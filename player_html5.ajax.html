@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n";
+
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<!--Includes-->
+		<link href="js/jquery.mobile-1.3.0/jquery.mobile-1.3.0.min.css" rel="stylesheet" />
+		<script src="js/jquery.mobile-1.3.0/jquery.mobile-1.3.0.min.js"></script>
+		
+		<link href="js/mobiscroll.custom-2.4.4.min.css" rel="stylesheet" type="text/css" />
+		<script src="js/mobiscroll.custom-2.4.4.min.js" type="text/javascript"></script>
+		
+		<link href="js/jplayer/skin/blue.monday/jplayer.blue.monday.css" rel="stylesheet" type="text/css" />
+		<script src="js/jplayer/jquery.jplayer.min.js" type="text/javascript"></script>
+		
+		<script src="js/iscroll.js" type="text/javascript"></script>
+		
+		<style type="text/css">
+			@import "js/svg/jquery.svg.css";
+		</style> 
+		<script src="js/svg/jquery.svg.min.js" type="text/javascript"></script>
+		
+		<style type="text/css">
+		  .exp {
+				vertical-align: middle;
+				display: table-cell;
+				height:28px;
+		  }
+		  .exp span {
+				display: inline-block;
+		    float: left;
+		    font-size : 12.5px;
+				text-align: left;
+				word-spacing:0px;
+				vertical-align: middle;
+				line-height: 14px;
+				white-space : normal !important;
+			}
+			.exp_txt {
+				font-weight: bold;
+			}
+			.exp_var {
+				margin-left: 20px;
+				font-style:italic;
+				font-weight: normal;
+			}
+			.exp_trans {
+				min-height: 20px;
+				margin:0px;
+				padding-top:0px;
+				text-align:center;
+				font-size: 16px;
+				color: #333333;
+				background-color: #FFFFFF;
+				text-shadow: 0 0px 0 #000000 !important;
+				border: 0px;
+			}
+			.exp_phon {
+				height: 18px;
+				margin:0px;
+				padding-top:0px;
+				text-align:center;
+				font-size: 14px;
+				color: #333333;
+				background-color: #FFFFFF;
+				text-shadow: 0 0px 0 #000000 !important;
+				border: 0px;
+			}
+		
+		  .list_option {
+		    position: relative;
+		    height: 100%;
+		  }
+		  .list_option img {
+		    height: 20px;
+		    display: block;
+		    margin-top: 5px;
+		  }
+		  .list_option .img-cont {
+		    width: 30px;
+		    padding-left: 5px;
+		    padding-right: 10px;
+		    height: 20px;
+		    text-align: center;
+		    float: left;
+		    position: relative;
+		    top: 50%;
+		    margin-top: -14px;
+		  }
+		  .list_option span {
+		    float: left;
+		    font-size : 20px;
+		  }
+		  
+		  .list_share {
+		  	padding: 0.6em 15px;
+		  }
+		  .list_share div {
+		  	height: 32px; width: 200px;
+		  }
+		  
+		  .img_flag {
+		  	padding-top: 2px;
+		  }
+		
+			#list_exp {
+				position:absolute; z-index:1;
+				background:#fff;
+				overflow:auto;
+			}
+			#scroller {
+				position:absolute; z-index:1;
+			/*	-webkit-touch-callout:none;*/
+			/*	-webkit-tap-highlight-color:rgba(0,0,0,0);*/
+				width:100%;
+				padding:0;
+			}
+			.tab_exp {
+				height: 40px;
+			}
+			.tab_exp div{
+				height: 40px;
+				display: table-cell;
+				vertical-align: middle;
+			}
+			#scroller a{
+				display: inline-block;
+				padding: 2px 5px;
+				white-space: normal;
+				vertical-align: middle;
+			}
+			.tab_exp_txt {
+				margin-left: 10px;
+				font-weight: bold;
+			}
+			.tab_exp_var {
+				margin-left: 20px;
+				font-style:italic;
+				font-weight: normal;
+			}
+		
+		
+			.ui-icon-help {
+				background-image: url("ressources/webapp/icon_help.png");
+				background-position: 3px 3px;
+				background-size: 70%;
+			}
+			.ui-icon-play {
+				background-image: url("ressources/webapp/icon_play.png");
+				background-position: 3px 2px;
+				background-size: 70%;
+			}
+			.ui-icon-stop {
+				background-image: url("ressources/webapp/icon_stop.png");
+				background-position: 3px 2px;
+				background-size: 70%;
+			}
+		</style>
+		<style type="text/css">				
+			@media all{
+				.i-txt { display:none; }
+				.ios .dwhl { padding: 5px 0; }
+				.dwwr { padding: 0 5px; }
+		  	.dwi { padding: 0; margin: 0 }
+		  	.dw-li { padding: 0 5px; }
+		  	.ui-body-c { background-image: none;}
+			}
+		</style>
+		
+		<script type="text/javascript">
+			var page = document.getElementById('page'),
+		    ua = navigator.userAgent,
+		    lang = navigator.language,
+		    iphone = ~ua.indexOf('iPhone') || ~ua.indexOf('iPod'),
+		    ipad = ~ua.indexOf('iPad'),
+		    ios = iphone || ipad,
+		    // Detect if this is running as a fullscreen app from the homescreen
+		    fullscreen = window.navigator.standalone,
+		    android = ~ua.indexOf('Android'),
+		    lastWidth = 0;
+		
+			var _w = Math.max( $(window).width(), $(window).height() );
+			var _h = Math.min( $(window).width(), $(window).height() );
+			// assume tablet view based upon display resolution
+			var tabletView = (_w >= 1000 && _h >= 600);
+		//	tabletView = false;
+			//Orientation
+			var orientation = window.orientation;
+		
+		
+			var mode_player = true;
+			var num_exp = 1;
+			var cur_expID;
+			var nb_exp;
+			var jump = 5;
+		
+			var prd_id;
+			var from_lang_id;
+			var from_lang_id_r2l;
+			var to_lang_id = 2;
+			var title_id = 0;
+			var title_text;
+			var data_titles;
+			var data_exp;
+		
+			var myScroll;
+			if (tabletView == true)
+			{
+				function loaded() {
+					myScroll = new iScroll('list_exp', {snap: false});
+		//			myScroll.scrollTo(0, -100, 200);
+				}
+				function scrollToLine(i, autoplay) {
+					if ((i > 0) && (typeof(myScroll)!='undefined'))
+					{
+						if (autoplay == true)
+							myScroll.scrollToElement('li:nth-child(' + i + ')', 200);
+					}
+				}
+				document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+		//		document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+			}
+		
+			function get_dataexp_pos(ar_data, id){
+				var nb=1;
+				var l = data_exp.length;
+				for (var i = 0; i < l; i++)
+				{
+					if(data_exp[i].id == id)
+						break;
+					nb++;
+				}
+		   	return i;
+			};
+			
+		$(function(){
+			var img_ratio = 140/379; // TODO => Change for image detection !!!!
+			var browser_width = $(window).innerWidth();
+			var browser_height = $(window).innerHeight();
+			var scroller_row = 3;
+			if (browser_height > 420)
+				scroller_row = 5;
+			if (iphone && !fullscreen)
+				browser_height += 60;
+			var scroller_width = browser_width - 37;
+			var scroller_r2l = false;
+		  var exp_used = new Array();
+		  var qcm_sel;
+		  var qcm_num;
+			if (tabletView == false)
+			{
+				var img_width = browser_width;
+				var img_height = img_width*img_ratio;
+				var bar_width = browser_width;
+		
+				var cnt_padding = (((browser_height)  - (44 + 38 + img_height + 50 + 41 + (scroller_row * 30) +18)) / 2);
+			}
+			else
+			{
+				var left_column_width = 400;
+				var main_vertical_margins = 30;
+				var img_width = browser_width - left_column_width;
+				var img_height = img_width*img_ratio;
+				var bar_width = browser_width;
+				var lbl_trans_height = 30;
+				var lbl_phon_height = 27;
+				var main_row_height = img_height + lbl_trans_height + lbl_phon_height + (main_vertical_margins*2.5);
+				
+				var cnt_padding;
+			}
+		
+			function ajax_get_lang_used(lang)
+			{
+			  $.ajax({
+			    type: "GET",
+			    url: "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_lang_used.php?lang=" + lang,
+			    cache: false,
+			    contentType: "application/json; charset=utf-8",                                                            
+			    dataType: "json",
+			    success: function(data)
+			    {
+						from_lang_id =  data[0].id;
+						from_lang_id_r2l =  data[0].r2L;
+						if (from_lang_id_r2l == 'Y')
+						{
+							scroller_r2l = true;
+							$(".exp_txt").css({'text-align': 'right'});
+							$(".exp_var").css({'text-align': 'right'});
+							$(".img-cont").css({'float': 'right'});
+							$(".img-cont").css({'padding-right': '5px'});
+							$(".img-cont").css({'padding-left': '10px'});
+							$(".list_option span").css({'float': 'right'});
+							
+							$(".tab_exp_txt").css({'text-align': 'right'});
+							$(".tab_exp_var").css({'text-align': 'right'});
+							$(".tab_exp_var").css({'margin-right': '20px'});
+						}
+						else
+							scroller_r2l = false;
+						ajax_get_product(from_lang_id);
+			    }
+			  });
+			}
+			function ajax_get_product(lang_id)
+			{
+			  $.ajax({
+			    type: "GET",
+			    url: "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_products.php?display=400ex&lang_id=" + lang_id,
+			    cache: false,
+			    contentType: "application/json; charset=utf-8",                                                            
+			    dataType: "json",
+			    success: function(data)
+			    {
+						prd_id = data[0].prd_id;
+						ajax_upd_titles(prd_id, from_lang_id);
+			    }
+			  });
+			}
+			function ajax_get_fromlangs(prd_id, lang_id)
+			{
+			  $.ajax({
+			    type: "GET",
+			    url: "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=from&prd_id=" + prd_id + "&lang_id=" + lang_id,
+			    cache: false,
+			    contentType: "application/json; charset=utf-8",                                                            
+			    dataType: "json",
+			    success: onData_fromlangs
+				});
+			}
+			function onData_fromlangs(data)
+			{
+				$('#sel_from_lang').mobiscroll('destroy');
+				$('#sel_from_lang li').remove();
+				var l = data.length;
+				for (var i = 0; i < l; i++)
+				{
+					var tmp_id = data[i].lang_id;
+					$('#sel_from_lang').append('<li data-val=" '+ tmp_id.toString() + '"><div class="list_option"><div class="img-cont"><img id="from_lang_icon_'+ tmp_id.toString() + '" src="images/flags/' + data[i].icon + '" /></div><span>' + data[i].lang_name + '</span></div></li>');
+				}
+			  $('#flag1').attr('src', $('#from_lang_icon_'+from_lang_id).attr('src'));
+			  $('#sel_from_lang').mobiscroll().image({
+			    theme: 'default',
+			    lang: 'fr',
+			    setText: 'OK',
+			    cancelText: 'Annuler',
+			    display: 'modal',
+			    mode: 'scroller',
+			    r2l: scroller_r2l,
+			    labels: ['Langue de d&eacute;part'],
+			    inputClass: 'i-txt',
+			    rows: 5,
+			    width: 200,
+			    onSelect: function (valueText, inst){
+				    var sel = $.trim($('#sel_from_lang').mobiscroll('getValue'));
+				    from_lang_id = sel;
+				    $('#flag1').attr('src', $('#from_lang_icon_'+sel).attr('src'));
+		//		    window.location.href = 'player_html5.php?from_lang=' + from_lang_id + '&to_lang=' + to_lang_id + '&title_id=' + title_id;
+						ajax_upd_titles(prd_id, sel);
+				  }
+			  });
+			}
+			function ajax_get_tolangs(prd_id, lang_id)
+			{
+			  $.ajax({
+			    type: "GET",
+			    url: "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=to&prd_id=" + prd_id + "&lang_id=" + lang_id,
+			    cache: false,
+			    contentType: "application/json; charset=utf-8",                                                            
+			    dataType: "json",
+			    success: onData_tolangs
+				});
+			}
+			function onData_tolangs(data)
+			{
+				$('#sel_to_lang').mobiscroll('destroy');
+				$('#sel_to_lang li').remove();
+				var l = data.length;
+				for (var i = 0; i < l; i++)
+				{
+					var tmp_id = data[i].lang_id;
+					$('#sel_to_lang').append('<li data-val=" '+ tmp_id.toString() + '"><div class="list_option"><div class="img-cont"><img id="to_lang_icon_'+ tmp_id.toString() + '" src="images/flags/' + data[i].icon + '" /></div><span>' + data[i].lang_name + '</span></div></li>');
+				}
+			  $('#flag2').attr('src', $('#to_lang_icon_'+to_lang_id).attr('src'));
+			  $('#sel_to_lang').mobiscroll().image({
+			    theme: 'default',
+			    lang: 'fr',
+			    setText: 'OK',
+			    cancelText: 'Annuler',
+			    display: 'modal',
+			    mode: 'scroller',
+			    r2l: scroller_r2l,
+			    labels: ['Langue de d&acute;arriv&eacute;e'],
+			    inputClass: 'i-txt',
+			    rows: 5,
+			    width: 200,
+			    onSelect: function (valueText, inst){
+				    var sel = $.trim($('#sel_to_lang').mobiscroll('getValue'));
+				    to_lang_id = sel;
+				    $('#flag2').attr('src', $('#to_lang_icon_'+sel).attr('src'));
+		//		    window.location.href = 'player_html5.php?from_lang=' + from_lang_id + '&to_lang=' + to_lang_id + '&title_id=' + title_id;
+						ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id);
+				  }
+			  });
+			}
+		
+			function ajax_upd_titles(prd_id, lang_id)
+			{
+		    $.ajax({
+		      type: "GET",
+		      url: "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_titles.php?prd_id=" + prd_id + "&lang_id=" + lang_id,
+		      cache: false,
+		      contentType: "application/json; charset=utf-8",                                                            
+		      dataType: "json",
+		      success: onData_Titles
+		    });
+			}
+			function onData_Titles(data)
+			{
+				$('#sel_title').mobiscroll('destroy');
+				$('#sel_title li').remove();
+				var l = data.length;
+				for (var i = 0; i < l; i++)
+				{
+					if (((title_id <= 0) && (i == 0)) || (title_id == data[i].title_id))
+					{
+						title_id = data[i].title_id;
+						title_text = data[i].name;
+						$("#top_title").html(title_text);
+					}
+					var tmp_id = data[i].title_id;
+					$('#sel_title').append('<li data-val=" '+ tmp_id.toString() + '"><div class="list_option"><span id="title_' + tmp_id.toString() + '">' + data[i].name + '</span></div></li>');
+				}
+			  $('#sel_title').mobiscroll().image({
+			    theme: 'default',
+			    lang: 'fr',
+			    setText: 'OK',
+			    cancelText: 'Annuler',
+			    display: 'modal',
+			    mode: 'scroller',
+			    r2l: scroller_r2l,
+			    labels: ['Th&egrave;mes'],
+			    inputClass: 'i-txt',
+			    rows: 5,
+			    width: 200,
+			    onSelect: function (valueText, inst){
+				    var sel = $('#sel_title').mobiscroll('getValue');
+				    title_id = $.trim(sel);
+				    $("#top_title").html($("#title_" + title_id).html());
+				    ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id);
+				  }
+			  });
+				ajax_get_fromlangs(prd_id, from_lang_id);
+				ajax_get_tolangs(prd_id, from_lang_id);
+				ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id);
+			}
+			function ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id)
+			{
+		    $.ajax({
+		      type: "GET",
+		      url: "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_expressions.php?prd_id=" + prd_id + "&from_lang_id=" + from_lang_id + "&to_lang_id=" + to_lang_id + "&title_id=" + title_id,
+		      cache: false,
+		      contentType: "application/json; charset=utf-8",                                                            
+		      dataType: "json",
+		      success: onData_Expressions
+		    });
+			}
+			function onData_Expressions(data)
+			{
+				data_exp = data;
+				$('#sel_exp li').remove();
+				$('#sel_exp').mobiscroll('destroy');
+				nb_exp = data.length;
+				num_exp = 1;
+				cur_expID = data[0].id;
+				for (var i = 0; i < nb_exp; i++)
+				{
+					var tmp_id = data[i].id;
+					if (data[i].variation == "N")
+					{
+							$('#sel_exp').append('<li data-val=" '+ tmp_id.toString() + '"><div class="exp"><span class="exp_text">' + data[i].text + '</span></div></li>');
+							$('#scroller > ul').append('<li class="tab_exp" data-val=" '+ tmp_id.toString() + '" data-icon="false"><a class="tab_exp_txt" href="#">' + data[i].text + '</a></li>');
+					}
+					else
+					{
+						if (from_lang_r2l == "Y")
+						{
+							$('#sel_exp').append('<li data-val=" '+ tmp_id.toString() + '"><div class="exp"><span class="exp_var">' + data[i].desc + ' +</span></div></li>');
+							$('#scroller > ul').append('<li class="tab_exp" data-val=" '+ tmp_id.toString() + '" data-icon="false"><a class="tab_exp_var" href="#">' + data[i].desc + ' +</a></li>');
+						}
+						else
+						{
+							$('#sel_exp').append('<li data-val=" '+ tmp_id.toString() + '"><div class="exp"><span class="exp_var">+ ' + data[i].desc + '</span></div></li>');
+							$('#scroller > ul').append('<li class="tab_exp" data-val=" '+ tmp_id.toString() + '" data-icon="false"><a class="tab_exp_var" href="#">+ ' + data[i].desc + '</a></li>');
+						}
+					}
+				}
+		
+				$('.tab_exp a').css({'width' : left_column_width-40 + 'px'});
+				$('.tab_exp').click(function()
+				{
+					cur_expID = $.trim($(this).attr('data-val'));
+					if (mode_player == true)
+						upd_elem(cur_expID);
+					else
+					{
+				    $('#btn_validate').removeClass('ui-disabled');
+						$('#scroller .ui-btn-up-a').removeClass('ui-btn-up-a').removeClass('ui-btn-hover-a').addClass('ui-btn-up-d').attr('data-theme', 'd').trigger('create');
+						$("[data-val=' " + cur_expID + "']").removeClass('ui-btn-up-d').removeClass('ui-btn-hover-d').addClass('ui-btn-up-a').attr('data-theme', 'a').trigger('create');
+					}
+			    return false;
+			  });
+		
+				$('#scroller > ul').trigger('create');    
+				$('#scroller > ul').listview('refresh');
+				$('#page1').css("min-height","");
+				$('#page1').css("padding-bottom","");
+				$('#page1').css("padding-top","");
+				setup_UI();
+		
+				loaded();
+		
+				$('#sel_exp').mobiscroll().image({
+			    theme: 'ios',
+			    lang: lang,
+			    display: 'inline',
+			    mode: 'scroller',
+			    labels: ['Expressions'],
+			    inputClass: 'i-txt',
+			    rows: scroller_row,
+			    width: scroller_width+10,
+			    onChange: function (valueText, inst){
+						var sel = valueText;
+						cur_expID = $.trim(sel);
+						if (mode_player == true)
+							upd_elem(cur_expID);
+						else
+						{
+							upd_elem(cur_expID, false, false, false, false);
+							$('#btn_validate').removeClass('ui-disabled');
+						}
+					}
+				});
+				upd_elem(data_exp[0].id);
+			}
+			ajax_get_lang_used(lang);
+		//	ajax_get_product(from_lang_id);
+		//	ajax_upd_titles(prd_id, from_lang_id);
+		
+		
+		
+			$("#jquery_jplayer_1").jPlayer({
+				ready: function (event) {
+				},
+				swfPath: "js/jplayer",
+				supplied: "mp3, m4a, oga",
+				wmode: "window",
+				solution:"flash,html"
+			});
+		
+			$('#img_exp').bind('swipeleft',swipe_left);
+			$('#img_exp').bind('swiperight',swipe_right);
+		  $('#img_exp').click(function(){
+		    if (mode_player == true)
+			    upd_elem(cur_expID);
+			  else
+			  {
+			  	if (nb_exp_used < nb_exp)
+			  		upd_elem(qcm_sel, false, false, false);
+			  	else
+		  		{
+				    exp_used = new Array();
+						nb_good_answers=0;
+						nb_exp_used=0;
+				    init_QCM();
+		  		}
+			  }
+		    return false;
+		  });
+			function swipe_left(e){
+				if (mode_player == true)
+				{
+					if (num_exp < nb_exp)
+					{
+						num_exp++;
+			    	cur_expID = data_exp[num_exp].id;
+			    	$('#sel_exp').mobiscroll('setValue', [cur_expID], false, 0.5);
+						upd_elem(cur_expID);
+						scrollToLine(num_exp-jump, true);
+					}
+				}
+			};
+			function swipe_right(e){
+				if (mode_player == true)
+				{
+					if (num_exp > 1)
+					{
+						num_exp--;
+			    	cur_expID = data_exp[num_exp].id;
+			    	$('#sel_exp').mobiscroll('setValue', [cur_expID], false, 0.5);
+						upd_elem(cur_expID);
+						scrollToLine(num_exp-jump, true);
+					}
+				}
+			};
+			var timer;
+			var nb_good_answers=0;
+			var nb_exp_used=0;
+		
+			function init_QCM() {
+		    $('#btn_validate').addClass('ui-disabled');
+				$('#scroller .ui-btn-up-a').removeClass('ui-btn-up-a').removeClass('ui-btn-hover-a').addClass('ui-btn-up-d').attr('data-theme', 'd').trigger('create');
+		
+				if (nb_exp_used < nb_exp)
+				{
+			   	$('#img_exp').svg({loadURL: 'ressources/webapp/quizz.svg', addTo: false, changeSize: false});
+					$('#img_exp').svg('destroy');
+			   	$('#img_exp').svg({loadURL: 'ressources/webapp/quizz.svg', addTo: false, changeSize: false});
+					if (nb_exp_used > 0)
+					{
+				    $('#lbl_trans').html('Bonnes reponses : ' + nb_good_answers + '  /  ' + nb_exp_used);  // TO translate
+				    $('#lbl_phon').html('Progression : ' + nb_exp_used + '  /  ' + nb_exp);  // TO translate
+				  }
+				  else
+					{
+				    $('#lbl_trans').html('');
+				    $('#lbl_phon').html('');
+				  }
+		
+					if (nb_exp_used <= 0)
+						nb_good_answers = 0;
+					qcm_num = Math.floor((Math.random()*nb_exp)+1);
+					while (exp_used[qcm_num] == true)
+						qcm_num = Math.floor((Math.random()*nb_exp)+1);
+					exp_used[qcm_num] = true;
+					nb_exp_used++;
+					qcm_sel = data_exp[qcm_num].id;
+					upd_elem(qcm_sel, false, false, false);
+				}
+				else
+				{
+			    $('#lbl_trans').html('Bonnes reponses : ' + nb_good_answers + '  /  ' + nb_exp_used);  // TO translate
+			    $('#lbl_phon').html('Cliquer pour rejouer');  // TO translate
+			   	$('#img_exp').svg({loadURL: 'ressources/webapp/quizz-end.svg', addTo: false, changeSize: false});
+					$('#img_exp').svg('destroy');
+			   	$('#img_exp').svg({loadURL: 'ressources/webapp/quizz-end.svg', addTo: false, changeSize: false});
+				}
+			}
+		
+		  $('#btn_validate').click(function(){
+		  	if ($('#btn_validate').hasClass('ui-disabled') == false)
+		  	{
+		  		var snd_qcm;
+		  		if (qcm_sel == cur_expID)
+		  		{
+		  			nb_good_answers++;
+			 			$("#pup_result").html('<div style="display: table-cell;"><img src="ressources/webapp/ok.png" style="vertical-align: middle; padding-right: 10px;"><span style="text-align: center; vertical-align: middle;">Bonne r&eacute;ponse</span></div>');
+		  			snd_qcm = 'ressources/webapp/yes.mp3';
+		  		}
+		  		else
+		  		{
+			 			$("#pup_result").html('<div style="display: table-cell;"><img src="ressources/webapp/nok.png" style="vertical-align: middle; padding-right: 10px;"><span style="text-align: center; vertical-align: middle;">Mauvaise r&eacute;ponse</span></div>');
+		  			snd_qcm = 'ressources/webapp/no.mp3';
+		  		}
+		 			$("#pup_result").popup("open");
+		  		$("#jquery_jplayer_1").bind($.jPlayer.event.ended + ".jp-ended", function(event) { // Using ".jp-ended" namespace so we can easily remove this event
+			 			$("#pup_result").popup("close");
+						upd_elem(qcm_sel);
+						setTimeout(init_QCM,3000);
+						$("#jquery_jplayer_1").unbind($.jPlayer.event.ended + ".jp-ended");
+					});
+				  $("#jquery_jplayer_1").jPlayer("setMedia", {
+				  	mp3: snd_qcm
+				  }).jPlayer("play");
+				}
+		    return false;
+		  });
+		
+		  $('#btn_quizz').click(function(){
+		    if (mode_player == true)
+		    {
+		    	mode_player = false;
+		    	jump=1;
+		    	$("#btn_quizz .ui-btn-text").text("Lecteur");  // TO translate
+		    	$("#help_content").hide();
+		    	$("#help_quizzcontent").show();
+					$('#btn_refresh').removeClass('ui-btn-up-b').removeClass('ui-btn-hover-b').addClass('ui-btn-up-a').attr('data-theme', 'a').trigger('create');
+			    $('#btn_autoplay').hide();
+			    $('#btn_validate').css({'display': 'block'});
+			    $('#btn_validate').addClass('ui-first-child');
+		//	    $('#btn_validate').addClass('ui-disabled');
+			    
+			    exp_used = new Array();
+					nb_good_answers=0;
+					nb_exp_used=0;
+			    init_QCM();
+				}
+				else
+				{
+					jump=5;
+					mode_player = true;
+		    	$("#btn_quizz .ui-btn-text").text("Quizz");  // TO translate
+		    	$("#help_content").show();
+		    	$("#help_quizzcontent").hide();
+			    $('#btn_validate').hide();
+			    $('#btn_autoplay').show();
+		 			$('#btn_refresh').removeClass('ui-btn-up-a').removeClass('ui-btn-hover-a').addClass('ui-btn-up-b').attr('data-theme', 'b').trigger('create');
+		
+		    	upd_elem(cur_expID);
+				}
+		
+		    return false;
+		  });
+		
+		  $('#btn_autoplay').click(function(){
+				$("#jquery_jplayer_1").unbind($.jPlayer.event.ended + ".jp-ended");
+		    if ($('#btn_refresh').hasClass('ui-disabled'))
+		    {
+		    	window.clearInterval(timer);
+		    	$('#btn_refresh').removeClass('ui-disabled');
+		   		$("#btn_autoplay span.ui-icon").addClass("ui-icon-play").removeClass("ui-icon-stop");
+		    }
+		    else
+		    {
+		    	$('#btn_refresh').addClass('ui-disabled');
+		    	upd_elem(cur_expID);
+		   		$("#btn_autoplay span.ui-icon").addClass("ui-icon-stop").removeClass("ui-icon-play");
+		    }
+		    return false;
+		  });
+		
+		  $('#btn_refresh').click(function(){
+		    if ($('#btn_refresh').hasClass('ui-disabled') == false)
+		    {
+			    if (mode_player == true)
+			    	upd_elem(cur_expID);
+					else
+			    	upd_elem(qcm_sel, false, false, false);
+			    return false;
+			  }
+		  });
+		
+		  $('#btn_from_lang').click(function(){
+		    $('#sel_from_lang').mobiscroll('show');
+		    $('#sel_from_lang').mobiscroll('setValue', [' ' + from_lang_id], false, 0.5);
+		    return false;
+		  });
+		
+		  $('#btn_to_lang').click(function(){
+		    $('#sel_to_lang').mobiscroll('show');
+		    $('#sel_to_lang').mobiscroll('setValue', [' ' + to_lang_id], false, 0.5);
+		    return false;
+		  });
+		
+		  $('#btn_title').click(function(){
+		    $('#sel_title').mobiscroll('show');
+		    $('#sel_title').mobiscroll('setValue', [' ' + title_id], false, 0.5);
+		    return false;
+		  });
+		
+			function upd_elem(exp_id, update_img, update_txt, update_list, update_snd) {
+		    num_exp = get_dataexp_pos(data_exp, exp_id);
+				if (typeof(update_snd) == 'undefined')
+				{
+		/*
+		  		$("#jquery_jplayer_1").bind($.jPlayer.event.ended + ".jp-ended", function(event) { // Using ".jp-ended" namespace so we can easily remove this event
+						if ($('#btn_refresh').hasClass('ui-disabled'))
+						{
+							if (num_exp <= nb_exp)
+								timer = setTimeout(swipe_left,3000);
+							else
+							{
+					   		$("#btn_autoplay span.ui-icon").addClass("ui-icon-play").removeClass("ui-icon-delete");
+					   		$('#btn_refresh').removeClass('ui-disabled');
+							}
+						}
+						$("#jquery_jplayer_1").unbind($.jPlayer.event.ended + ".jp-ended");
+					});
+		*/
+				  $("#jquery_jplayer_1").jPlayer("setMedia", {
+		//		  	mp3: exp_data[' ' + $.trim(exp_id)]['soundtra']
+				  	mp3: data_exp[num_exp].sound_tra
+				  }).jPlayer("play");
+				}
+		
+				if (typeof(update_img) == 'undefined')
+				{
+			   	$('#img_exp').svg({loadURL: data_exp[num_exp].image, addTo: false, changeSize: false});
+					$('#img_exp').svg('destroy');
+			   	$('#img_exp').svg({loadURL: data_exp[num_exp].image, addTo: false, changeSize: false});
+			  }
+		
+				if (typeof(update_txt) == 'undefined')
+				{
+			    $('#lbl_trans').html(data_exp[num_exp].text_tra);
+			    if (tabletView == false)
+			    {
+						$('#lbl_trans').css("font-size", "16px");
+						$('#lbl_phon').css("font-size", "14px");
+						if ($('#lbl_trans').height() > 20)
+						{
+				    	var size;
+				    	while($('#lbl_trans').height() > 20)
+				    	{
+				    		size = parseInt($('#lbl_trans').css("font-size"), 10);
+								$('#lbl_trans').css("font-size", size - 1);
+							}
+							$('#lbl_phon').css("font-size", size - 3.5);
+						}
+			    }
+			    $('#lbl_phon').html(data_exp[num_exp].phonetic_tra);
+			  }
+		
+				if (typeof(update_list) == 'undefined')
+				{
+					if (tabletView == true)
+					{
+						$('#scroller .ui-btn-up-a').removeClass('ui-btn-up-a').removeClass('ui-btn-hover-a').addClass('ui-btn-up-d').attr('data-theme', 'd').trigger('create');
+						$("[data-val=' " + exp_id + "']").removeClass('ui-btn-up-d').removeClass('ui-btn-hover-d').addClass('ui-btn-up-a').attr('data-theme', 'a').trigger('create');
+						if (($("#btn_autoplay span.ui-icon").hasClass("ui-icon-stop")) || (mode_player == false))
+							scrollToLine(num_exp-jump, true);
+						else
+							scrollToLine(num_exp-jump, false);
+					}
+					else
+			    	$('#sel_exp').mobiscroll('setValue', [' ' + qcm_sel], false, 0.5);
+			   }
+			}
+		
+		
+		
+		
+			function setup_UI()
+			{
+				if (tabletView == false)
+				{
+					$('#grd_block1').css({'display' : 'none'});
+					$('#grd_block2').css({'width' : browser_width + 'px'});
+					$('#grd_block3').css({'display' : 'none'});
+					$('#grd_block4').css({'width' : browser_width + 'px'});
+					$('#grd_block5').css({'display' : 'none'});
+					$('#grd_block6').css({'width' : browser_width + 'px'});
+			
+					$('#topbar_left').css({'width' : '100px;', 'min-width' : '100px;', 'max-width' : '100px;'});
+					$('#topbar_right').css({'width' : '100px;'});
+					$('#bar_left').css({'width' : '160px;'});
+					$('#bar_right').css({'width' : '90px;'});
+			
+					$(".exp_txt").width(scroller_width);
+					$(".exp_var").width(scroller_width-20);
+			
+					var img_width = browser_width;
+					var img_height = img_width*img_ratio;
+					var bar_width = browser_width;
+			
+					$('#tab_ads').css({'display' : 'none'});
+			
+			
+			//	alert(browser_height + " / header: " + $('#page_header').height() + " / " + 38 + " / img: " + img_height + " / ads: " + $('#ads').height() + " / " + $('#bar_left').height() + " / " + $('#grd_block6:nth-child(3)').height());
+					var cnt_padding = (((browser_height)  - (44 + 38 + img_height + 50 + 41 + (scroller_row * 30) +18)) / 2);
+			//	alert(cnt_padding);
+					$('#cnt_exp').css({'padding-top': cnt_padding + 'px', 'padding-bottom': cnt_padding + 'px'});
+				}
+				else
+				{
+					var left_column_width = 400;
+					var main_vertical_margins = 30;
+					var img_width = browser_width - left_column_width;
+					var img_height = img_width*img_ratio;
+					var bar_width = browser_width;
+					var lbl_trans_height = 30;
+					var lbl_phon_height = 27;
+			
+					$('#lbl_trans').css({'height' : lbl_trans_height + 'px'});
+					$('#lbl_trans').css({'font-size' : 24 + 'px'});
+					$('#lbl_trans').css({'padding-top': (main_vertical_margins / 2) + 'px', 'padding-bottom': '0px'});
+					$('#lbl_phon').css({'height' : lbl_phon_height + 'px'});
+					$('#lbl_phon').css({'font-size' : 20 + 'px'});
+					$('#lbl_phon').css({'padding-top': '0px', 'padding-bottom': (main_vertical_margins) + 'px'});
+					
+					var main_row_height = img_height + lbl_trans_height + lbl_phon_height + (main_vertical_margins*2.5);
+					$('#grd_block1').css({'width' : left_column_width + 'px'});
+					$('#grd_block1').css({'height' : main_row_height + 'px'});
+					$('#grd_block2').css({'width' : browser_width-$('#grd_block1').width() + 'px'});
+					$('#grd_block2').css({'height' : main_row_height + 'px'});
+					$('#grd_block3').css({'display' : 'none'});
+					$('#grd_block4').css({'width' : browser_width + 'px'});
+					$('#grd_block5').css({'display' : 'none'});
+					$('#grd_block6').css({'display' : 'none'});
+			
+					$('#topbar_left').css({'width' : '100px;'});
+					$('#topbar_right').css({'width' : '100px;'});
+			//		$("#topbar_center div").css({'padding-top': '5px'});
+					$('#bar_left').css({'width' : '160px;'});
+					$('#bar_right').css({'width' : '90px;'});
+			
+					$('#list_exp').css({'width' : left_column_width + 'px'});
+					$('#list_exp').css({'height' : main_row_height + 'px'});
+					$('#scroller').css({'width' : left_column_width-8 + 'px'});
+			/*
+					$('.tab_exp a').css({'width' : left_column_width-40 + 'px'});
+					$('.tab_exp').click(function()
+					{
+						cur_expID = $(this).attr('data-val');
+						if (mode_player == true)
+							upd_elem(cur_expID);
+						else
+						{
+					    $('#btn_validate').removeClass('ui-disabled');
+							$('#scroller .ui-btn-up-a').removeClass('ui-btn-up-a').removeClass('ui-btn-hover-a').addClass('ui-btn-up-d').attr('data-theme', 'd').trigger('create');
+							$("[data-val=' " + cur_expID + "']").removeClass('ui-btn-up-d').removeClass('ui-btn-hover-d').addClass('ui-btn-up-a').attr('data-theme', 'a').trigger('create');
+						}
+				    return false;
+				  });
+			*/
+					$('#tab_ads').css({'width' : browser_width + 'px', 'height' : browser_height-40-main_row_height-40 + 'px'});
+					$('#ads').css({'display' : 'none'});
+			
+					$('#cnt_exp').css({'padding-top': '0px', 'padding-bottom': main_vertical_margins + 'px'});
+				}
+			
+			
+				$('#footer').css({'height': browser_height-40 + 'px'});
+			
+				$('#topbar_center').css({'width': browser_width - $('#topbar_left').width() - $('#topbar_right').width() + 'px'});
+				$('#top_title').css({'width': browser_width - $('#topbar_left').width() - $('#topbar_right').width() + 'px'});
+				$('#topbar_center > div').css({'display': 'table-cell'});
+				$('#bar_center').css({'width': bar_width - $('#bar_left').width() - $('#bar_right').width() + 'px'});
+			
+				$('#img_exp').css({'width': img_width});
+				$('#img_exp').css({'height': img_height});
+				$("#pup_result").popup({positionTo: $('#img_exp')});
+			}
+			setup_UI();
+		
+		//	ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id);
+		//	upd_elem(cur_expID);
+		});
+		</script>
+	</head>
+	<body>
+		<script src="phonegap.js"></script>
+		<!-- Home -->
+		<div data-role="page" id="page1">
+	
+			<div data-role="panel" id="pnl_share" data-position="right" data-display="push" data-theme="a">
+					<ul data-role="listview" data-inset="true" data-theme="c" data-divider-theme="c">
+						<li data-role="list-divider">Partager</li>
+						<li data-icon="false" class="list_share">
+							<div class="addthis_toolbox addthis_32x32_style addthis_vertical_style">
+								<a href="#" class="addthis_button_facebook" title="Facebook">&nbsp;&nbsp;&nbsp;&nbsp;Facebook</a>
+							</div></li>
+						<li data-icon="false" class="list_share">
+							<div class="addthis_toolbox addthis_32x32_style addthis_vertical_style">
+								<a href="#" class="addthis_button_twitter" title="Twitter">&nbsp;&nbsp;&nbsp;&nbsp;Twitter</a>
+							</div></li>
+						<li data-icon="false" class="list_share">
+							<div class="addthis_toolbox addthis_32x32_style addthis_vertical_style">
+								<a href="#" class="addthis_button_google" title="Google">&nbsp;&nbsp;&nbsp;&nbsp;Google</a>
+							</div></li>
+						<li data-icon="false" class="list_share">
+							<div class="addthis_toolbox addthis_32x32_style addthis_vertical_style">
+								<a href="#" class="addthis_button_linkedin" title="LinkedIn">&nbsp;&nbsp;&nbsp;&nbsp;LinkedIn</a>
+							</div></li>
+						<li data-icon="false" class="list_share">
+							<div class="addthis_toolbox addthis_32x32_style addthis_vertical_style">
+								<a href="#" class="addthis_button_viadeo" title="Viadeo">&nbsp;&nbsp;&nbsp;&nbsp;Viadeo</a>
+							</div></li>
+					</ul>
+					<script type="text/javascript">var addthis_config = {"data_track_addressbar":false};var addthis_language = "fr";</script>
+					<script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-507a83730478e532"></script>
+				  <a href="#pnl_share" data-role="button" data-rel="close" data-theme="a">Fermer</a>
+			</div>
+	
+			<div id="page_header" class="my-header-grid ui-grid-b" data-theme="a" data-role="header" data-position="fixed">
+				<div id="topbar_left" class="ui-block-a ui-bar-a" data-theme="a" style="width: 100px;">
+					<div align="left" style="padding-left:5px; padding-top:2px; height:40px;">
+						<a href="#premiumPage" data-rel="popup" data-position-to="window" id="btn_premium" data-role="button" data-inline="true" data-mini="true" data-theme="b">Premium</a>
+						<!-- Premium -->
+						<div data-role="popup" id="premiumPage" data-theme="b" data-corners="false">
+							<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+						  <div data-role="header" data-theme="b">
+						    <h2>Version Premium</h2>
+						  </div>
+						  <div data-role="content" data-theme="b">
+						  	<div id="premium_content" style="width: 300px;">
+						    	<p>Une application off-line sera bient&ocirc;t disponible pour iPhone, Ipad et Android</p>
+							  </div>
+						  </div>
+						</div>
+						<!-- /Premium -->
+					</div>
+				</div>
+				<div id="topbar_center" class="ui-block-b ui-bar-a">
+					<div style="text-align:center; vertical-align: middle; height: 40px; display:table-cell;">
+						<div id="top_title" style="vertical-align: middle; text-align: center; font-size: 14px; font-weight: bold;">Lexique</div>
+					</div>
+				</div>
+				<div id="topbar_right" class="ui-block-c ui-bar-a" style="width: 100px;">
+					<div align="right" style="height:40px;">
+						<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+							<a id="btn_info" href="#infoPage" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-mini="true" data-iconpos="notext" data-icon="help" data-theme="a">Info</a>
+							<!-- Info -->
+							<div data-role="popup" id="infoPage" data-corners="false">
+								<a href="#" data-rel="back" data-role="button" data-theme="e" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Fermer</a>
+							  <div data-role="header" data-theme="e">
+							    <h2>Aide</h2>
+							  </div>
+							  <div data-role="content" data-theme="e">
+							  	<div id="help_content" style="width: 300px;">
+										<div style="width: 100%; height: 50px;">
+											<div style="float: left; width: 100px;">
+												<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+													<a href="#" id="btn_from_lang_demo" data-role="button" data-inline="true" data-mini="true" data-theme="a"><img id="flag1" class="img_flag" src="images/flags/fr.gif" /></a>
+									    		<a href="#" id="btn_to_lang_demo" data-role="button" data-inline="true" data-mini="true" data-theme="a"><img id="flag2" class="img_flag" src="images/flags/uk.gif" /></a>
+									    	</div>
+								    	</div>
+								    	<span>Changer les langues de d&eacute;part et d&acute;arriv&eacute;e</span>
+								    </div>
+										<div style="width: 100%; height: 50px;">
+											<div style="float: left; width: 50px;">
+												<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+									    		<a href="#" id="btn_title_demo" data-role="button" data-inline="true" data-mini="true" data-iconpos="notext" data-icon="bars" data-theme="a"></a>
+												</div>
+									    </div>
+									    <span style="margin-top: 10px; display: inline-block;">Changer le th&egrave;me</span>
+								    </div>
+										<div style="width: 100%; height: 50px;">
+											<div style="float: left; width: 50px;">
+												<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+													<a href="#" id="btn_autoplay_demo" data-role="button" data-iconpos="notext" data-icon="play" data-theme="b">Autoplay</a>
+												</div>
+									    </div>
+									    <span style="margin-top: 10px; display: inline-block;">Lecture continue</span>
+								    </div>
+										<div style="width: 100%; height: 50px;">
+											<div style="float: left; width: 50px;">
+												<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+													<a href="#" id="btn_refresh_demo" data-role="button" data-iconpos="notext" data-icon="refresh" data-theme="b">Refresh</a>
+												</div>
+									    </div>
+									    <span style="margin-top: 10px; display: inline-block;">Rejouer</span>
+								    </div>
+								  </div>
+							  	<div id="help_quizzcontent" style="width: 300px; display: none;">
+										<ol>
+											<li>Ecoutez l&acute;expression</li>
+											<li>Choisissez une r&eacute;ponse dans la liste des epxressions</li>
+											<li>Validez votre r&eacute;ponse</li>
+										</ol>
+									</div>
+							  </div>
+							</div>
+							<!-- /Info -->
+							<a href="#pnl_share" id="btn_share" data-role="button" data-inline="true" data-mini="true" data-theme="a"><img id="icon_share" src="ressources/webapp/icon_share2.png" style="margin-top:-3px; width:23px;" /></a>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+	<!--		<div data-role="content" data-position="fixed" style="padding: 0; height: 0px; background-color: #FFFFFF"></div>-->
+	
+			<div id="footer" data-theme="a" data-role="footer" data-position="fixed" style=" padding-bottom:0px; border-top-width: 0; background-color: #FFFFFF;">
+				<div id="grd_main" class="ui-grid-a2">
+					<div id="grd_block1" class="ui-block-a">
+	<!-------------------- BLOCK 1 ui-bar ui-bar-e -------------------->
+						<div id="list_exp">
+							<div id="scroller">
+								<ul data-role="listview" data-inset="false" data-theme="d" data-divider-theme="d">
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="grd_block2" class="ui-block-b" style=" background-color: #FFFFFF">
+	<!-------------------- BLOCK 2 ui-bar ui-bar-e -------------------->
+						<div class="" style="">
+	
+							<div id="cnt_exp" style="text-align: center">
+								<h4 id="lbl_trans" class="exp_trans" style=""> </h4>
+								<h5 id="lbl_phon" class="exp_phon" style="">[&nbsp;<i> </i>&nbsp;]</h5>
+	<!--							<embed id="img_exp" src="../OrizonFlash_V2/ressources/svg/LABLANG_V2_1_1.svg"  type="image/svg+xml" />
+								<img id="img_exp" src="../OrizonFlash_V2/ressources/svg/LABLANG_V2_1_1.svg" /> <!--  style="max-width: 500px; max-height: 200px;" -->
+								<div id="img_exp"></div>
+								<div id="pup_result" data-role="popup" class="ui-content" style="width: 200px; max-width:350px;"></div>
+							</div>
+					
+							<div id="ads" style="width: 320px; height: 50px;">
+	<!--							<script type="text/javascript"><!--
+									google_ad_client = "ca-pub-8664648974897099";
+									/* Annonces Smartphones */
+									google_ad_slot = "2358793837";
+									google_ad_width = 320;
+									google_ad_height = 50;
+									//-->
+	<!--							</script>
+								<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>-->
+							</div>
+	
+						</div>
+					</div>
+	<!-------------------- BLOCK 3 ui-bar ui-bar-e -------------------->
+					<div id="grd_block3" class="ui-block-a">
+						<div class="" style=""></div>
+					</div>
+	<!-------------------- BLOCK 4 ui-bar ui-bar-e -------------------->
+					<div id="grd_block4" class="ui-block-b">
+						<div class="" style="">
+	
+							<div class="my-header-grid ui-grid-b" data-theme="a">
+								<div id="bar_left" class="ui-block-a ui-bar-a" style="width: 160px;">
+									<div align="left" style="padding-left:5px; padding-top:3px; height:38px;">
+										<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+											<a href="#" id="btn_from_lang" data-role="button" data-inline="true" data-mini="true" data-theme="a"><img id="flag1" class="img_flag" src="" /></a>
+							    		<a href="#" id="btn_to_lang" data-role="button" data-inline="true" data-mini="true" data-theme="a"><img id="flag2" class="img_flag" src="" /></a>
+							    		<a href="#" id="btn_title" data-role="button" data-inline="true" data-mini="true" data-iconpos="notext" data-icon="bars" data-theme="a">Theme</a>
+							    	</div>
+									</div>
+								</div>
+								<div id="bar_center" class="ui-block-b ui-bar-a">
+									<div align="center" style="padding-top:3px; text-align:center; height:38px;">
+										<div style="padding-top:0px;">
+											<a href="#" id="btn_quizz" data-role="button" data-inline="true" data-mini="true" style="">Quizz</a>
+										</div>
+									</div>
+								</div>
+								<div id="bar_right" class="ui-block-d ui-bar-a" style="width: 90px;">
+									<div align="right">
+										<div id="cgr_play" style="padding-top:3px;" data-role="controlgroup" data-type="horizontal" data-mini="true">
+											<a href="#" id="btn_autoplay" data-role="button" data-iconpos="notext" data-icon="arrow-r" data-theme="b">Autoplay</a>
+											<a href="#" id="btn_validate" data-role="button" data-iconpos="notext" data-icon="check" data-theme="b" style="display: none;">Validate</a>
+											<a href="#" id="btn_refresh" data-role="button" data-iconpos="notext" data-icon="refresh" data-theme="b">Refresh</a>
+										</div>
+									</div>
+								</div>
+							</div>
+	
+							<div id="tab_ads" style="width: 728px; height: 90px; display: table-cell; margin: auto; text-align: center; vertical-align: middle;">
+								<script type="text/javascript"><!--
+									google_ad_client = "ca-pub-8664648974897099";
+									/* Annonces Tablettes */
+									google_ad_slot = "8544928235";
+									google_ad_width = 728;
+									google_ad_height = 90;
+									//-->
+								</script>
+								<script type="text/javascript"src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+							</div>
+	
+						</div>
+					</div>
+	<!-------------------- BLOCK 5 ui-bar ui-bar-e -------------------->
+					<div id="grd_block5" class="ui-block-a">
+						<div class="" style=""></div>
+					</div>
+	<!-------------------- BLOCK 6 ui-bar ui-bar-e -------------------->
+					<div id="grd_block6" class="ui-block-b2">
+						<div class="" style="">
+							<ul id="sel_exp">
+							</ul>
+						</div>
+					</div>
+				</div>
+	
+				<div id="jquery_jplayer_1" class="jp-jplayer"></div>
+				<div id="jp_container_1" class="jp-audio" style="display:none;">
+					<div class="jp-type-single">
+						<div class="jp-gui jp-interface">
+							<ul class="jp-controls">
+								<li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+								<li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
+								<li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>
+							</ul>
+						</div>
+						<div class="jp-no-solution">
+							<span>Update Required</span>
+							To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+						</div>
+					</div>
+				</div>
+				<ul id="sel_from_lang">
+				</ul>
+				<ul id="sel_to_lang">
+				</ul>
+				<ul id="sel_title">
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>
