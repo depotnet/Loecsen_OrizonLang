@@ -237,6 +237,51 @@
 			};
 			
 		$(function(){
+	window.appRootDirName = ".myapp";
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	function onDeviceReady() {
+		console.log("device is ready");
+		window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+	}
+	
+	function fail() {
+		console.log("failed to get filesystem");
+	}
+
+	function gotFS(fileSystem) {
+		console.log("filesystem got");
+		fileSystem.root.getDirectory(window.appRootDirName, {
+			create : true,
+			exclusive : false
+		}, dirReady, fail);
+	}
+
+	function dirReady(entry) {
+		window.appRootDir = entry;
+		console.log(JSON.stringify(window.appRootDir));
+	}
+function downloadImage(url, name, success, err){
+	console.log('download image ' + url);
+	
+	var fileName = new name_ + Date().getTime() + ".svg";
+	ft = new FileTransfer();
+	ft.download(
+	    url,
+	    window.appRootDir.fullPath + "/" + fileName,
+	    function(entry) {
+	        console.log("download complete: " + entry.fullPath);
+	        success(entry.fullPath);
+	    },
+	    function(error) {
+	        console.log("download error source " + error.source);
+	        console.log("download error target " + error.target);
+	        console.log("upload error code" + error.code);
+	        err(error);
+	    }
+	);
+}
 			var img_ratio = 140/379; // TODO => Change for image detection !!!!
 			var browser_width = $(window).innerWidth();
 			var browser_height = $(window).innerHeight();
@@ -787,6 +832,7 @@
 		
 				if (typeof(update_img) == 'undefined')
 				{
+					downloadImage(data_exp[num_exp].image, 'toto', success, err)
 			   	$('#img_exp').svg({loadURL: data_exp[num_exp].image, addTo: false, changeSize: false});
 					$('#img_exp').svg('destroy');
 			   	$('#img_exp').svg({loadURL: data_exp[num_exp].image, addTo: false, changeSize: false});
