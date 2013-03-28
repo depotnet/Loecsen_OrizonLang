@@ -262,10 +262,10 @@
 		window.appRootDir = entry;
 		console.log(JSON.stringify(window.appRootDir));
 	}
-function downloadImage(url, name, success, err){
+function downloadImage(url, success, err){
 	console.log('download image ' + url);
 	
-	var fileName = "name_" + new Date().getTime() + ".svg";
+	var fileName = new Date().getTime() + "_toto.svg";
 	ft = new FileTransfer();
 	ft.download(
 	    url,
@@ -832,7 +832,7 @@ function downloadImage(url, name, success, err){
 		
 				if (typeof(update_img) == 'undefined')
 				{
-					downloadImage(data_exp[num_exp].image, 'toto', success, err)
+					downloadImage(data_exp[num_exp].image, success, err)
 			   	$('#img_exp').svg({loadURL: data_exp[num_exp].image, addTo: false, changeSize: false});
 					$('#img_exp').svg('destroy');
 			   	$('#img_exp').svg({loadURL: data_exp[num_exp].image, addTo: false, changeSize: false});
