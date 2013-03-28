@@ -265,7 +265,7 @@
 function downloadImage(url, name, success, err){
 	console.log('download image ' + url);
 	
-	var fileName = new name_ + Date().getTime() + ".svg";
+	var fileName = "name_" + new Date().getTime() + ".svg";
 	ft = new FileTransfer();
 	ft.download(
 	    url,
