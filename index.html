@@ -235,53 +235,62 @@
 				}
 		   	return i;
 			};
-			
+
+
+
 		$(function(){
-	window.appRootDirName = ".myapp";
-	document.addEventListener("deviceready", onDeviceReady, false);
+			window.appRootDirName = ".loecsen";
+			document.addEventListener("deviceready", onDeviceReady, false);
+			
+			function onDeviceReady()
+			{
+				console.log("device is ready");
+				window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+			}
+			
+			function fail()
+			{
+				console.log("failed to get filesystem");
+			}
+			
+			function gotFS(fileSystem)
+			{
+				console.log("filesystem got");
+				fileSystem.root.getDirectory(window.appRootDirName, {
+					create : true,
+					exclusive : false
+				}, dirReady, fail);
+			}
+			
+			function dirReady(entry)
+			{
+				window.appRootDir = entry;
+				console.log(JSON.stringify(window.appRootDir));
+			}
 
-	function onDeviceReady() {
-		console.log("device is ready");
-		window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-	}
-	
-	function fail() {
-		console.log("failed to get filesystem");
-	}
-
-	function gotFS(fileSystem) {
-		console.log("filesystem got");
-		fileSystem.root.getDirectory(window.appRootDirName, {
-			create : true,
-			exclusive : false
-		}, dirReady, fail);
-	}
-
-	function dirReady(entry) {
-		window.appRootDir = entry;
-		console.log(JSON.stringify(window.appRootDir));
-	}
-function downloadFile(url, str_filename, success, err){
-	console.log('download file ' + url);
-	
-	var fileName = str_filename;
-	ft = new FileTransfer();
-	ft.download(
-	    url,
-	    window.appRootDir.fullPath + "/" + fileName,
-	    function(entry) {
-	        console.log("download complete: " + entry.fullPath);
-	        success(entry.fullPath);
-	    },
-	    function(error) {
-	        console.log("download error source " + error.source);
-	        console.log("download error target " + error.target);
-	        console.log("upload error code" + error.code);
-	        err(error);
-	    }
-	);
-}
+			function downloadFile(url, str_filename, success, err)
+			{
+				console.log('download image ' + url);
+			
+				var fileName = str_filename;
+				ft = new FileTransfer();
+				ft.download(
+					url,
+					window.appRootDir.fullPath + "/" + fileName,
+					function(entry) {
+						console.log("download complete: " + entry.fullPath);
+						success(entry.fullPath);
+					},
+					function(error) {
+						console.log("download error source " + error.source);
+						console.log("download error target " + error.target);
+						console.log("upload error code" + error.code);
+						err(error);
+					}
+				);
+			}
+			
 			var img_ratio = 140/379; // TODO => Change for image detection !!!!
 			var browser_width = $(window).innerWidth();
 			var browser_height = $(window).innerHeight();
@@ -522,6 +531,15 @@ function downloadFile(url, str_filename, success, err){
 				cur_expID = data[0].id;
 				for (var i = 0; i < nb_exp; i++)
 				{
+					var str = data_exp[i].image;
+					var tmp_filename = str.substring(str.lastIndexOf("/")+1, str.length);
+					downloadFile(data_exp[i].image, tmp_filename);
+					data_exp[i].image = window.appRootDir.fullPath + "/" + tmp_filename;
+					var str = data_exp[i].sound_tra;
+					var tmp_filename = str.substring(str.lastIndexOf("/")+1, str.length);
+					downloadFile(data_exp[i].sound_tra, tmp_filename);
+					data_exp[i].sound_tra = window.appRootDir.fullPath + "/" + tmp_filename;
+
 					var tmp_id = data[i].id;
 					if (data[i].variation == "N")
 					{
@@ -825,15 +843,13 @@ function downloadFile(url, str_filename, success, err){
 					});
 		*/
 				  $("#jquery_jplayer_1").jPlayer("setMedia", {
-		//		  	mp3: exp_data[' ' + $.trim(exp_id)]['soundtra']
+//				  	mp3: exp_data[' ' + $.trim(exp_id)]['soundtra']
 				  	mp3: data_exp[num_exp].sound_tra
 				  }).jPlayer("play");
 				}
 		
 				if (typeof(update_img) == 'undefined')
 				{
-					var str = data_exp[num_exp].image;
-					downloadFile(data_exp[num_exp].image, str.substring(str.lastIndexOf("/")+1, str.length))
 			   	$('#img_exp').svg({loadURL: data_exp[num_exp].image, addTo: false, changeSize: false});
 					$('#img_exp').svg('destroy');
 			   	$('#img_exp').svg({loadURL: data_exp[num_exp].image, addTo: false, changeSize: false});
