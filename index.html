@@ -261,6 +261,7 @@
 					create : true,
 					exclusive : false
 				}, dirReady, fail);
+				ajax_get_lang_used(lang);
 			}
 			
 			function dirReady(entry)
@@ -611,7 +612,7 @@
 				});
 				upd_elem(data_exp[0].id);
 			}
-			ajax_get_lang_used(lang);
+		//	ajax_get_lang_used(lang);
 		//	ajax_get_product(from_lang_id);
 		//	ajax_upd_titles(prd_id, from_lang_id);
 		
