@@ -276,7 +276,7 @@
 			}
 			function fileExists(e)
 			{
-				alert("Exists " + e.source + " / " + e.target);
+				alert("Exists " + e.target.error.source + " / " + e.target.error.target);
 			}
 
 			function downloadFile(url, str_filename, success, err)
