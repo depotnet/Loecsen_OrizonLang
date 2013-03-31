@@ -270,6 +270,15 @@
 				console.log(JSON.stringify(window.appRootDir));
 			}
 
+			function fileNotExists(e)
+			{
+				alert("Not Exists " + e.source + " / " + e.target);
+			}
+			function fileExists(e)
+			{
+				alert("Exists " + e.source + " / " + e.target);
+			}
+
 			function downloadFile(url, str_filename, success, err)
 			{
 				console.log('download image ' + url);
@@ -532,15 +541,14 @@
 				cur_expID = data[0].id;
 				for (var i = 0; i < nb_exp; i++)
 				{
-					alert(window.appRootDir.fullPath);
 					var str = data_exp[i].image;
 					var tmp_filename = str.substring(str.lastIndexOf("/")+1, str.length);
-					alert(tmp_filename);
+					window.resolveLocalFileSystemURI(window.appRootDir.fullPath + "/" + tmp_filename, fileExists, fileNotExists);
 					downloadFile(data_exp[i].image, tmp_filename);
 					data_exp[i].image = window.appRootDir.fullPath + "/" + tmp_filename;
 					var str = data_exp[i].sound_tra;
 					var tmp_filename = str.substring(str.lastIndexOf("/")+1, str.length);
-					alert(tmp_filename);
+//					window.resolveLocalFileSystemURI(window.appRootDir.fullPath + "/" + tmp_filename, onResolveSuccess, fail);
 					downloadFile(data_exp[i].sound_tra, tmp_filename);
 					data_exp[i].sound_tra = window.appRootDir.fullPath + "/" + tmp_filename;
 
