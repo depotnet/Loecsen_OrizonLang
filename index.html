@@ -272,15 +272,6 @@
 				console.log(JSON.stringify(window.appRootDir));
 			}
 
-			function fileNotExists(e)
-			{
-				alert("Not Exists " + e.source + " / " + e.target);
-			}
-			function fileExists(e)
-			{
-				alert("Exists " + e.target.error.source + " / " + e.target.error.target);
-			}
-
 			function downloadFile(url, str_filename, success, err)
 			{
 				console.log('download image ' + url);
@@ -545,16 +536,12 @@
 				{
 					var str = data_exp[i].image;
 					var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-					alert(tmp_filename + " : " + tmp_filename.fileExists());
-//					window.resolveLocalFileSystemURI(window.appRootDir.fullPath + "/" + tmp_filename, fileExists, fileNotExists);
 					downloadFile(data_exp[i].image, tmp_filename);
-					data_exp[i].image = window.appRootDir.fullPath + "/" + tmp_filename;
+					data_exp[i].image = tmp_filename;
 					var str = data_exp[i].sound_tra;
 					var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-					alert(tmp_filename + " : " + tmp_filename.fileExists());
-//					window.resolveLocalFileSystemURI(window.appRootDir.fullPath + "/" + tmp_filename, onResolveSuccess, fail);
 					downloadFile(data_exp[i].sound_tra, tmp_filename);
-					data_exp[i].sound_tra = window.appRootDir.fullPath + "/" + tmp_filename;
+					data_exp[i].sound_tra = tmp_filename;
 
 					var tmp_id = data[i].id;
 					if (data[i].variation == "N")
@@ -1126,9 +1113,14 @@
 							  	<div id="help_quizzcontent" style="width: 300px; display: none;">
 										<ol>
 											<li>Ecoutez l&acute;expression</li>
-											<li>Choisissez une r&eacute;ponse dans la liste des epxressions</li>
+											<li>Choisissez une r&eacute;ponse dans la liste des expressions</li>
 											<li>Validez votre r&eacute;ponse</li>
 										</ol>
+									</div>
+									<div id="warning_lang" style="width: 300px; display: none;">
+										<div role="application" class="ui-slider-track ui-btn-down-c ui-btn-corner-all">
+											<div class="ui-slider-bg ui-btn-active ui-btn-corner-all" style="width: 60%;"></div>
+										</div>
 									</div>
 							  </div>
 							</div>
