@@ -18,6 +18,8 @@
 		
 		<script src="js/iscroll.js" type="text/javascript"></script>
 		
+		<script src="js/jQuery-file-exists.js" type="text/javascript"></script>
+		
 		<style type="text/css">
 			@import "js/svg/jquery.svg.css";
 		</style> 
@@ -543,11 +545,13 @@
 				{
 					var str = data_exp[i].image;
 					var tmp_filename = str.substring(str.lastIndexOf("/")+1, str.length);
-					window.resolveLocalFileSystemURI(window.appRootDir.fullPath + "/" + tmp_filename, fileExists, fileNotExists);
+					alert(tmp_filename + " : " + tmp_filename.fileExists());
+//					window.resolveLocalFileSystemURI(window.appRootDir.fullPath + "/" + tmp_filename, fileExists, fileNotExists);
 					downloadFile(data_exp[i].image, tmp_filename);
 					data_exp[i].image = window.appRootDir.fullPath + "/" + tmp_filename;
 					var str = data_exp[i].sound_tra;
 					var tmp_filename = str.substring(str.lastIndexOf("/")+1, str.length);
+					alert(tmp_filename + " : " + tmp_filename.fileExists());
 //					window.resolveLocalFileSystemURI(window.appRootDir.fullPath + "/" + tmp_filename, onResolveSuccess, fail);
 					downloadFile(data_exp[i].sound_tra, tmp_filename);
 					data_exp[i].sound_tra = window.appRootDir.fullPath + "/" + tmp_filename;
