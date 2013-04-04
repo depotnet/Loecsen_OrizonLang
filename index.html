@@ -275,13 +275,43 @@
 			function downloadFile(url, str_filename, success, err)
 			{
 				console.log('download ' + url);
-				var fileName = str_filename;
 				ft = new FileTransfer();
 				ft.download(
 					url,
-					window.appRootDir.fullPath + "/" + fileName,
+					str_filename,
 					function(entry) {
 						console.log("download complete: " + entry.fullPath);
+					},
+					function(error) {
+						console.log("download error source " + error.source);
+						console.log("download error target " + error.target);
+						console.log("upload error code" + error.code);
+						err(error);
+					}
+				);
+			}
+			function download_JSON(url, str_filename, fct, lang_id, prd_id, from_lang_id, to_lang_id, title_id)
+			{
+				console.log('download ' + url);
+				ft = new FileTransfer();
+				ft.download(
+					url,
+					str_filename,
+					function(entry) {
+						console.log("download complete: " + entry.fullPath);
+						if (fct == "lang_used")
+							ajax_get_lang_used(lang_id);
+						if (fct == "product")
+							ajax_get_product(lang_id);
+						if (fct == "fromlangs")
+							ajax_get_fromlangs(prd_id, lang_id);
+						if (fct == "tolangs")
+							ajax_get_tolangs(prd_id, lang_id);
+						if (fct == "titles")
+							ajax_upd_titles(prd_id, lang_id);
+						if (fct == "expressions")
+							ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id);
+							
 					},
 					function(error) {
 						console.log("download error source " + error.source);
@@ -332,30 +362,11 @@
 
 
 
-			function download_lang_used(url, str_filename, lang)
-			{
-				console.log('download ' + url);
-				ft = new FileTransfer();
-				ft.download(
-					url,
-					str_filename,
-					function(entry) {
-						console.log("download complete: " + entry.fullPath);
-						ajax_get_lang_used(lang);
-					},
-					function(error) {
-						console.log("download error source " + error.source);
-						console.log("download error target " + error.target);
-						console.log("upload error code" + error.code);
-						err(error);
-					}
-				);
-			}
 			function ajax_get_lang_used(lang)
 			{
 				var str_uri = window.appRootDir.fullPath + "/get_lang_used_" + lang + ".json";
 				if (str_uri.fileExists() == false)
-					download_lang_used("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_lang_used.php?lang=" + lang, str_uri, lang);
+					download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_lang_used.php?lang=" + lang, str_uri, "lang_used", lang);
 				else
 				{
 				  $.ajax({
@@ -389,30 +400,11 @@
 				  });
 				}
 			}
-			function download_product(url, str_filename, lang_id)
-			{
-				console.log('download ' + url);
-				ft = new FileTransfer();
-				ft.download(
-					url,
-					str_filename,
-					function(entry) {
-						console.log("download complete: " + entry.fullPath);
-						ajax_get_product(lang_id);
-					},
-					function(error) {
-						console.log("download error source " + error.source);
-						console.log("download error target " + error.target);
-						console.log("upload error code" + error.code);
-						err(error);
-					}
-				);
-			}
 			function ajax_get_product(lang_id)
 			{
 				var str_uri = window.appRootDir.fullPath + "/get_products_400ex_" + lang_id + ".json";
 				if (str_uri.fileExists() == false)
-					download_product("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_products.php?display=400ex&lang_id=" + lang_id, str_uri, lang_id);
+					download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_products.php?display=400ex&lang_id=" + lang_id, str_uri, "product", lang_id);
 				else
 				{
 				  $.ajax({
@@ -433,16 +425,18 @@
 			{
 				var str_uri = window.appRootDir.fullPath + "/get_langs_from_" + prd_id + "_" + lang_id + ".json";
 				if (str_uri.fileExists() == false)
-					str_uri = "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=from&prd_id=" + prd_id + "&lang_id=" + lang_id;
-
-			  $.ajax({
-			    type: "GET",
-			    url: str_uri,
-			    cache: false,
-			    contentType: "application/json; charset=utf-8",                                                            
-			    dataType: "json",
-			    success: onData_fromlangs
-				});
+					download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=from&prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "fromlangs", lang_id, prd_id);
+				else
+				{
+				  $.ajax({
+				    type: "GET",
+				    url: str_uri,
+				    cache: false,
+				    contentType: "application/json; charset=utf-8",
+				    dataType: "json",
+				    success: onData_fromlangs
+					});
+				}
 			}
 			function onData_fromlangs(data)
 			{
@@ -471,7 +465,7 @@
 				    var sel = $.trim($('#sel_from_lang').mobiscroll('getValue'));
 				    from_lang_id = sel;
 				    $('#flag1').attr('src', $('#from_lang_icon_'+sel).attr('src'));
-		//		    window.location.href = 'player_html5.php?from_lang=' + from_lang_id + '&to_lang=' + to_lang_id + '&title_id=' + title_id;
+
 						ajax_upd_titles(prd_id, sel);
 				  }
 			  });
@@ -480,16 +474,18 @@
 			{
 				var str_uri = window.appRootDir.fullPath + "/get_langs_to_" + prd_id + "_" + lang_id + ".json";
 				if (str_uri.fileExists() == false)
-					str_uri = "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=to&prd_id=" + prd_id + "&lang_id=" + lang_id;
-
-			  $.ajax({
-			    type: "GET",
-			    url: str_uri,
-			    cache: false,
-			    contentType: "application/json; charset=utf-8",                                                            
-			    dataType: "json",
-			    success: onData_tolangs
-				});
+					download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=to&prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "tolangs", lang_id, prd_id);
+				else
+				{
+				  $.ajax({
+				    type: "GET",
+				    url: str_uri,
+				    cache: false,
+				    contentType: "application/json; charset=utf-8",
+				    dataType: "json",
+				    success: onData_tolangs
+					});
+				}
 			}
 			function onData_tolangs(data)
 			{
@@ -518,7 +514,7 @@
 				    var sel = $.trim($('#sel_to_lang').mobiscroll('getValue'));
 				    to_lang_id = sel;
 				    $('#flag2').attr('src', $('#to_lang_icon_'+sel).attr('src'));
-		//		    window.location.href = 'player_html5.php?from_lang=' + from_lang_id + '&to_lang=' + to_lang_id + '&title_id=' + title_id;
+
 						ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id);
 				  }
 			  });
@@ -528,16 +524,18 @@
 			{
 				var str_uri = window.appRootDir.fullPath + "/get_titles_" + prd_id + "_" + lang_id + ".json";
 				if (str_uri.fileExists() == false)
-					str_uri = "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_titles.php?prd_id=" + prd_id + "&lang_id=" + lang_id;
-
-		    $.ajax({
-		      type: "GET",
-		      url: str_uri,
-		      cache: false,
-		      contentType: "application/json; charset=utf-8",                                                            
-		      dataType: "json",
-		      success: onData_Titles
-		    });
+					download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_titles.php?prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "titles", lang_id, prd_id);
+				else
+				{
+			    $.ajax({
+			      type: "GET",
+			      url: str_uri,
+			      cache: false,
+			      contentType: "application/json; charset=utf-8",
+			      dataType: "json",
+			      success: onData_Titles
+			    });
+			  }
 			}
 			function onData_Titles(data)
 			{
@@ -582,16 +580,18 @@
 			{
 				var str_uri = window.appRootDir.fullPath + "/get_expressions_" + prd_id + "_" + from_lang_id + "_" + to_lang_id + "_" + title_id + ".json";
 				if (str_uri.fileExists() == false)
-					str_uri = "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_expressions.php?prd_id=" + prd_id + "&from_lang_id=" + from_lang_id + "&to_lang_id=" + to_lang_id + "&title_id=" + title_id;
-
-		    $.ajax({
-		      type: "GET",
-		      url: str_uri,
-		      cache: false,
-		      contentType: "application/json; charset=utf-8",                                                            
-		      dataType: "json",
-		      success: onData_Expressions
-		    });
+					download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_expressions.php?prd_id=" + prd_id + "&from_lang_id=" + from_lang_id + "&to_lang_id=" + to_lang_id + "&title_id=" + title_id, str_uri, "expressions", -1, prd_id, from_lang_id, to_lang_id, title_id);
+				else
+				{
+			    $.ajax({
+			      type: "GET",
+			      url: str_uri,
+			      cache: false,
+			      contentType: "application/json; charset=utf-8",
+			      dataType: "json",
+			      success: onData_Expressions
+			    });
+			  }
 			}
 			function onData_Expressions(data)
 			{
