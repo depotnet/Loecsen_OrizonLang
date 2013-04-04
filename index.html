@@ -906,6 +906,7 @@
 		
 				if (typeof(update_img) == 'undefined')
 				{
+					alert(data_exp[num_exp].image);
 			   	$('#img_exp').svg({loadURL: data_exp[num_exp].image, addTo: false, changeSize: false});
 					$('#img_exp').svg('destroy');
 			   	$('#img_exp').svg({loadURL: data_exp[num_exp].image, addTo: false, changeSize: false});
