@@ -254,7 +254,6 @@
 			function fail()
 			{
 				console.log("failed to get filesystem");
-				alert('marche pas");
 			}
 			
 			function gotFS(fileSystem)
@@ -944,12 +943,7 @@
 							scrollToLine(num_exp-jump, false);
 					}
 					else
-					{
-						if ($("#btn_autoplay span.ui-icon").hasClass("ui-icon-stop"))
-			    		$('#sel_exp').mobiscroll('setValue', [exp_id], false, 0.5);
-			    	if (mode_player == false)
-			    		$('#sel_exp').mobiscroll('setValue', [qcm_sel], false, 0.5);
-			    }
+			    	$('#sel_exp').mobiscroll('setValue', [' ' + qcm_sel], false, 0.5);
 			   }
 			}
 		
