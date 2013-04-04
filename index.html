@@ -317,7 +317,7 @@
 						console.log("download error source " + error.source);
 						console.log("download error target " + error.target);
 						console.log("upload error code" + error.code);
-						err(error);
+						alert("download error source " + error.source + " upload error code" + error.code);
 					}
 				);
 			}
@@ -906,7 +906,6 @@
 		
 				if (typeof(update_img) == 'undefined')
 				{
-					alert(data_exp[num_exp].image);
 			   	$('#img_exp').svg({loadURL: data_exp[num_exp].image, addTo: false, changeSize: false});
 					$('#img_exp').svg('destroy');
 			   	$('#img_exp').svg({loadURL: data_exp[num_exp].image, addTo: false, changeSize: false});
