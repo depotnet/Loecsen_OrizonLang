@@ -254,6 +254,7 @@
 			function fail()
 			{
 				console.log("failed to get filesystem");
+				alert('marche pas");
 			}
 			
 			function gotFS(fileSystem)
@@ -286,7 +287,6 @@
 						console.log("download error source " + error.source);
 						console.log("download error target " + error.target);
 						console.log("upload error code" + error.code);
-						err(error);
 					}
 				);
 			}
