@@ -263,19 +263,18 @@
 					create : true,
 					exclusive : false
 				}, dirReady, fail);
-				ajax_get_lang_used(lang);
 			}
 			
 			function dirReady(entry)
 			{
 				window.appRootDir = entry;
 				console.log(JSON.stringify(window.appRootDir));
+				ajax_get_lang_used(lang);
 			}
 
 			function downloadFile(url, str_filename, success, err)
 			{
-				console.log('download image ' + url);
-			
+				console.log('download ' + url);
 				var fileName = str_filename;
 				ft = new FileTransfer();
 				ft.download(
@@ -283,7 +282,6 @@
 					window.appRootDir.fullPath + "/" + fileName,
 					function(entry) {
 						console.log("download complete: " + entry.fullPath);
-						success(entry.fullPath);
 					},
 					function(error) {
 						console.log("download error source " + error.source);
@@ -293,6 +291,7 @@
 					}
 				);
 			}
+
 			
 			var img_ratio = 140/379; // TODO => Change for image detection !!!!
 			var browser_width = $(window).innerWidth();
@@ -328,44 +327,78 @@
 				
 				var cnt_padding;
 			}
-		
+
+
+
+
+
+			function download_lang_used(url, str_filename, lang)
+			{
+				console.log('download ' + url);
+				var fileName = str_filename;
+				ft = new FileTransfer();
+				ft.download(
+					url,
+					window.appRootDir.fullPath + "/" + fileName,
+					function(entry) {
+						console.log("download complete: " + entry.fullPath);
+						ajax_get_lang_used(lang);
+					},
+					function(error) {
+						console.log("download error source " + error.source);
+						console.log("download error target " + error.target);
+						console.log("upload error code" + error.code);
+						err(error);
+					}
+				);
+			}
 			function ajax_get_lang_used(lang)
 			{
-			  $.ajax({
-			    type: "GET",
-			    url: "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_lang_used.php?lang=" + lang,
-			    cache: false,
-			    contentType: "application/json; charset=utf-8",                                                            
-			    dataType: "json",
-			    success: function(data)
-			    {
-						from_lang_id =  data[0].id;
-						from_lang_id_r2l =  data[0].r2L;
-						if (from_lang_id_r2l == 'Y')
-						{
-							scroller_r2l = true;
-							$(".exp_txt").css({'text-align': 'right'});
-							$(".exp_var").css({'text-align': 'right'});
-							$(".img-cont").css({'float': 'right'});
-							$(".img-cont").css({'padding-right': '5px'});
-							$(".img-cont").css({'padding-left': '10px'});
-							$(".list_option span").css({'float': 'right'});
-							
-							$(".tab_exp_txt").css({'text-align': 'right'});
-							$(".tab_exp_var").css({'text-align': 'right'});
-							$(".tab_exp_var").css({'margin-right': '20px'});
-						}
-						else
-							scroller_r2l = false;
-						ajax_get_product(from_lang_id);
-			    }
-			  });
+				var str_uri = window.appRootDir.fullPath + "/get_lang_used_" + lang + ".json";
+				if (str_uri.fileExists() == false)
+					download_lang_used("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_lang_used.php?lang=" + lang, str_uri, lang);
+				else
+				{
+				  $.ajax({
+				    type: "GET",
+				    url: str_uri,
+				    cache: false,
+				    contentType: "application/json; charset=utf-8",                                                            
+				    dataType: "json",
+				    success: function(data)
+				    {
+							from_lang_id =  data[0].id;
+							from_lang_id_r2l =  data[0].r2L;
+							if (from_lang_id_r2l == 'Y')
+							{
+								scroller_r2l = true;
+								$(".exp_txt").css({'text-align': 'right'});
+								$(".exp_var").css({'text-align': 'right'});
+								$(".img-cont").css({'float': 'right'});
+								$(".img-cont").css({'padding-right': '5px'});
+								$(".img-cont").css({'padding-left': '10px'});
+								$(".list_option span").css({'float': 'right'});
+								
+								$(".tab_exp_txt").css({'text-align': 'right'});
+								$(".tab_exp_var").css({'text-align': 'right'});
+								$(".tab_exp_var").css({'margin-right': '20px'});
+							}
+							else
+								scroller_r2l = false;
+							ajax_get_product(from_lang_id);
+				    }
+				  });
+				}
 			}
 			function ajax_get_product(lang_id)
 			{
+				var url = window.appRootDir.fullPath + "/get_products_400ex_" + lang_id + ".json";
+				if (url.fileExists() == false)
+					url = "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_products.php?display=400ex&lang_id=" + lang_id;
+
 			  $.ajax({
 			    type: "GET",
-			    url: "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_products.php?display=400ex&lang_id=" + lang_id,
+			    url: url,
 			    cache: false,
 			    contentType: "application/json; charset=utf-8",                                                            
 			    dataType: "json",
@@ -378,9 +411,13 @@
 			}
 			function ajax_get_fromlangs(prd_id, lang_id)
 			{
+				var url = window.appRootDir.fullPath + "/get_langs_from_" + prd_id + "_" + lang_id + ".json";
+				if (url.fileExists() == false)
+					url = "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=from&prd_id=" + prd_id + "&lang_id=" + lang_id;
+
 			  $.ajax({
 			    type: "GET",
-			    url: "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=from&prd_id=" + prd_id + "&lang_id=" + lang_id,
+			    url: url,
 			    cache: false,
 			    contentType: "application/json; charset=utf-8",                                                            
 			    dataType: "json",
@@ -421,6 +458,10 @@
 			}
 			function ajax_get_tolangs(prd_id, lang_id)
 			{
+				var url = window.appRootDir.fullPath + "/get_langs_to_" + prd_id + "_" + lang_id + ".json";
+				if (url.fileExists() == false)
+					url = "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=to&prd_id=" + prd_id + "&lang_id=" + lang_id;
+
 			  $.ajax({
 			    type: "GET",
 			    url: "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=to&prd_id=" + prd_id + "&lang_id=" + lang_id,
@@ -465,9 +506,13 @@
 		
 			function ajax_upd_titles(prd_id, lang_id)
 			{
+				var url = window.appRootDir.fullPath + "/get_titles_" + prd_id + "_" + lang_id + ".json";
+				if (url.fileExists() == false)
+					url = "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_titles.php?prd_id=" + prd_id + "&lang_id=" + lang_id;
+
 		    $.ajax({
 		      type: "GET",
-		      url: "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_titles.php?prd_id=" + prd_id + "&lang_id=" + lang_id,
+		      url: url,
 		      cache: false,
 		      contentType: "application/json; charset=utf-8",                                                            
 		      dataType: "json",
@@ -515,9 +560,13 @@
 			}
 			function ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id)
 			{
+				var url = window.appRootDir.fullPath + "/get_expressions_" + prd_id + "_" + from_lang_id + "_" + to_lang_id + "_" + title_id + ".json";
+				if (url.fileExists() == false)
+					url = "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_expressions.php?prd_id=" + prd_id + "&from_lang_id=" + from_lang_id + "&to_lang_id=" + to_lang_id + "&title_id=" + title_id;
+
 		    $.ajax({
 		      type: "GET",
-		      url: "http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_expressions.php?prd_id=" + prd_id + "&from_lang_id=" + from_lang_id + "&to_lang_id=" + to_lang_id + "&title_id=" + title_id,
+		      url: url,
 		      cache: false,
 		      contentType: "application/json; charset=utf-8",                                                            
 		      dataType: "json",
@@ -830,23 +879,7 @@
 		    num_exp = get_dataexp_pos(data_exp, exp_id);
 				if (typeof(update_snd) == 'undefined')
 				{
-		/*
-		  		$("#jquery_jplayer_1").bind($.jPlayer.event.ended + ".jp-ended", function(event) { // Using ".jp-ended" namespace so we can easily remove this event
-						if ($('#btn_refresh').hasClass('ui-disabled'))
-						{
-							if (num_exp <= nb_exp)
-								timer = setTimeout(swipe_left,3000);
-							else
-							{
-					   		$("#btn_autoplay span.ui-icon").addClass("ui-icon-play").removeClass("ui-icon-delete");
-					   		$('#btn_refresh').removeClass('ui-disabled');
-							}
-						}
-						$("#jquery_jplayer_1").unbind($.jPlayer.event.ended + ".jp-ended");
-					});
-		*/
 				  $("#jquery_jplayer_1").jPlayer("setMedia", {
-//				  	mp3: exp_data[' ' + $.trim(exp_id)]['soundtra']
 				  	mp3: data_exp[num_exp].sound_tra
 				  }).jPlayer("play");
 				}
@@ -1118,8 +1151,13 @@
 										</ol>
 									</div>
 									<div id="warning_lang" style="width: 300px; display: none;">
-										<div role="application" class="ui-slider-track ui-btn-down-c ui-btn-corner-all">
-											<div class="ui-slider-bg ui-btn-active ui-btn-corner-all" style="width: 60%;"></div>
+										<div role="application" class="ui-slider-track ui-btn-down-c ui-btn-corner-all ui-mini" style="display: none;">
+											<div class="ui-slider-bg ui-btn-active ui-btn-corner-all" style="width: 25%;"></div>
+<!--
+											<a href="#" class="ui-slider-handle ui-btn ui-shadow ui-btn-corner-all ui-btn-up-c" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" aria-valuetext="25" title="25" aria-labelledby="slider-13-label" style="left: 25%;">
+												<span class="ui-btn-inner"><span class="ui-btn-text"></span></span>
+											</a>
+-->
 										</div>
 									</div>
 							  </div>
