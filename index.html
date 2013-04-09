@@ -181,6 +181,7 @@
 		    ios = iphone || ipad,
 		    // Detect if this is running as a fullscreen app from the homescreen
 		    fullscreen = window.navigator.standalone,
+		    app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1,
 		    android = ~ua.indexOf('Android'),
 		    lastWidth = 0;
 		
@@ -241,7 +242,7 @@
 
 
 		$(function(){
-			window.appRootDirName = ".loecsen";
+			window.appRootDirName = "com.loecsen.orizonlang";
 			document.addEventListener("deviceready", onDeviceReady, false);
 			
 			function onDeviceReady()
@@ -328,7 +329,7 @@
 			var scroller_row = 3;
 			if (browser_height > 420)
 				scroller_row = 5;
-			if (iphone && !fullscreen)
+			if (iphone && !fullscreen && !app)
 				browser_height += 60;
 			var scroller_width = browser_width - 37;
 			var scroller_r2l = false;
@@ -720,7 +721,7 @@
 					{
 						num_exp++;
 			    	cur_expID = data_exp[num_exp].id;
-			    	$('#sel_exp').mobiscroll('setValue', [cur_expID], false, 0.5);
+			    	$('#sel_exp').mobiscroll('setValue', [' ' + cur_expID], false, 0.5);
 						upd_elem(cur_expID);
 						scrollToLine(num_exp-jump, true);
 					}
@@ -733,7 +734,7 @@
 					{
 						num_exp--;
 			    	cur_expID = data_exp[num_exp].id;
-			    	$('#sel_exp').mobiscroll('setValue', [cur_expID], false, 0.5);
+			    	$('#sel_exp').mobiscroll('setValue', [' ' + cur_expID], false, 0.5);
 						upd_elem(cur_expID);
 						scrollToLine(num_exp-jump, true);
 					}
@@ -984,7 +985,7 @@
 			//	alert(browser_height + " / header: " + $('#page_header').height() + " / " + 38 + " / img: " + img_height + " / ads: " + $('#ads').height() + " / " + $('#bar_left').height() + " / " + $('#grd_block6:nth-child(3)').height());
 					var cnt_padding = (((browser_height)  - (44 + 38 + img_height + 50 + 41 + (scroller_row * 30) +18)) / 2);
 			//	alert(cnt_padding);
-					//$('#cnt_exp').css({'padding-top': cnt_padding + 'px', 'padding-bottom': cnt_padding + 'px'});
+					$('#cnt_exp').css({'padding-top': cnt_padding + 'px', 'padding-bottom': cnt_padding + 'px'});
 				}
 				else
 				{
