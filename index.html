@@ -242,7 +242,10 @@
 
 
 		$(function(){
-			window.appRootDirName = "com.loecsen.orizonlang";
+			if (android)
+				window.appRootDirName = "Android/data/com.loecsen.orizonlang";
+			else
+				window.appRootDirName = "com.loecsen.orizonlang";
 			document.addEventListener("deviceready", onDeviceReady, false);
 			
 			function onDeviceReady()
