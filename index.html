@@ -242,6 +242,7 @@
 
 
 		$(function(){
+			$.mobile.loading('show', { theme: "a", text: "Chargement...", textonly: false, textVisible: true });
 			if (android)
 				window.appRootDirName = "Android/data/com.loecsen.orizonlang";
 			else
@@ -253,7 +254,6 @@
 				console.log("device is ready");
 				window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
 				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-				$.mobile.loading('show', { theme: "a", text: "Chargement...", textonly: false, textVisible: true });
 			}
 			
 			function fail()
@@ -607,6 +607,7 @@
 			{
 				data_exp = data;
 				$('#sel_exp li').remove();
+				$('#scroller li').remove();
 				$('#sel_exp').mobiscroll('destroy');
 				nb_exp = data.length;
 				num_exp = 1;
