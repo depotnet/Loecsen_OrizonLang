@@ -680,8 +680,10 @@
 		
 				if (tabletView == true)
 				{
-					Scroll_destroy();
-					Scroll_create();
+					if (typeof(myScroll) != 'undefined')
+						Scroll_refresh();
+					else
+						Scroll_create();
 				}
 		
 				$('#sel_exp').mobiscroll().image({
