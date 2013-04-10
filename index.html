@@ -212,9 +212,16 @@
 			var myScroll;
 			if (tabletView == true)
 			{
-				function loaded() {
+				function Scroll_create() {
 					myScroll = new iScroll('list_exp', {snap: false});
 		//			myScroll.scrollTo(0, -100, 200);
+				}
+				function Scroll_refresh() {
+					myScroll.refresh();
+				}
+				function Scroll_destroy() {
+					myScroll.destroy();
+					myScroll = null;
 				}
 				function scrollToLine(i, autoplay) {
 					if ((i > 0) && (typeof(myScroll)!='undefined'))
@@ -224,7 +231,7 @@
 					}
 				}
 				document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-		//		document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+		//		document.addEventListener('DOMContentLoaded', function () { setTimeout(Scroll_create, 200); }, false);
 			}
 		
 			function get_dataexp_pos(ar_data, id){
@@ -606,10 +613,11 @@
 			}
 			function onData_Expressions(data)
 			{
-				data_exp = data;
 				$('#sel_exp li').remove();
-				$('#scroller li').remove();
 				$('#sel_exp').mobiscroll('destroy');
+				$('#scroller li').remove();
+
+				data_exp = data;
 				nb_exp = data.length;
 				num_exp = 1;
 				cur_expID = data[0].id;
@@ -670,7 +678,11 @@
 				$('#page1').css("padding-top","");
 				setup_UI();
 		
-				loaded();
+				if (tabletView == true)
+				{
+					Scroll_destroy();
+					Scroll_create();
+				}
 		
 				$('#sel_exp').mobiscroll().image({
 			    theme: 'ios',
