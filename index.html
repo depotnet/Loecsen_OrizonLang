@@ -202,7 +202,7 @@
 		
 			var prd_id;
 			var from_lang_id;
-			var from_lang_id_r2l;
+			var from_lang_r2l;
 			var to_lang_id = 2;
 			var title_id = 0;
 			var title_text;
@@ -253,6 +253,7 @@
 				console.log("device is ready");
 				window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
 				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+				$.mobile.loading('show', { theme: "a", text: "Chargement...", textonly: false, textVisible: true });
 			}
 			
 			function fail()
@@ -449,8 +450,11 @@
 				for (var i = 0; i < l; i++)
 				{
 					var tmp_id = data[i].lang_id;
-					$('#sel_from_lang').append('<li data-val=" '+ tmp_id.toString() + '"><div class="list_option"><div class="img-cont"><img id="from_lang_icon_'+ tmp_id.toString() + '" src="images/flags/' + data[i].icon + '" /></div><span>' + data[i].lang_name + '</span></div></li>');
-				}
+          if (data[i].r2l == "Y")
+            $('#sel_from_lang').append('<li data-val=" '+ tmp_id.toString() + '"><div class="list_option"><div class="img-cont"><img id="from_lang_icon_'+ tmp_id.toString() + '" src="images/flags/' + data[i].icon + '" class="r2l" /></div><span>' + data[i].lang_name + '</span></div></li>');
+          else
+            $('#sel_from_lang').append('<li data-val=" '+ tmp_id.toString() + '"><div class="list_option"><div class="img-cont"><img id="from_lang_icon_'+ tmp_id.toString() + '" src="images/flags/' + data[i].icon + '" /></div><span>' + data[i].lang_name + '</span></div></li>');
+        }
 			  $('#flag1').attr('src', $('#from_lang_icon_'+from_lang_id).attr('src'));
 			  $('#sel_from_lang').mobiscroll().image({
 			    theme: 'default',
@@ -468,6 +472,8 @@
 				    var sel = $.trim($('#sel_from_lang').mobiscroll('getValue'));
 				    from_lang_id = sel;
 				    $('#flag1').attr('src', $('#from_lang_icon_'+sel).attr('src'));
+            if ($('#from_lang_icon_'+sel).hasClass('r2l'))
+              from_lang_r2l="Y";
 
 						ajax_upd_titles(prd_id, sel);
 				  }
@@ -581,6 +587,7 @@
 			}
 			function ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id)
 			{
+				$.mobile.loading('show', { theme: "a", text: "Chargement" + "... 0%", textonly: false, textVisible: true });
 				var str_uri = window.appRootDir.fullPath + "/get_expressions_" + prd_id + "_" + from_lang_id + "_" + to_lang_id + "_" + title_id + ".json";
 				if (str_uri.fileExists() == false)
 					download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_expressions.php?prd_id=" + prd_id + "&from_lang_id=" + from_lang_id + "&to_lang_id=" + to_lang_id + "&title_id=" + title_id, str_uri, "expressions", -1, prd_id, from_lang_id, to_lang_id, title_id);
@@ -606,13 +613,16 @@
 				cur_expID = data[0].id;
 				for (var i = 0; i < nb_exp; i++)
 				{
+					$.mobile.loading('show', { theme: "a", text: "Chargement" + "... " + Math.round((i*100)/nb_exp) + "%", textonly: false, textVisible: true });
 					var str = data_exp[i].image;
 					var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-					downloadFile(data_exp[i].image, tmp_filename);
+					if (tmp_filename.fileExists() == false)
+						downloadFile(data_exp[i].image, tmp_filename);
 					data_exp[i].image = tmp_filename;
 					var str = data_exp[i].sound_tra;
 					var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-					downloadFile(data_exp[i].sound_tra, tmp_filename);
+					if (tmp_filename.fileExists() == false)
+						downloadFile(data_exp[i].sound_tra, tmp_filename);
 					data_exp[i].sound_tra = tmp_filename;
 
 					var tmp_id = data[i].id;
@@ -681,6 +691,7 @@
 						}
 					}
 				});
+$.mobile.loading('hide');
 				upd_elem(data_exp[0].id);
 			}
 		//	ajax_get_lang_used(lang);
