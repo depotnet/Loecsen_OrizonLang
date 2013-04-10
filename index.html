@@ -587,6 +587,7 @@
 			}
 			function ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id)
 			{
+				$.mobile.loading('hide');
 				$.mobile.loading('show', { theme: "a", text: "Chargement" + "... 0%", textonly: false, textVisible: true });
 				var str_uri = window.appRootDir.fullPath + "/get_expressions_" + prd_id + "_" + from_lang_id + "_" + to_lang_id + "_" + title_id + ".json";
 				if (str_uri.fileExists() == false)
@@ -614,7 +615,7 @@
 				cur_expID = data[0].id;
 				for (var i = 0; i < nb_exp; i++)
 				{
-					$.mobile.loading('show', { theme: "a", text: "Chargement" + "... " + Math.round((i*100)/nb_exp) + "%", textonly: false, textVisible: true });
+					$.mobile.loading("option", "text", "Chargement" + "... " + Math.round((i*100)/nb_exp) + "%");
 					var str = data_exp[i].image;
 					var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
 					if (tmp_filename.fileExists() == false)
@@ -692,7 +693,7 @@
 						}
 					}
 				});
-$.mobile.loading('hide');
+				$.mobile.loading('hide');
 				upd_elem(data_exp[0].id);
 			}
 		//	ajax_get_lang_used(lang);
