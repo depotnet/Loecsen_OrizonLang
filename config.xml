@@ -26,12 +26,12 @@
 	<icon src="images/iOS/icon-72.png" gap:platform="ios" width="72" height="72" />
 	<icon src="images/iOS/icon-114.png" gap:platform="ios" width="114" height="114" />
 
-	<!-- icons for Android 
-	<icon src="images/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
-	<icon src="images/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
-	<icon src="images/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
-	<icon src="images/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
--->
+	<!-- icons for Android  -->
+	<icon src="images/android/icon-ldpi.png" gap:platform="android" gap:density="ldpi" />
+	<icon src="images/android/icon-mdpi.png" gap:platform="android" gap:density="mdpi" />
+	<icon src="images/android/icon-hdpi.png" gap:platform="android" gap:density="hdpi" />
+	<icon src="images/android/icon-xhdpi.png" gap:platform="android" gap:density="xhdpi" />
+
 	<!-- icons for Blackberry 
 	<icon src="images/bb/icon.png" gap:platform="blackberry" />
 	<icon src="iimages/bb/icon_hover.png" gap:platform="blackberry" gap:state="hover"/>	
@@ -41,23 +41,25 @@
 	<icon src="images/winphone/tileicon.png" gap:platform="winphone" gap:role="background" />
 -->
 
-<!--
-	<gap:splash src="splash/ios/Default.png" width="320" height="480" />
-	<gap:splash src="splash/ios/Default_at_2x.png" width="640" height="960" />
-	<gap:splash src="splash/ios/Default_iphone5.png" width="640" height="1136" />
-	<gap:splash src="splash/ios/Default-Landscape.png" width="1024" height="768" />
-	<gap:splash src="splash/ios/Default-Portrait.png" width="768" height="1024" />
-	
-	Android
-	<gap:splash src="splash/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
-	<gap:splash src="splash/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
-	<gap:splash src="splash/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
-	<gap:splash src="splash/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
-	
-	BlackBerry
+	<!-- Splash for iOS -->
+	<gap:splash src="images/ios/splash-Default~iphone.png" width="320" height="480" />
+	<gap:splash src="images/ios/splash-Default@2x~iphone.png" width="640" height="960" />
+	<gap:splash src="images/ios/splash-Default-568h@2x~iphone.png" width="640" height="1136" />
+	<gap:splash src="images/ios/splash-Default-Landscape~ipad.png" width="1024" height="768" />
+	<gap:splash src="images/ios/splash-Default-Landscape@2x~ipad.png" width="2048" height="1536" />
+	<gap:splash src="images/ios/splash-Default-Portrait~ipad.png" width="768" height="1024" />
+	<gap:splash src="images/ios/splash-Default-Portrait@2x~ipad.png" width="1536" height="2048" />
+
+	<!-- Splash for Android -->
+	<gap:splash src="images/android/splash-ldpi-landscape.png" gap:platform="android" gap:density="ldpi" />
+	<gap:splash src="images/android/splash-mdpi-landscape.png" gap:platform="android" gap:density="mdpi" />
+	<gap:splash src="images/android/splash-hdpi-landscape.png" gap:platform="android" gap:density="hdpi" />
+	<gap:splash src="images/android/splash-xhdpi-landscape.png" gap:platform="android" gap:density="xhdpi" />
+
+	<!-- Splash for BlackBerry 
 	<gap:splash src="splash/bb/splash.png" gap:platform="blackberry" />
-	
-	Windows Phone
+-->
+	<!-- Splash for Windows Phone 
 	<gap:splash src="splash/winphone/splash.jpg" gap:platform="winphone" />
 -->
 
