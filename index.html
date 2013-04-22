@@ -356,7 +356,7 @@
               data_exp[pos].sound_tra = localfilepath;
 							//onData_Expressions(data_tmp);
 						}
-alert(nb_exp + "  " + nb_elem2dl + "  " + Math.round((nb_elem2dl*100/(nb_exp))));
+//alert(nb_exp + "  " + nb_elem2dl + "  " + Math.round((nb_elem2dl*100/(nb_exp))));
 //            if (nb_elem2dl >= (2*nb_exp))
 //              hide_ProgressBar();
 					},
@@ -864,6 +864,7 @@ alert(nb_exp + "  " + nb_elem2dl + "  " + Math.round((nb_elem2dl*100/(nb_exp))))
 					
 					if ((tmp_filename.fileExists() == false) && (data_exp[i].downloadedImage != "downloading"))
 					{
+						alert("coucou 1");
 						ready = false;
             data_exp[i].downloadedImage = "downloading";
             downloadFile(str, tmp_filename);
@@ -878,13 +879,17 @@ alert(nb_exp + "  " + nb_elem2dl + "  " + Math.round((nb_elem2dl*100/(nb_exp))))
             }
           }
           if (data_exp[i].downloadedImage == "downloading")
+          {
+						alert("coucou 2");
             ready = false;
+          }
 
 					var str = data_exp[i].sound_tra;
 					var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
 					
           if (((tmp_filename.fileExists() == false) || ((data_exp[i].date_tra > exp_last_upd_ms) && (data_exp[i].downloadedSound_tra != "OK"))) && (data_exp[i].downloadedSound_tra != "downloading"))
 					{
+						alert("coucou 3");
 						ready = false;
             data_exp[i].downloadedSound_tra = "downloading";
 						downloadFile(str, tmp_filename);
@@ -899,7 +904,10 @@ alert(nb_exp + "  " + nb_elem2dl + "  " + Math.round((nb_elem2dl*100/(nb_exp))))
             }
           }
           if (data_exp[i].downloadedSound_tra == "downloading")
+          {
+						alert("coucou 4");
             ready = false;
+          }
         }
 alert(ready + " nb: " + nb_elem2dl);
 				if (ready == true)
