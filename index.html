@@ -892,7 +892,7 @@
 					}
           else
           {
-            if ((data_exp[i].date_tra > exp_last_upd_ms) && (data_exp[i].downloadedSound_tra != "OK"))
+            if ((data_exp[i].downloadedSound_tra != "downloading") && (data_exp[i].downloadedSound_tra != "OK"))
             {
               nb_elem2dl++;
               data_exp[i].sound_tra = tmp_filename;
@@ -904,6 +904,7 @@
       
 				if (ready == true)
 				{
+					alert("coucou");
 	        for (var i = 0; i < nb_exp; i++)
 					{
 						var tmp_id = data_exp[i].id;
