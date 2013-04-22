@@ -356,7 +356,7 @@
               data_exp[pos].sound_tra = localfilepath;
 							//onData_Expressions(data_tmp);
 						}
-//alert(nb_exp + "  " + nb_elem2dl + "  " + Math.round((nb_elem2dl*100/(nb_exp))));
+alert(nb_exp + "  " + nb_elem2dl + "  " + Math.round((nb_elem2dl*100/(nb_exp))));
 //            if (nb_elem2dl >= (2*nb_exp))
 //              hide_ProgressBar();
 					},
@@ -822,7 +822,7 @@
 			{
         exp_chk_upd = true;
         var date_tmp = new Date(m.modificationTime);
-        var exp_last_upd_ms = date_tmp.getTime();
+        exp_last_upd_ms = date_tmp.getTime();
         console.log("Last Update : " + exp_last_upd_ms);
         if ((today_ms - exp_last_upd_ms) > (2*3600*1000))
         {
@@ -901,7 +901,7 @@
           if (data_exp[i].downloadedSound_tra == "downloading")
             ready = false;
         }
-      
+alert(ready + " nb: " + nb_elem2dl);
 				if (ready == true)
 				{
 					alert("coucou");
