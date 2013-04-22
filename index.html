@@ -201,6 +201,7 @@
 			var num_exp = 1;
 			var cur_expID;
 			var nb_exp;
+			var nb_elem2dl = 0;
 			var jump = 5;
 		
 			var prd_id;
@@ -211,7 +212,22 @@
 			var title_text;
 			var data_titles;
 			var data_exp;
-		
+      var data_tmp;
+
+      var today = new Date();
+      var today_ms = today.getTime();
+      var exp_last_upd_ms = today_ms;
+      
+      var fromlang_chk_upd = false;
+      var fromlang_do_upd = false;
+      var tolang_chk_upd = false;
+      var tolang_do_upd = false;
+      var title_chk_upd = false;
+      var title_do_upd = false;
+      var exp_chk_upd = false;
+      var exp_do_upd = false;
+      
+      var fileSystem;
       var ProgressBar;
 			var myScroll;
 			if (tabletView == true)
@@ -238,18 +254,34 @@
 		//		document.addEventListener('DOMContentLoaded', function () { setTimeout(Scroll_create, 200); }, false);
 			}
 		
-			function get_dataexp_pos(ar_data, id){
-				var nb=1;
+			function get_dataexp_pos(ar_data, str_search, fieldname){
+				var found=false;
 				var l = data_exp.length;
 				for (var i = 0; i < l; i++)
 				{
-					if(data_exp[i].id == id)
+					if ((fieldname == "exp") && (data_exp[i].id == str_search))
+					{
+						found = true;
 						break;
-					nb++;
+					}
+          var str = data_exp[i].image;
+					if ((fieldname == "image") && (str.lastIndexOf(str_search) != -1))
+					{
+						found = true;
+						break;
+					}
+          var str = data_exp[i].sound_tra;
+					if ((fieldname == "sound_tra") && (str.lastIndexOf(str_search) != -1))
+					{
+						found = true;
+						break;
+					}
 				}
-		   	return i;
+				if (found == true)
+		   		return i;
+		   	else
+		   		return -1;
 			};
-
 
 
 		$(function(){
@@ -271,8 +303,10 @@
 				console.log("failed to get filesystem");
 			}
 			
-			function gotFS(fileSystem)
+			function gotFS(fs)
 			{
+        fileSystem = fs;
+      
 				console.log("filesystem got");
 				fileSystem.root.getDirectory(window.appRootDirName, {
 					create : true,
@@ -295,7 +329,36 @@
 					url,
 					str_filename,
 					function(entry) {
-						console.log("download complete: " + entry.fullPath);
+						var localfilepath = entry.fullPath;
+            var localfilename = entry.name;
+            var localfileext = localfilename.substr(localfilename.length - 3);
+//alert(localfileext);
+//alert(str.substr(str.length - 3));
+            if (localfileext == "svg")
+						{
+//alert("image");
+              var pos = get_dataexp_pos(data_exp, localfilename, "image");
+							data_exp[pos].downloadedImage = "OK";
+							//nb_elem2dl++;
+              //console.log("Image " + "n" + nb_elem2dl + " download complete: " + localfilename);
+							//ProgressBar.setValue(Math.round((nb_elem2dl*100/(2*nb_exp))));
+              data_exp[pos].image = localfilepath;
+							//onData_Expressions(data_tmp);
+						}
+						if ((localfileext == "mp3") || (localfileext == "ogg"))
+						{
+							
+              var pos = get_dataexp_pos(data_exp, localfilename, "sound_tra");
+							data_exp[pos].downloadedSound_tra = "OK";
+							nb_elem2dl++;
+              console.log(Math.round((nb_elem2dl*100/(nb_exp))) + "% Sound " + "n" + nb_elem2dl + " download complete: " + localfilename);
+							ProgressBar.setValue(Math.round((nb_elem2dl*100/(nb_exp))));
+              data_exp[pos].sound_tra = localfilepath;
+							//onData_Expressions(data_tmp);
+						}
+//alert(nb_exp + "  " + nb_elem2dl + "  " + Math.round((nb_elem2dl*100/(nb_exp))));
+//            if (nb_elem2dl >= (2*nb_exp))
+//              hide_ProgressBar();
 					},
 					function(error) {
 						console.log("download error source " + error.source);
@@ -340,6 +403,7 @@
       {
         if (ProgressBar == null)
         {
+          nb_elem2dl = 0;
           $("<div id=\"progressbar-overlay\" class=\"ui-tolito-progressbar-overlay\"><div class=\"ui-tolito-progressbar-overlay-box\"><div class=\"ui-tolito-progressbar-overlay-box-corner-top ui-tolito-progressbar-overlay-box-corner-bottom ui-tolito-progressbar-overlay-box-content ui-tolito-progressbar-overlay-box-body-c\"><h3>Chargement des donnees...</h3><p></p><div id=\"progressbar\"></div></div></div></div>").prependTo($('#footer'));
 /*      	
         $(["<div id=\"progressbar-overlay2\" class=\"ui-tolito-progressbar-overlay\">",
@@ -366,7 +430,7 @@
             .logOptions()
             .build()
             .run()
-            .stop()
+            
             
            });
         }
@@ -485,6 +549,8 @@
 				    {
 							prd_id = data[0].prd_id;
 							ajax_upd_titles(prd_id, from_lang_id);
+              //ajax_get_fromlangs(prd_id, from_lang_id);
+              //ajax_get_tolangs(prd_id, from_lang_id);
 				    }
 				  });
 				}
@@ -492,20 +558,45 @@
 			function ajax_get_fromlangs(prd_id, lang_id)
 			{
 				var str_uri = window.appRootDir.fullPath + "/get_langs_from_" + prd_id + "_" + lang_id + ".json";
-				if (str_uri.fileExists() == false)
-					download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=from&prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "fromlangs", lang_id, prd_id);
-				else
-				{
-				  $.ajax({
-				    type: "GET",
-				    url: str_uri,
-				    cache: false,
-				    contentType: "application/json; charset=utf-8",
-				    dataType: "json",
-				    success: onData_fromlangs
-					});
+        if (fromlang_chk_upd == false)
+          fileSystem.root.getFile(str_uri, {create:false}, function(f){f.getMetadata(do_upd_fromlang, do_upd_fromlang_fail);}, do_upd_fromlang_fail);
+        else
+        {
+					if ((str_uri.fileExists() == false) || (fromlang_do_upd == true))
+						download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=from&prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "fromlangs", lang_id, prd_id);
+					else
+					{
+					  $.ajax({
+					    type: "GET",
+					    url: str_uri,
+					    cache: false,
+					    contentType: "application/json; charset=utf-8",
+					    dataType: "json",
+					    success: onData_fromlangs
+						});
+					}
 				}
 			}
+			function do_upd_fromlang(m)
+			{
+        fromlang_chk_upd = true;
+        var date_tmp = new Date(m.modificationTime);
+        var last_upd_ms = date_tmp.getTime();
+        console.log("Last Update FromLang : " + last_upd_ms);
+        if ((today_ms - last_upd_ms) > (2*3600*1000))
+        {
+          console.log("Do update FromLang");
+          fromlang_do_upd = true;
+        }
+        //fromlang_do_upd = true;
+        ajax_get_fromlangs(prd_id, from_lang_id);
+      }
+			function do_upd_fromlang_fail(evt)
+			{
+        fromlang_chk_upd = true;
+        ajax_get_fromlangs(prd_id, from_lang_id);
+      }
+      
 			function onData_fromlangs(data)
 			{
 				$('#sel_from_lang').mobiscroll('destroy');
@@ -545,22 +636,46 @@
 			}
 			function ajax_get_tolangs(prd_id, lang_id)
 			{
-        show_ProgressBar();
 				var str_uri = window.appRootDir.fullPath + "/get_langs_to_" + prd_id + "_" + lang_id + ".json";
-				if (str_uri.fileExists() == false)
-					download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=to&prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "tolangs", lang_id, prd_id);
-				else
-				{
-				  $.ajax({
-				    type: "GET",
-				    url: str_uri,
-				    cache: false,
-				    contentType: "application/json; charset=utf-8",
-				    dataType: "json",
-				    success: onData_tolangs
-					});
+        if (tolang_chk_upd == false)
+          fileSystem.root.getFile(str_uri, {create:false}, function(f){f.getMetadata(do_upd_tolang, do_upd_tolang_fail);}, do_upd_tolang_fail);
+        else
+        {
+	        show_ProgressBar();
+					if ((str_uri.fileExists() == false) || (tolang_do_upd == true))
+						download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=to&prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "tolangs", lang_id, prd_id);
+					else
+					{
+					  $.ajax({
+					    type: "GET",
+					    url: str_uri,
+					    cache: false,
+					    contentType: "application/json; charset=utf-8",
+					    dataType: "json",
+					    success: onData_tolangs
+						});
+					}
 				}
 			}
+			function do_upd_tolang(m)
+			{
+        tolang_chk_upd = true;
+        var date_tmp = new Date(m.modificationTime);
+        var last_upd_ms = date_tmp.getTime();
+        console.log("Last Update ToLang : " + last_upd_ms);
+        if ((today_ms - last_upd_ms) > (2*3600*1000))
+        {
+          console.log("Do update ToLang");
+          tolang_do_upd = true;
+        }
+        //tolang_do_upd = true;
+        ajax_get_tolangs(prd_id, from_lang_id);
+      }
+			function do_upd_tolang_fail(evt)
+			{
+        tolang_chk_upd = true;
+        ajax_get_tolangs(prd_id, from_lang_id);
+      }
 			function onData_tolangs(data)
 			{
 				$('#sel_to_lang').mobiscroll('destroy');
@@ -596,22 +711,46 @@
 		
 			function ajax_upd_titles(prd_id, lang_id)
 			{
-        show_ProgressBar();
         var str_uri = window.appRootDir.fullPath + "/get_titles_" + prd_id + "_" + lang_id + ".json";
-				if (str_uri.fileExists() == false)
-					download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_titles.php?prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "titles", lang_id, prd_id);
-				else
-				{
-			    $.ajax({
-			      type: "GET",
-			      url: str_uri,
-			      cache: false,
-			      contentType: "application/json; charset=utf-8",
-			      dataType: "json",
-			      success: onData_Titles
-			    });
-			  }
+        if (title_chk_upd == false)
+          fileSystem.root.getFile(str_uri, {create:false}, function(f){f.getMetadata(do_upd_title, do_upd_title_fail);}, do_upd_title_fail);
+        else
+        {
+	        show_ProgressBar();
+					if ((str_uri.fileExists() == false) || (title_do_upd == true))
+						download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_titles.php?prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "titles", lang_id, prd_id);
+					else
+					{
+				    $.ajax({
+				      type: "GET",
+				      url: str_uri,
+				      cache: false,
+				      contentType: "application/json; charset=utf-8",
+				      dataType: "json",
+				      success: onData_Titles
+				    });
+				  }
+				}
 			}
+			function do_upd_title(m)
+			{
+        title_chk_upd = true;
+        var date_tmp = new Date(m.modificationTime);
+        var last_upd_ms = date_tmp.getTime();
+        console.log("Last Update Titles : " + last_upd_ms);
+        if ((today_ms - last_upd_ms) > (2*3600*1000))
+        {
+          console.log("Do update Title");
+          title_do_upd = true;
+        }
+        //title_do_upd = true;
+        ajax_upd_titles(prd_id, from_lang_id);
+      }
+			function do_upd_title_fail(evt)
+			{
+        title_chk_upd = true;
+        ajax_upd_titles(prd_id, from_lang_id);
+      }
 			function onData_Titles(data)
 			{
 				$('#sel_title').mobiscroll('destroy');
@@ -651,122 +790,201 @@
 				ajax_get_tolangs(prd_id, from_lang_id);
 				ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id);
 			}
+      
+      
 			function ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id)
 			{
-				show_ProgressBar();
-				var str_uri = window.appRootDir.fullPath + "/get_expressions_" + prd_id + "_" + from_lang_id + "_" + to_lang_id + "_" + title_id + ".json";
-				if (str_uri.fileExists() == false)
-					download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_expressions.php?prd_id=" + prd_id + "&from_lang_id=" + from_lang_id + "&to_lang_id=" + to_lang_id + "&title_id=" + title_id, str_uri, "expressions", -1, prd_id, from_lang_id, to_lang_id, title_id);
-				else
-				{
-			    $.ajax({
-			      type: "GET",
-			      url: str_uri,
-			      cache: false,
-			      contentType: "application/json; charset=utf-8",
-			      dataType: "json",
-			      success: onData_Expressions
-			    });
+        var str_uri = window.appRootDir.fullPath + "/get_expressions_" + prd_id + "_" + from_lang_id + "_" + to_lang_id + "_" + title_id + ".json";
+        if (exp_chk_upd == false)
+          fileSystem.root.getFile(str_uri, {create:false}, function(f){f.getMetadata(do_upd_exp,fail);},do_upd_exp_fail);
+        else
+        {
+          show_ProgressBar();
+          if ((str_uri.fileExists() == false) || (exp_do_upd == true))
+          {
+            exp_do_upd = false;
+            download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_expressions.php?prd_id=" + prd_id + "&from_lang_id=" + from_lang_id + "&to_lang_id=" + to_lang_id + "&title_id=" + title_id, str_uri, "expressions", -1, prd_id, from_lang_id, to_lang_id, title_id);
+          }
+          else
+          {
+            $.ajax({
+			        type: "GET",
+			        url: str_uri,
+			        cache: false,
+			        contentType: "application/json; charset=utf-8",
+			        dataType: "json",
+			        success: onData_Expressions
+			      });
+          }
 			  }
 			}
-			function onData_Expressions(data)
+			function do_upd_exp(m)
 			{
-        $('#sel_exp li').remove();
-				$('#sel_exp').mobiscroll('destroy');
-				$('#scroller li').remove();
-
-				data_exp = data;
-				nb_exp = data.length;
-				num_exp = 1;
-				cur_expID = data[0].id;
+        exp_chk_upd = true;
+        var date_tmp = new Date(m.modificationTime);
+        var exp_last_upd_ms = date_tmp.getTime();
+        console.log("Last Update : " + exp_last_upd_ms);
+        if ((today_ms - exp_last_upd_ms) > (2*3600*1000))
+        {
+          console.log("Do update");
+          exp_do_upd = true;
+        }
+        //exp_do_upd = true;
+        ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id);
+      }
+			function do_upd_exp_fail(evt)
+			{
+        exp_chk_upd = true;
+        ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id);
+      }
       
+      function onData_Expressions(data)
+			{
+        var ready = true;
+        if (typeof(data) != "undefined")
+        {
+          $('#sel_exp li').remove();
+          $('#sel_exp').mobiscroll('destroy');
+          $('#scroller li').remove();
+
+          
+          data_exp = data;
+          nb_exp = data.length;
+          num_exp = 1;
+          cur_expID = data[0].id;
+        }      
         for (var i = 0; i < nb_exp; i++)
 				{
-          ProgressBar.setValue(Math.round((i+1)*100/nb_exp));
+					//ProgressBar.run();
+					//ProgressBar.setValue(Math.round((i+1)*100/nb_exp));
+					//ProgressBar.stop();
+					//alert('coucou');
           var str = data_exp[i].image;
 					var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-					if (tmp_filename.fileExists() == false)
-						downloadFile(data_exp[i].image, tmp_filename);
-					data_exp[i].image = tmp_filename;
+					
+					if ((tmp_filename.fileExists() == false) && (data_exp[i].downloadedImage != "downloading"))
+					{
+						ready = false;
+            data_exp[i].downloadedImage = "downloading";
+            downloadFile(str, tmp_filename);
+            break;
+					}
+          else
+          {
+            if (data_exp[i].downloadedImage != "downloading")
+            {
+            //nb_elem2dl++;
+              data_exp[i].image = tmp_filename;
+            }
+          }
+          if (data_exp[i].downloadedImage == "downloading")
+            ready = false;
+
 					var str = data_exp[i].sound_tra;
 					var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-					if (tmp_filename.fileExists() == false)
-						downloadFile(data_exp[i].sound_tra, tmp_filename);
-					data_exp[i].sound_tra = tmp_filename;
-
-					var tmp_id = data[i].id;
-					if (data[i].variation == "N")
+					
+          if (((tmp_filename.fileExists() == false) || ((data_exp[i].date_tra > exp_last_upd_ms) && (data_exp[i].downloadedSound_tra != "OK"))) && (data_exp[i].downloadedSound_tra != "downloading"))
 					{
-							$('#sel_exp').append('<li data-val=" '+ tmp_id.toString() + '"><div class="exp"><span class="exp_txt">' + data[i].text + '</span></div></li>');
-							$('#scroller > ul').append('<li class="tab_exp" data-val=" '+ tmp_id.toString() + '" data-icon="false"><a class="tab_exp_txt" href="#">' + data[i].text + '</a></li>');
+						ready = false;
+            data_exp[i].downloadedSound_tra = "downloading";
+						downloadFile(str, tmp_filename);
+            break;
 					}
-					else
+          else
+          {
+            if ((data_exp[i].date_tra > exp_last_upd_ms) && (data_exp[i].downloadedSound_tra != "OK"))
+            {
+              nb_elem2dl++;
+              data_exp[i].sound_tra = tmp_filename;
+            }
+          }
+          if (data_exp[i].downloadedSound_tra == "downloading")
+            ready = false;
+        }
+      
+				if (ready == true)
+				{
+	        for (var i = 0; i < nb_exp; i++)
 					{
-						if (from_lang_r2l == "Y")
+						var tmp_id = data_exp[i].id;
+						if (data_exp[i].variation == "N")
 						{
-							$('#sel_exp').append('<li data-val=" '+ tmp_id.toString() + '"><div class="exp"><span class="exp_var">' + data[i].desc + ' +</span></div></li>');
-							$('#scroller > ul').append('<li class="tab_exp" data-val=" '+ tmp_id.toString() + '" data-icon="false"><a class="tab_exp_var" href="#">' + data[i].desc + ' +</a></li>');
+								$('#sel_exp').append('<li data-val=" '+ tmp_id.toString() + '"><div class="exp"><span class="exp_txt">' + data_exp[i].text + '</span></div></li>');
+								$('#scroller > ul').append('<li class="tab_exp" data-val=" '+ tmp_id.toString() + '" data-icon="false"><a class="tab_exp_txt" href="#">' + data_exp[i].text + '</a></li>');
 						}
 						else
 						{
-							$('#sel_exp').append('<li data-val=" '+ tmp_id.toString() + '"><div class="exp"><span class="exp_var">+ ' + data[i].desc + '</span></div></li>');
-							$('#scroller > ul').append('<li class="tab_exp" data-val=" '+ tmp_id.toString() + '" data-icon="false"><a class="tab_exp_var" href="#">+ ' + data[i].desc + '</a></li>');
+							if (from_lang_r2l == "Y")
+							{
+								$('#sel_exp').append('<li data-val=" '+ tmp_id.toString() + '"><div class="exp"><span class="exp_var">' + data_exp[i].desc + ' +</span></div></li>');
+								$('#scroller > ul').append('<li class="tab_exp" data-val=" '+ tmp_id.toString() + '" data-icon="false"><a class="tab_exp_var" href="#">' + data_exp[i].desc + ' +</a></li>');
+							}
+							else
+							{
+								$('#sel_exp').append('<li data-val=" '+ tmp_id.toString() + '"><div class="exp"><span class="exp_var">+ ' + data_exp[i].desc + '</span></div></li>');
+								$('#scroller > ul').append('<li class="tab_exp" data-val=" '+ tmp_id.toString() + '" data-icon="false"><a class="tab_exp_var" href="#">+ ' + data_exp[i].desc + '</a></li>');
+							}
 						}
 					}
-				}
-      hide_ProgressBar();
-      $('.tab_exp a').css({'width' : left_column_width-40 + 'px'});
-				$('.tab_exp').click(function()
-				{
-					cur_expID = $.trim($(this).attr('data-val'));
-					if (mode_player == true)
-						upd_elem(cur_expID);
-					else
+					
+          $('.tab_exp a').css({'width' : left_column_width-40 + 'px'});
+					$('.tab_exp').click(function()
 					{
-				    $('#btn_validate').removeClass('ui-disabled');
-						$('#scroller .ui-btn-up-a').removeClass('ui-btn-up-a').removeClass('ui-btn-hover-a').addClass('ui-btn-up-d').attr('data-theme', 'd').trigger('create');
-						$("[data-val=' " + cur_expID + "']").removeClass('ui-btn-up-d').removeClass('ui-btn-hover-d').addClass('ui-btn-up-a').attr('data-theme', 'a').trigger('create');
-					}
-			    return false;
-			  });
-		
-				$('#scroller > ul').trigger('create');    
-				$('#scroller > ul').listview('refresh');
-				$('#page1').css("min-height","");
-				$('#page1').css("padding-bottom","");
-				$('#page1').css("padding-top","");
-				setup_UI();
-		
-				if (tabletView == true)
-				{
-					if (typeof(myScroll) != 'undefined')
-						Scroll_refresh();
-					else
-						Scroll_create();
-				}
-		
-				$('#sel_exp').mobiscroll().image({
-			    theme: 'ios',
-			    lang: lang,
-			    display: 'inline',
-			    mode: 'scroller',
-			    labels: ['Expressions'],
-			    inputClass: 'i-txt',
-			    rows: scroller_row,
-			    width: scroller_width+10,
-			    onChange: function (valueText, inst){
-						var sel = valueText;
-						cur_expID = $.trim(sel);
+						cur_expID = $.trim($(this).attr('data-val'));
 						if (mode_player == true)
 							upd_elem(cur_expID);
 						else
 						{
-							upd_elem(cur_expID, false, false, false, false);
-							$('#btn_validate').removeClass('ui-disabled');
+					    $('#btn_validate').removeClass('ui-disabled');
+							$('#scroller .ui-btn-up-a').removeClass('ui-btn-up-a').removeClass('ui-btn-hover-a').addClass('ui-btn-up-d').attr('data-theme', 'd').trigger('create');
+							$("[data-val=' " + cur_expID + "']").removeClass('ui-btn-up-d').removeClass('ui-btn-hover-d').addClass('ui-btn-up-a').attr('data-theme', 'a').trigger('create');
 						}
+				    return false;
+				  });
+					
+          $('#scroller > ul').trigger('create');
+					$('#scroller > ul').listview('refresh');
+					$('#page1').css("min-height","");
+					$('#page1').css("padding-bottom","");
+					$('#page1').css("padding-top","");
+					setup_UI();
+			
+					if (tabletView == true)
+					{
+						if (typeof(myScroll) != 'undefined')
+							Scroll_refresh();
+						else
+							Scroll_create();
 					}
-				});
-				upd_elem(data_exp[0].id);
+			
+					$('#sel_exp').mobiscroll().image({
+				    theme: 'ios',
+				    lang: lang,
+				    display: 'inline',
+				    mode: 'scroller',
+				    labels: ['Expressions'],
+				    inputClass: 'i-txt',
+				    rows: scroller_row,
+				    width: scroller_width+10,
+				    onChange: function (valueText, inst){
+							var sel = valueText;
+							cur_expID = $.trim(sel);
+							if (mode_player == true)
+								upd_elem(cur_expID);
+							else
+							{
+								upd_elem(cur_expID, false, false, false, false);
+								$('#btn_validate').removeClass('ui-disabled');
+							}
+						}
+					});
+          hide_ProgressBar();
+					upd_elem(data_exp[0].id);
+				}
+        else
+        {
+          onData_Expressions(data_tmp);
+        }
 			}
 		//	ajax_get_lang_used(lang);
 		//	ajax_get_product(from_lang_id);
@@ -984,7 +1202,7 @@
 		  });
 		
 			function upd_elem(exp_id, update_img, update_txt, update_list, update_snd) {
-		    num_exp = get_dataexp_pos(data_exp, exp_id);
+		    num_exp = get_dataexp_pos(data_exp, exp_id, "exp");
 				if (typeof(update_snd) == 'undefined')
 				{
 		  		$("#jquery_jplayer_1").bind($.jPlayer.event.ended + ".jp-ended", function(event) { // Using ".jp-ended" namespace so we can easily remove this event
