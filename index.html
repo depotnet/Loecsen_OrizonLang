@@ -864,7 +864,7 @@
 					
 					if ((tmp_filename.fileExists() == false) && (data_exp[i].downloadedImage != "downloading"))
 					{
-						alert("coucou 1");
+						//alert("coucou 1");
 						ready = false;
             data_exp[i].downloadedImage = "downloading";
             downloadFile(str, tmp_filename);
@@ -880,7 +880,7 @@
           }
           if (data_exp[i].downloadedImage == "downloading")
           {
-						alert("coucou 2");
+						//alert("coucou 2");
             ready = false;
           }
 
@@ -889,7 +889,7 @@
 					
           if (((tmp_filename.fileExists() == false) || ((data_exp[i].date_tra > exp_last_upd_ms) && (data_exp[i].downloadedSound_tra != "OK"))) && (data_exp[i].downloadedSound_tra != "downloading"))
 					{
-						alert("coucou 3");
+						//alert("coucou 3");
 						ready = false;
             data_exp[i].downloadedSound_tra = "downloading";
 						downloadFile(str, tmp_filename);
@@ -905,11 +905,11 @@
           }
           if (data_exp[i].downloadedSound_tra == "downloading")
           {
-						alert("coucou 4");
+						//alert("coucou 4");
             ready = false;
           }
         }
-alert(ready + " nb: " + nb_elem2dl);
+//alert(ready + " nb: " + nb_elem2dl);
 				if (ready == true)
 				{
 					alert("coucou");
