@@ -333,7 +333,7 @@
             var localfilename = entry.name;
             var localfileext = localfilename.substr(localfilename.length - 3);
             localfileext = localfileext.toLowerCase();
-alert("> " + localfilename);
+//alert("> " + localfilename);
             if (localfileext == "svg")
 						{
 							//nb_elem2dl++;
@@ -353,7 +353,6 @@ alert("> " + localfilename);
 							data_exp[pos].downloadedSound_tra = "OK";
               data_exp[pos].sound_tra = localfilepath;
 						}
-//alert(nb_exp + "  " + nb_elem2dl + "  " + Math.round((nb_elem2dl*100/(nb_exp))));
 					},
 					function(error) {
 						console.log("download error source " + error.source);
@@ -931,7 +930,6 @@ alert("Error");
 
 				if ((ready == true) || (nb_elem2dl >= nb_exp))
 				{
-					alert("coucou");
 	        for (var i = 0; i < nb_exp; i++)
 					{
 						var tmp_id = data_exp[i].id;
