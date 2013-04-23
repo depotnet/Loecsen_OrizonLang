@@ -880,7 +880,7 @@ alert("Error");
 						data_exp[i].downloadedSound_tra = "";
 	          if (((tmp_filename.fileExists() == false) || ((data_exp[i].date_tra > exp_last_upd_ms) && (data_exp[i].downloadedSound_tra != "OK"))) && (data_exp[i].downloadedSound_tra != "downloading"))
 						{
-							//alert("coucou 3 " + i);
+							alert("coucou 3 " + i);
 							ready = false;
 	            data_exp[i].downloadedSound_tra = "downloading";
 							downloadFile(str, tmp_filename);
@@ -896,7 +896,7 @@ alert("Error");
 	          }
 		          if (data_exp[i].downloadedSound_tra == "downloading")
 		          {
-								//alert("coucou 4 " + i);
+								alert("coucou 4 " + i);
 								//if (i == (nb_exp - 1))
 								//	downloadFile(str, tmp_filename);
 		            ready = false;
