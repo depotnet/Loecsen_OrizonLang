@@ -324,7 +324,7 @@
 			function downloadFile(url, str_filename, success, err)
 			{
 				console.log('download ' + url);
-				var ft = new FileTransfer();
+				ft = new FileTransfer();
 				ft.download(
 					url,
 					str_filename,
@@ -332,55 +332,45 @@
 						var localfilepath = entry.fullPath;
             var localfilename = entry.name;
             var localfileext = localfilename.substr(localfilename.length - 3);
-alert(localfilename);
+alert(localfileext);
 //alert(str.substr(str.length - 3));
             if (localfileext == "svg")
 						{
 //alert("image");
               var pos = get_dataexp_pos(data_exp, localfilename, "image");
 							data_exp[pos].downloadedImage = "OK";
+							//nb_elem2dl++;
+              //console.log("Image " + "n" + nb_elem2dl + " download complete: " + localfilename);
+							//ProgressBar.setValue(Math.round((nb_elem2dl*100/(2*nb_exp))));
               data_exp[pos].image = localfilepath;
+							//onData_Expressions(data_tmp);
 						}
 						if ((localfileext == "mp3") || (localfileext == "ogg"))
 						{
+							
+              var pos = get_dataexp_pos(data_exp, localfilename, "sound_tra");
+							data_exp[pos].downloadedSound_tra = "OK";
 							nb_elem2dl++;
               console.log(Math.round((nb_elem2dl*100/(nb_exp))) + "% Sound " + "n" + nb_elem2dl + " download complete: " + localfilename);
 							ProgressBar.setValue(Math.round((nb_elem2dl*100/(nb_exp))));
-              var pos = get_dataexp_pos(data_exp, localfilename, "sound_tra");
-							data_exp[pos].downloadedSound_tra = "OK";
               data_exp[pos].sound_tra = localfilepath;
+							//onData_Expressions(data_tmp);
 						}
 //alert(nb_exp + "  " + nb_elem2dl + "  " + Math.round((nb_elem2dl*100/(nb_exp))));
+//            if (nb_elem2dl >= (2*nb_exp))
+//              hide_ProgressBar();
 					},
 					function(error) {
 						console.log("download error source " + error.source);
 						console.log("download error target " + error.target);
 						console.log("Error code" + error.code);
-            var localfilename = error.target;
-            var localfileext = localfilename.substr(localfilename.length - 3);
-            localfileext = localfileext.toLowerCase();
-            if (localfileext == "svg")
-						{
-							//nb_elem2dl++;
-              var pos = get_dataexp_pos(data_exp, localfilename, "image");
-							data_exp[pos].image_downloaded = "NOK";
-						}
-						if ((localfileext == "mp3") || (localfileext == "ogg"))
-						{
-							//nb_elem2dl++;
-              var pos = get_dataexp_pos(data_exp, localfilename, "sound_tra");
-//alert(localfilename + " pos: " + pos + " nbdl: " + nb_elem2dl + " / " + nb_exp);
-							data_exp[pos].sound_tra_downloaded = "NOK";
-						}
-
-alert("Error");
 					}
 				);
 			}
 			function download_JSON(url, str_filename, fct, lang_id, prd_id, from_lang_id, to_lang_id, title_id)
 			{
 				console.log('download ' + url);
-				var ft = new FileTransfer();
+				ft = new FileTransfer();
 				ft.download(
 					url,
 					str_filename,
@@ -865,6 +855,10 @@ alert("Error");
         }      
         for (var i = 0; i < nb_exp; i++)
 				{
+					//ProgressBar.run();
+					//ProgressBar.setValue(Math.round((i+1)*100/nb_exp));
+					//ProgressBar.stop();
+					//alert('coucou');
           var str = data_exp[i].image;
 					var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
 					
@@ -884,9 +878,7 @@ alert("Error");
             }
           }
           if (data_exp[i].downloadedImage == "downloading")
-					{
             ready = false;
-          }
 
 					var str = data_exp[i].sound_tra;
 					var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
@@ -907,9 +899,7 @@ alert("Error");
             }
           }
           if (data_exp[i].downloadedSound_tra == "downloading")
-          {
             ready = false;
-          }
         }
       
 				if (ready == true)
