@@ -324,7 +324,7 @@
 			function downloadFile(url, str_filename, success, err)
 			{
 				console.log('download ' + url);
-alert(url + "=>" + str_filename);
+//alert(url + "=>" + str_filename);
 				ft = new FileTransfer();
 				ft.download(
 					url,
@@ -353,7 +353,7 @@ alert(localfilename);
               console.log(Math.round((nb_elem2dl*100/(nb_exp))) + "% Sound " + "n" + nb_elem2dl + " download complete: " + localfilename);
 							ProgressBar.setValue(Math.round((nb_elem2dl*100/(nb_exp))));
               var pos = get_dataexp_pos(data_exp, localfilename, "sound_tra");
-alert(localfilename + " pos: " + pos + " nbdl: " + nb_elem2dl + " / " + nb_exp);
+//alert(localfilename + " pos: " + pos + " nbdl: " + nb_elem2dl + " / " + nb_exp);
 							data_exp[pos].downloadedSound_tra = "OK";
               data_exp[pos].sound_tra = localfilepath;
 							//onData_Expressions(data_tmp);
@@ -906,6 +906,8 @@ alert("Error");
 	          if (data_exp[i].downloadedSound_tra == "downloading")
 	          {
 							alert("coucou 4 " + i);
+							if (i == 20)
+								downloadFile(str, tmp_filename);
 	            ready = false;
 	            //break;
 	          }
