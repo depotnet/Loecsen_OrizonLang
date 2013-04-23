@@ -350,6 +350,7 @@
 							
               var pos = get_dataexp_pos(data_exp, localfilename, "sound_tra");
 							data_exp[pos].downloadedSound_tra = "OK";
+							alert(localfilename + " pos: " + pos + " / " + nb_exp);
 							nb_elem2dl++;
               console.log(Math.round((nb_elem2dl*100/(nb_exp))) + "% Sound " + "n" + nb_elem2dl + " download complete: " + localfilename);
 							ProgressBar.setValue(Math.round((nb_elem2dl*100/(nb_exp))));
@@ -849,9 +850,9 @@
 
           
           data_exp = data;
-          nb_exp = data.length;
+          nb_exp = data_exp.length;
           num_exp = 1;
-          cur_expID = data[0].id;
+          cur_expID = data_exp[0].id;
         }      
         for (var i = 0; i < nb_exp; i++)
 				{
