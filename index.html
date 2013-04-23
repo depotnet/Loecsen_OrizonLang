@@ -324,6 +324,7 @@
 			function downloadFile(url, str_filename, success, err)
 			{
 				console.log('download ' + url);
+alert(url + "=>" + str_filename);
 				ft = new FileTransfer();
 				ft.download(
 					url,
@@ -365,6 +366,7 @@ alert(localfilename + " nbdl: " + nb_elem2dl + " pos: " + pos + " / " + nb_exp);
 						console.log("download error source " + error.source);
 						console.log("download error target " + error.target);
 						console.log("Error code" + error.code);
+alert("Error");
 					}
 				);
 			}
