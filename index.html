@@ -871,7 +871,7 @@ alert("Error");
         }
         do
         {
-	        for (var i = 0; i < 1; i++)
+	        for (var i = 0; i < nb_exp; i++)
 					{
 						//alert('coucou');
 					
@@ -896,8 +896,6 @@ alert("Error");
 		          if (data_exp[i].sound_tra_downloaded == "downloading")
 		          {
 								//alert("coucou 4 " + i);
-								//if (i == (nb_exp - 1))
-								//	downloadFile(str, tmp_filename);
 		            ready = false;
 		            break;
 		          }
@@ -926,6 +924,14 @@ alert("Error");
 		            ready = false;
 		            break;
 		          }
+
+						if (i == (nb_exp - 1))
+						{
+							var str = "http://www.loecsen.com/OrizonFlash_V2/dummy.txt";
+							var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
+							downloadFile(str, tmp_filename);
+						}
+
 	        }
 	//alert(ready + " nb: " + nb_elem2dl);
 	      }
