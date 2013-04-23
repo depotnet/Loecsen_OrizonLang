@@ -906,6 +906,8 @@ alert("Error");
 	          if (data_exp[i].downloadedSound_tra == "downloading")
 	          {
 							alert("coucou 4 " + i);
+							if (i == (nb_exp - 1))
+								downloadFile(str, tmp_filename);
 	            ready = false;
 	            //break;
 	          }
@@ -1434,7 +1436,6 @@ while ((ready == false) || (nb_elem2dl < nb_exp))
 	</head>
 	<body>
 		<script src="phonegap.js"></script>
-		<script src="http://debug.phonegap.com/target/target-script-min.js#anonymous"></script>
 		<!-- Home -->
 		<div data-role="page" id="page1">
 	
