@@ -902,20 +902,20 @@ alert("Error");
 					}
           else
           {
+	          if (data_exp[i].downloadedSound_tra == "downloading")
+	          {
+							alert("coucou 4 " + i);
+	            ready = false;
+	            break;
+	          }
             if ((data_exp[i].downloadedSound_tra != "downloading") && (data_exp[i].downloadedSound_tra != "OK"))
             {
               nb_elem2dl++;
               data_exp[i].sound_tra = tmp_filename;
             }
-	          if (data_exp[i].downloadedSound_tra == "downloading")
-	          {
-							alert("coucou 4 " + i);
-	            ready = false;
-	          }
           }
-
-
         }
+
 //alert(ready + " nb: " + nb_elem2dl);
 				if ((ready == true) || (nb_elem2dl >= nb_exp))
 				{
