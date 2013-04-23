@@ -341,7 +341,7 @@ alert("> " + entry.name);
               //console.log("Image " + "n" + nb_elem2dl + " download complete: " + localfilename);
 							//ProgressBar.setValue(Math.round((nb_elem2dl*100/(2*nb_exp))));
               var pos = get_dataexp_pos(data_exp, localfilename, "image");
-							data_exp[pos].downloadedImage = "OK";
+							data_exp[pos].image_downloaded = "OK";
               data_exp[pos].image = localfilepath;
 						}
 						if ((localfileext == "mp3") || (localfileext == "ogg"))
@@ -351,7 +351,7 @@ alert("> " + entry.name);
 							ProgressBar.setValue(Math.round((nb_elem2dl*100/(nb_exp))));
               var pos = get_dataexp_pos(data_exp, localfilename, "sound_tra");
 //alert(localfilename + " pos: " + pos + " nbdl: " + nb_elem2dl + " / " + nb_exp);
-							data_exp[pos].downloadedSound_tra = "OK";
+							data_exp[pos].sound_tra_downloaded = "OK";
               data_exp[pos].sound_tra = localfilepath;
 						}
 */
@@ -368,14 +368,14 @@ alert("> " + entry.name);
 						{
 							//nb_elem2dl++;
               var pos = get_dataexp_pos(data_exp, localfilename, "image");
-							data_exp[pos].downloadedImage = "NOK";
+							data_exp[pos].image_downloaded = "NOK";
 						}
 						if ((localfileext == "mp3") || (localfileext == "ogg"))
 						{
 							//nb_elem2dl++;
               var pos = get_dataexp_pos(data_exp, localfilename, "sound_tra");
 alert(localfilename + " pos: " + pos + " nbdl: " + nb_elem2dl + " / " + nb_exp);
-							data_exp[pos].downloadedSound_tra = "NOK";
+							data_exp[pos].sound_tra_downloaded = "NOK";
 						}
 
 alert("Error");
@@ -873,30 +873,27 @@ alert("Error");
         {
 	        for (var i = 0; i < 1; i++)
 					{
-						//alert('coucou');
-					
 						var str = data_exp[i].sound_tra;
 						var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-						data_exp[i].downloadedSound_tra = "";
-	          if (((tmp_filename.fileExists() == false) || ((data_exp[i].date_tra > exp_last_upd_ms) && (data_exp[i].downloadedSound_tra != "OK"))) && (data_exp[i].downloadedSound_tra != "downloading"))
+	          if (((tmp_filename.fileExists() == false) || ((data_exp[i].date_tra > exp_last_upd_ms) && (data_exp[i].sound_tra_downloaded != "OK"))) && (data_exp[i].sound_tra_downloaded != "downloading"))
 						{
-							alert("coucou 3 " + i);
+							//alert("coucou 3 " + i);
 							ready = false;
-	            data_exp[i].downloadedSound_tra = "downloading";
+	            data_exp[i].sound_tra_downloaded = "downloading";
 							downloadFile(str, tmp_filename);
 	            break;
 						}
 	          else
 	          {
-	            if ((data_exp[i].downloadedSound_tra != "downloading") && (data_exp[i].downloadedSound_tra != "OK"))
+	            if ((data_exp[i].sound_tra_downloaded != "downloading") && (data_exp[i].sound_tra_downloaded != "OK"))
 	            {
 	              nb_elem2dl++;
 	              data_exp[i].sound_tra = tmp_filename;
 	            }
 	          }
-		          if (data_exp[i].downloadedSound_tra == "downloading")
+		          if (data_exp[i].sound_tra_downloaded == "downloading")
 		          {
-								alert("coucou 4 " + i);
+								//alert("coucou 4 " + i);
 								//if (i == (nb_exp - 1))
 								//	downloadFile(str, tmp_filename);
 		            ready = false;
@@ -905,24 +902,23 @@ alert("Error");
 	
 	          var str = data_exp[i].image;
 						var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-						data_exp[i].downloadedImage = "";
-						if ((tmp_filename.fileExists() == false) && (data_exp[i].downloadedImage != "downloading"))
+						if ((tmp_filename.fileExists() == false) && (data_exp[i].image_downloaded != "downloading"))
 						{
 							//alert("coucou 1 " + i);
 							ready = false;
-	            data_exp[i].downloadedImage = "downloading";
+	            data_exp[i].image_downloaded = "downloading";
 	            downloadFile(str, tmp_filename);
 	            break;
 						}
 	          else
 	          {
-	            if (data_exp[i].downloadedImage != "downloading")
+	            if (data_exp[i].image_downloaded != "downloading")
 	            {
 	            //nb_elem2dl++;
 	              data_exp[i].image = tmp_filename;
 	            }
 	          }
-		          if (data_exp[i].downloadedImage == "downloading")
+		          if (data_exp[i].image_downloaded == "downloading")
 		          {
 								//alert("coucou 2 " + i);
 		            ready = false;
