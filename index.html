@@ -330,7 +330,7 @@
 					str_filename,
 					function(entry) {
 alert("> " + entry.name);
-/*
+
 						var localfilepath = entry.fullPath;
             var localfilename = entry.name;
             var localfileext = localfilename.substr(localfilename.length - 3);
@@ -354,10 +354,8 @@ alert("> " + entry.name);
 							data_exp[pos].sound_tra_downloaded = "OK";
               data_exp[pos].sound_tra = localfilepath;
 						}
-*/
 					},
 					function(error) {
-/*
 						console.log("download error source " + error.source);
 						console.log("download error target " + error.target);
 						console.log("Error code" + error.code);
@@ -379,7 +377,6 @@ alert(localfilename + " pos: " + pos + " nbdl: " + nb_elem2dl + " / " + nb_exp);
 						}
 
 alert("Error");
-*/
 					}
 				);
 			}
