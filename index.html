@@ -352,7 +352,7 @@
               console.log(Math.round((nb_elem2dl*100/(nb_exp))) + "% Sound " + "n" + nb_elem2dl + " download complete: " + localfilename);
 							ProgressBar.setValue(Math.round((nb_elem2dl*100/(nb_exp))));
               var pos = get_dataexp_pos(data_exp, localfilename, "sound_tra");
-							alert(localfilename + " nbdl: " + nb_elem2dl + + " pos: " + pos + " / " + nb_exp);
+alert(localfilename + " nbdl: " + nb_elem2dl + " pos: " + pos + " / " + nb_exp);
 							data_exp[pos].downloadedSound_tra = "OK";
               data_exp[pos].sound_tra = localfilepath;
 							//onData_Expressions(data_tmp);
@@ -908,7 +908,7 @@
 
           if (data_exp[i].downloadedSound_tra == "downloading")
           {
-						//alert("coucou 4 " + i);
+						alert("coucou 4 " + i);
             ready = false;
           }
 
