@@ -332,6 +332,7 @@
 						var localfilepath = entry.fullPath;
             var localfilename = entry.name;
             var localfileext = localfilename.substr(localfilename.length - 3);
+            localfileext = localfileext.toLowerCase();
 //alert(localfileext);
 //alert(str.substr(str.length - 3));
             if (localfileext == "svg")
@@ -347,13 +348,12 @@
 						}
 						if ((localfileext == "mp3") || (localfileext == "ogg"))
 						{
-							
-              var pos = get_dataexp_pos(data_exp, localfilename, "sound_tra");
-							data_exp[pos].downloadedSound_tra = "OK";
-							alert(localfilename + " pos: " + pos + " / " + nb_exp);
 							nb_elem2dl++;
               console.log(Math.round((nb_elem2dl*100/(nb_exp))) + "% Sound " + "n" + nb_elem2dl + " download complete: " + localfilename);
 							ProgressBar.setValue(Math.round((nb_elem2dl*100/(nb_exp))));
+              var pos = get_dataexp_pos(data_exp, localfilename, "sound_tra");
+							alert(localfilename + " nbdl: " + nb_elem2dl + + " pos: " + pos + " / " + nb_exp);
+							data_exp[pos].downloadedSound_tra = "OK";
               data_exp[pos].sound_tra = localfilepath;
 							//onData_Expressions(data_tmp);
 						}
@@ -865,7 +865,7 @@
 					
 					if ((tmp_filename.fileExists() == false) && (data_exp[i].downloadedImage != "downloading"))
 					{
-						//alert("coucou 1");
+						//alert("coucou 1 " + i);
 						ready = false;
             data_exp[i].downloadedImage = "downloading";
             downloadFile(str, tmp_filename);
@@ -882,7 +882,7 @@
 
           if (data_exp[i].downloadedImage == "downloading")
           {
-						//alert("coucou 2");
+						//alert("coucou 2 " + i);
             ready = false;
           }
 
@@ -891,7 +891,7 @@
 					
           if (((tmp_filename.fileExists() == false) || ((data_exp[i].date_tra > exp_last_upd_ms) && (data_exp[i].downloadedSound_tra != "OK"))) && (data_exp[i].downloadedSound_tra != "downloading"))
 					{
-						//alert("coucou 3");
+						//alert("coucou 3 " + i);
 						ready = false;
             data_exp[i].downloadedSound_tra = "downloading";
 						downloadFile(str, tmp_filename);
@@ -908,7 +908,7 @@
 
           if (data_exp[i].downloadedSound_tra == "downloading")
           {
-						//alert("coucou 4");
+						//alert("coucou 4 " + i);
             ready = false;
           }
 
