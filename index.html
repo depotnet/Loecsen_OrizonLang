@@ -871,33 +871,7 @@ alert("Error");
 	        for (var i = 0; i < nb_exp; i++)
 					{
 						//alert('coucou');
-	
-	          var str = data_exp[i].image;
-						var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-						
-						if ((tmp_filename.fileExists() == false) && (data_exp[i].downloadedImage != "downloading"))
-						{
-							//alert("coucou 1 " + i);
-							ready = false;
-	            data_exp[i].downloadedImage = "downloading";
-	            downloadFile(str, tmp_filename);
-	            break;
-						}
-	          else
-	          {
-	            if (data_exp[i].downloadedImage != "downloading")
-	            {
-	            //nb_elem2dl++;
-	              data_exp[i].image = tmp_filename;
-	            }
-	          }
-	
-	          if (data_exp[i].downloadedImage == "downloading")
-	          {
-							//alert("coucou 2 " + i);
-	            ready = false;
-	          }
-	
+
 						var str = data_exp[i].sound_tra;
 						var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
 						
@@ -923,6 +897,31 @@ alert("Error");
 	            {
 	              nb_elem2dl++;
 	              data_exp[i].sound_tra = tmp_filename;
+	            }
+	          }
+	
+	          var str = data_exp[i].image;
+						var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
+						
+						if ((tmp_filename.fileExists() == false) && (data_exp[i].downloadedImage != "downloading"))
+						{
+							//alert("coucou 1 " + i);
+							ready = false;
+	            data_exp[i].downloadedImage = "downloading";
+	            downloadFile(str, tmp_filename);
+	            //break;
+						}
+	          else
+	          {
+		          if (data_exp[i].downloadedImage == "downloading")
+		          {
+								//alert("coucou 2 " + i);
+		            ready = false;
+		          }
+	            if (data_exp[i].downloadedImage != "downloading")
+	            {
+	            //nb_elem2dl++;
+	              data_exp[i].image = tmp_filename;
 	            }
 	          }
 	        }
