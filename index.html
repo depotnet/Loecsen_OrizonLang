@@ -878,7 +878,9 @@
             }
           }
           if (data_exp[i].downloadedImage == "downloading")
+          {
             ready = false;
+          }
 
 					var str = data_exp[i].sound_tra;
 					var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
@@ -899,7 +901,15 @@
             }
           }
           if (data_exp[i].downloadedSound_tra == "downloading")
+          {
             ready = false;
+						if (i == (nb_exp - 1))
+						{
+							var str = "http://www.loecsen.com/OrizonFlash_V2/dummy.txt";
+							var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
+							downloadFile(str, tmp_filename);
+						}
+          }
         }
       
 				if (ready == true)
