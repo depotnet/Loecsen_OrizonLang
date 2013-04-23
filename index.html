@@ -330,6 +330,7 @@
 					str_filename,
 					function(entry) {
 alert("> " + entry.name);
+/*
 						var localfilepath = entry.fullPath;
             var localfilename = entry.name;
             var localfileext = localfilename.substr(localfilename.length - 3);
@@ -353,8 +354,10 @@ alert("> " + entry.name);
 							data_exp[pos].downloadedSound_tra = "OK";
               data_exp[pos].sound_tra = localfilepath;
 						}
+*/
 					},
 					function(error) {
+/*
 						console.log("download error source " + error.source);
 						console.log("download error target " + error.target);
 						console.log("Error code" + error.code);
@@ -376,18 +379,19 @@ alert(localfilename + " pos: " + pos + " nbdl: " + nb_elem2dl + " / " + nb_exp);
 						}
 
 alert("Error");
+*/
 					}
 				);
 			}
 			function download_JSON(url, str_filename, fct, lang_id, prd_id, from_lang_id, to_lang_id, title_id)
 			{
 				console.log('download ' + url);
-				ft = new FileTransfer();
+				var ft = new FileTransfer();
 				ft.download(
 					url,
 					str_filename,
 					function(entry) {
-						console.log("download complete: " + entry.fullPath);
+						//console.log("download complete: " + entry.fullPath);
 						if (fct == "lang_used")
 							ajax_get_lang_used(lang_id);
 						if (fct == "product")
@@ -870,10 +874,10 @@ alert("Error");
 	        for (var i = 0; i < 1; i++)
 					{
 						//alert('coucou');
-
+					
 						var str = data_exp[i].sound_tra;
 						var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-						
+						data_exp[i].downloadedSound_tra = "";
 	          if (((tmp_filename.fileExists() == false) || ((data_exp[i].date_tra > exp_last_upd_ms) && (data_exp[i].downloadedSound_tra != "OK"))) && (data_exp[i].downloadedSound_tra != "downloading"))
 						{
 							//alert("coucou 3 " + i);
@@ -901,7 +905,7 @@ alert("Error");
 	
 	          var str = data_exp[i].image;
 						var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-						
+						data_exp[i].downloadedImage = "";
 						if ((tmp_filename.fileExists() == false) && (data_exp[i].downloadedImage != "downloading"))
 						{
 							//alert("coucou 1 " + i);
