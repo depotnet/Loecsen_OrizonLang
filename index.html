@@ -341,7 +341,7 @@ alert("> " + entry.name);
               //console.log("Image " + "n" + nb_elem2dl + " download complete: " + localfilename);
 							//ProgressBar.setValue(Math.round((nb_elem2dl*100/(2*nb_exp))));
               var pos = get_dataexp_pos(data_exp, localfilename, "image");
-							data_exp[pos].downloadedImage = "OK";
+							data_exp[pos].image_downloaded = "OK";
               data_exp[pos].image = localfilepath;
 						}
 						if ((localfileext == "mp3") || (localfileext == "ogg"))
@@ -368,7 +368,7 @@ alert("> " + entry.name);
 						{
 							//nb_elem2dl++;
               var pos = get_dataexp_pos(data_exp, localfilename, "image");
-							data_exp[pos].downloadedImage = "NOK";
+							data_exp[pos].image_downloaded = "NOK";
 						}
 						if ((localfileext == "mp3") || (localfileext == "ogg"))
 						{
@@ -871,7 +871,7 @@ alert("Error");
 	        for (var i = 0; i < num_exp; i++)
 					{
 						data_exp[i].downloadedSound_tra = "";
-						data_exp[i].downloadedImage = "";
+						//data_exp[i].image_downloaded = "";
 					}
         }
         do
@@ -909,23 +909,23 @@ alert("Error");
 	
 	          var str = data_exp[i].image;
 						var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-						if ((tmp_filename.fileExists() == false) && (data_exp[i].downloadedImage != "downloading"))
+						if ((tmp_filename.fileExists() == false) && (data_exp[i].image_downloaded != "downloading"))
 						{
 							//alert("coucou 1 " + i);
 							ready = false;
-	            data_exp[i].downloadedImage = "downloading";
+	            data_exp[i].image_downloaded = "downloading";
 	            downloadFile(str, tmp_filename);
 	            break;
 						}
 	          else
 	          {
-	            if (data_exp[i].downloadedImage != "downloading")
+	            if (data_exp[i].image_downloaded != "downloading")
 	            {
 	            //nb_elem2dl++;
 	              data_exp[i].image = tmp_filename;
 	            }
 	          }
-		          if (data_exp[i].downloadedImage == "downloading")
+		          if (data_exp[i].image_downloaded == "downloading")
 		          {
 								//alert("coucou 2 " + i);
 		            ready = false;
