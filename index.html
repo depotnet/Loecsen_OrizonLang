@@ -855,7 +855,8 @@ alert("Error");
           nb_exp = data_exp.length;
           num_exp = 1;
           cur_expID = data_exp[0].id;
-        }      
+        }
+        do {
         for (var i = 0; i < nb_exp; i++)
 				{
 					//ProgressBar.run();
@@ -898,7 +899,7 @@ alert("Error");
 						ready = false;
             data_exp[i].downloadedSound_tra = "downloading";
 						downloadFile(str, tmp_filename);
-            break;
+            //break;
 					}
           else
           {
@@ -906,7 +907,7 @@ alert("Error");
 	          {
 							alert("coucou 4 " + i);
 	            ready = false;
-	            break;
+	            //break;
 	          }
             if ((data_exp[i].downloadedSound_tra != "downloading") && (data_exp[i].downloadedSound_tra != "OK"))
             {
@@ -915,7 +916,8 @@ alert("Error");
             }
           }
         }
-
+      }
+while ((ready == false) || (nb_elem2dl < nb_exp))
 //alert(ready + " nb: " + nb_elem2dl);
 				if ((ready == true) || (nb_elem2dl >= nb_exp))
 				{
