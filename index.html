@@ -321,7 +321,7 @@
 				ajax_get_lang_used(lang);
 			}
 
-			function downloadFile(url, str_filename, success, err)
+			function downloadFile(url, str_filename)
 			{
 				console.log('download ' + url);
 				ft = new FileTransfer();
@@ -332,38 +332,48 @@
 						var localfilepath = entry.fullPath;
             var localfilename = entry.name;
             var localfileext = localfilename.substr(localfilename.length - 3);
+            localfileext = localfileext.toLowerCase();
 //alert(localfileext);
 //alert(str.substr(str.length - 3));
             if (localfileext == "svg")
 						{
-//alert("image");
               var pos = get_dataexp_pos(data_exp, localfilename, "image");
 							data_exp[pos].downloadedImage = "OK";
-							//nb_elem2dl++;
-              //console.log("Image " + "n" + nb_elem2dl + " download complete: " + localfilename);
-							//ProgressBar.setValue(Math.round((nb_elem2dl*100/(2*nb_exp))));
               data_exp[pos].image = localfilepath;
-							//onData_Expressions(data_tmp);
 						}
 						if ((localfileext == "mp3") || (localfileext == "ogg"))
 						{
-							
-              var pos = get_dataexp_pos(data_exp, localfilename, "sound_tra");
-							data_exp[pos].downloadedSound_tra = "OK";
 							nb_elem2dl++;
               console.log(Math.round((nb_elem2dl*100/(nb_exp))) + "% Sound " + "n" + nb_elem2dl + " download complete: " + localfilename);
 							ProgressBar.setValue(Math.round((nb_elem2dl*100/(nb_exp))));
+              var pos = get_dataexp_pos(data_exp, localfilename, "sound_tra");
+//alert(localfilename + " pos: " + pos + " nbdl: " + nb_elem2dl + " / " + nb_exp);
+							data_exp[pos].downloadedSound_tra = "OK";
               data_exp[pos].sound_tra = localfilepath;
-							//onData_Expressions(data_tmp);
 						}
-//alert(nb_exp + "  " + nb_elem2dl + "  " + Math.round((nb_elem2dl*100/(nb_exp))));
-//            if (nb_elem2dl >= (2*nb_exp))
-//              hide_ProgressBar();
 					},
 					function(error) {
 						console.log("download error source " + error.source);
 						console.log("download error target " + error.target);
 						console.log("Error code" + error.code);
+/*
+            var localfilename = error.target;
+            var localfileext = localfilename.substr(localfilename.length - 3);
+            localfileext = localfileext.toLowerCase();
+            if (localfileext == "svg")
+						{
+							//nb_elem2dl++;
+              var pos = get_dataexp_pos(data_exp, localfilename, "image");
+							data_exp[pos].image_downloaded = "NOK";
+						}
+						if ((localfileext == "mp3") || (localfileext == "ogg"))
+						{
+							//nb_elem2dl++;
+              var pos = get_dataexp_pos(data_exp, localfilename, "sound_tra");
+alert(localfilename + " pos: " + pos + " nbdl: " + nb_elem2dl + " / " + nb_exp);
+							data_exp[pos].sound_tra_downloaded = "NOK";
+						}
+*/
 					}
 				);
 			}
@@ -549,8 +559,6 @@
 				    {
 							prd_id = data[0].prd_id;
 							ajax_upd_titles(prd_id, from_lang_id);
-              //ajax_get_fromlangs(prd_id, from_lang_id);
-              //ajax_get_tolangs(prd_id, from_lang_id);
 				    }
 				  });
 				}
@@ -563,7 +571,10 @@
         else
         {
 					if ((str_uri.fileExists() == false) || (fromlang_do_upd == true))
+					{
+						fromlang_do_upd = false;
 						download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=from&prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "fromlangs", lang_id, prd_id);
+					}
 					else
 					{
 					  $.ajax({
@@ -643,7 +654,10 @@
         {
 	        show_ProgressBar();
 					if ((str_uri.fileExists() == false) || (tolang_do_upd == true))
+					{
+						tolang_do_upd = false;
 						download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=to&prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "tolangs", lang_id, prd_id);
+					}
 					else
 					{
 					  $.ajax({
@@ -718,7 +732,10 @@
         {
 	        show_ProgressBar();
 					if ((str_uri.fileExists() == false) || (title_do_upd == true))
+					{
+						title_do_upd = false;
 						download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_titles.php?prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "titles", lang_id, prd_id);
+					}
 					else
 					{
 				    $.ajax({
@@ -822,7 +839,7 @@
 			{
         exp_chk_upd = true;
         var date_tmp = new Date(m.modificationTime);
-        var exp_last_upd_ms = date_tmp.getTime();
+        exp_last_upd_ms = date_tmp.getTime();
         console.log("Last Update : " + exp_last_upd_ms);
         if ((today_ms - exp_last_upd_ms) > (2*3600*1000))
         {
@@ -849,19 +866,14 @@
 
           
           data_exp = data;
-          nb_exp = data.length;
+          nb_exp = data_exp.length;
           num_exp = 1;
-          cur_expID = data[0].id;
+          cur_expID = data_exp[0].id;
         }      
         for (var i = 0; i < nb_exp; i++)
 				{
-					//ProgressBar.run();
-					//ProgressBar.setValue(Math.round((i+1)*100/nb_exp));
-					//ProgressBar.stop();
-					//alert('coucou');
           var str = data_exp[i].image;
 					var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-					
 					if ((tmp_filename.fileExists() == false) && (data_exp[i].downloadedImage != "downloading"))
 					{
 						ready = false;
@@ -884,7 +896,6 @@
 
 					var str = data_exp[i].sound_tra;
 					var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-					
           if (((tmp_filename.fileExists() == false) || ((data_exp[i].date_tra > exp_last_upd_ms) && (data_exp[i].downloadedSound_tra != "OK"))) && (data_exp[i].downloadedSound_tra != "downloading"))
 					{
 						ready = false;
