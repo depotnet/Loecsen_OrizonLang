@@ -9,12 +9,26 @@
  */
 String.prototype.fileExists = function() {
 	filename = this.trim();
-	
+	/*console.log("Exists?" + filename);*/
+
+/*
 	var response = jQuery.ajax({
 		url: filename,
 		type: 'HEAD',
+		cache: false,
 		async: false
-	}).status;	
-	
+	}).status;
+	console.log("Exists : " + response);
 	return (response != "200") ? false : true;
+	*/
+	var response = false;
+	jQuery.ajax({
+		url: filename,
+		type: 'HEAD',
+		cache: false,
+		async: false
+	}).done(function(){/*console.log("Exists!" + filename);*/ response = true;})
+	.fail(function(){/*console.log("Not Exists" + filename);*/ response = false;});
+	
+	return response;
 }
