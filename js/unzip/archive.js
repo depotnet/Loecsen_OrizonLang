@@ -701,13 +701,13 @@ var ZipLoader = function(zipURL) {
                 var tmp = "data:";
                 switch(getFileExtension(url).toLowerCase()) {
                     case 'mp3' :
-                        tmp += "audio/mpeg;base64,";
+                        tmp += "audio/mp3;base64,";
                         break;
                     case 'ogg' :
                         tmp += "audio/ogg;base64,";
                         break;
                 }
-                tmp += Base64(data);
+                tmp = Base64(data);
             }
             return tmp;
         },

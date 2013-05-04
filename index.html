@@ -26,6 +26,8 @@
 		<script src="js/svg/jquery.svg.min.js" type="text/javascript"></script>
 
 		<script src="js/unzip/archive.js" type="text/javascript"></script>
+    
+    <script src="js/base64-binary.js" type="text/javascript"></script>
 
 <!------  Languages  ------>
 		<script src="js/lang/UI_translations.js" type="text/javascript"></script>
@@ -189,7 +191,11 @@
 		    app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1,
 		    android = ~ua.indexOf('Android'),
 		    lastWidth = 0;
-			var lang_UI = "de";
+			var lang_UI = lang.substr(0,2);
+console.log("Language detected :" + lang_UI);
+			if ((lang_UI != "en") && (lang_UI != "fr") && (lang_UI != "de") && (lang_UI != "es") && (lang_UI != "it") && (lang_UI != "pt"))
+				lang_UI = "en";
+console.log("Language used :" + lang_UI);
 			
 			var _w = Math.max( $(window).width(), $(window).height() );
 			var _h = Math.min( $(window).width(), $(window).height() );
@@ -202,8 +208,7 @@
 		//	tabletView = false;
 			//Orientation
 			var orientation = window.orientation;
-		
-		
+
 			var mode_player = true;
 			var num_exp = 1;
 			var cur_expID;
@@ -227,16 +232,19 @@
       
       var fromlang_chk_upd = false;
       var fromlang_do_upd = false;
+      var tolang_filename = "";
+      var tolang_filepath = "";
       var tolang_chk_upd = false;
       var tolang_do_upd = false;
       var title_chk_upd = false;
       var title_do_upd = false;
       var exp_chk_upd = false;
+      var exp_chk_updZIP = false;
       var exp_do_upd = false;
-      var exp_chk_all = true;
+      var exp_do_updZIP = false;
 
 			var loaderZIPIMG = new ZipLoader('ressources/webapp/svg.zip');
-//			var loaderZIPSND = new ZipLoader('ressources/webapp/sonogg.zip');
+			var loaderZIPSND;
 
       var fileSystem;
       var knownfiles = [];
@@ -361,7 +369,7 @@
 				console.log(JSON.stringify(window.appRootDir));
 				ajax_get_lang_used(lang);
 			}
-
+/*
 			function downloadFile(url, str_filename)
 			{
 				console.log('Download start : ' + url);
@@ -398,7 +406,7 @@
 						console.log("download error source " + error.source);
 						console.log("download error target " + error.target);
 						console.log("Error code" + error.code);
-/*
+
             var localfilename = error.target;
             var localfileext = localfilename.substr(localfilename.length - 3);
             localfileext = localfileext.toLowerCase();
@@ -414,12 +422,12 @@
               var pos = get_dataexp_pos(data_exp, localfilename, "sound_tra");
 							data_exp[pos].sound_tra_downloaded = "NOK";
 						}
-*/
 						alert("download error source " + error.source + " error code" + error.code);
 						hide_ProgressBar()
 					}
 				);
 			}
+*/
 			function download_JSON(url, str_filename, fct, lang_id, prd_id, from_lang_id, to_lang_id, title_id)
 			{
 				console.log('download ' + url);
@@ -457,14 +465,13 @@
       {
         if (ProgressBar == false)
         {
-          nb_elem2dl = 0;
           pg_value = 0
           $("#bar").hide();
           $("#pg_bar").show();
           $("#slider-mini").attr('value', 0);
           $("#slider-mini").slider('refresh');
 	        ProgressBar = true;
-	        timer_pg = window.setInterval(upd_ProgressBar,500);
+	        timer_pg = window.setInterval(upd_ProgressBar,1500);
         }
       }
       function upd_ProgressBar()
@@ -498,7 +505,6 @@
 		  var qcm_sel;
 		  var qcm_num;
 			var timer;
-			var timer_load;
 			var timer_pg;
 			var nb_good_answers=0;
 			var nb_exp_used=0;
@@ -525,6 +531,57 @@
 				var cnt_padding;
 			}
 
+
+	/*
+      function listFiles()
+      {
+				var reader = window.appRootDir.createReader();
+				reader.readEntries(function(d){
+					gotFiles(d);
+				},fail);
+      }
+      function gotFiles(entries)
+      {
+				console.log("The dir has "+entries.length+" entries.");
+				for (var i=0; i<entries.length; i++) {
+					console.log(entries[i].name+' dir? '+entries[i].isDirectory);
+					knownfiles.push(entries[i].name);
+				}
+    	}      
+      
+      function checkIfFileExists(path, pos, type)
+      {
+				window.resolveLocalFileSystemURI(path,
+					function (fileEntry) {
+				  	console.log(">>>> " + fileEntry.name);
+				  	fileEntry.file(
+				  			function(file){
+				  				if (type == "sound_tra")
+				  				{
+							    	if (file.size >= data_exp[pos].sound_tra_size)
+							    	{
+							    		if (data_exp[pos].downloadedSound_tra == "downloading")
+							    		{
+							    			nb_elem2dl++;
+							    			data_exp[pos].downloadedSound_tra = "OK";
+							    			console.log("Downloaded: " + path + " > " + file.size);
+							    		}
+							    	}
+				  				}
+							},
+							function (error)
+							{
+								console.log("ERROR GETTING FILE INFO : " + error.code);
+							}
+						);
+					},
+					function (error)
+					{
+						console.log("NOT EXISTS : " + path);
+					}
+				);
+      }
+*/
 
 
 
@@ -667,7 +724,6 @@
 				    $('#flag1').attr('src', $('#from_lang_icon_'+sel).attr('src'));
             if ($('#from_lang_icon_'+sel).hasClass('r2l'))
               from_lang_r2l="Y";
-            exp_chk_all = true;
 						ajax_upd_titles(prd_id, sel);
 				  }
 			  });
@@ -679,7 +735,6 @@
           fileSystem.root.getFile(str_uri, {create:false}, function(f){f.getMetadata(do_upd_tolang, do_upd_tolang_fail);}, do_upd_tolang_fail);
         else
         {
-	        show_ProgressBar();
 					if ((str_uri.fileExists() == false) || (tolang_do_upd == true))
 					{
 						tolang_do_upd = false;
@@ -744,7 +799,6 @@
 				    var sel = $.trim($('#sel_to_lang').mobiscroll('getValue'));
 				    to_lang_id = sel;
 				    $('#flag2').attr('src', $('#to_lang_icon_'+sel).attr('src'));
-				    exp_chk_all = true;
 						ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id);
 				  }
 			  });
@@ -757,7 +811,6 @@
           fileSystem.root.getFile(str_uri, {create:false}, function(f){f.getMetadata(do_upd_title, do_upd_title_fail);}, do_upd_title_fail);
         else
         {
-	        show_ProgressBar();
 					if ((str_uri.fileExists() == false) || (title_do_upd == true))
 					{
 						title_do_upd = false;
@@ -826,7 +879,6 @@
 			    onSelect: function (valueText, inst){
 				    var sel = $('#sel_title').mobiscroll('getValue');
 				    title_id = $.trim(sel);
-				    exp_chk_all = false;
 				    $("#top_title").html($("#title_" + title_id).html());
 				    ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id);
 				  }
@@ -845,7 +897,6 @@
           fileSystem.root.getFile(str_uri, {create:false}, function(f){f.getMetadata(do_upd_exp,fail);},do_upd_exp_fail);
         else
         {
-          show_ProgressBar();
           if ((str_uri.fileExists() == false) || (exp_do_upd == true))
           {
             exp_do_upd = false;
@@ -891,279 +942,236 @@ console.log("Do update");
         if (typeof(data) != "undefined")
         {
           data_exp = data;
-          nb_exp_total = data_exp.length;
+//          nb_exp = data_exp.length;
           num_exp = 1;
 //          cur_expID = data_exp[0].id;
 //listFiles();
-          parseData();
+          downloadPack_tolang();
         }
 			}
 
-      function listFiles()
-      {
-				var reader = window.appRootDir.createReader();
-				reader.readEntries(function(d){
-					gotFiles(d);
-				},fail);
-      }
-      function gotFiles(entries)
-      {
-console.log("The dir has "+entries.length+" entries.");
-				for (var i=0; i<entries.length; i++) {
-console.log(entries[i].name+' dir? '+entries[i].isDirectory);
-					knownfiles.push(entries[i].name);
+/*
+			function downloadPack_fromlang()
+			{
+				nb_elem2dl=1;
+				fromlang_filename = "mp3_" + from_lang_id + ".zip";
+				fromlang_filepath = window.appRootDir.fullPath + "/" + fromlang_filename;
+				tolang_filename = "mp3_" + to_lang_id + ".zip";
+				tolang_filepath = window.appRootDir.fullPath + "/" + tolang_filename;
+
+				if (fromlang_filepath.fileExists() == false)
+				{
+	        show_ProgressBar();
+					if (tolang_filepath.fileExists() == false)
+						nb_elem2dl = 2;
+					console.log('Download 1 start : ');
+					ft = new FileTransfer();
+					ft.onprogress = function(progressEvent) {
+				    if (progressEvent.lengthComputable)
+				    {
+							pg_value = Math.round(progressEvent.loaded / progressEvent.total * 100 / nb_elem2dl);
+				    }
+				    else
+				    {
+
+				    }
+					};
+					ft.download(
+						encodeURI("http://www.loecsen.com/OrizonFlash_V2/ressources/webapp/" + fromlang_filename),
+						fromlang_filepath,
+						function(entry) {
+							console.log('Download 1 ended : ' + entry.name);
+							downloadPack_tolang();
+						},
+						function(error) {
+							console.log("download error source " + error.source);
+							console.log("download error target " + error.target);
+							console.log("Error code" + error.code);
+							alert("download error source " + error.source + " error code" + error.code);
+						}
+					);
 				}
-    	}      
+				else
+				{
+					downloadPack_tolang();
+				}
+			}
+*/
 
-      
-      
-      
-      
-      function checkIfFileExists(path, url, pos, type)
-      {
-    	  if (android)
-    		{
-    		  window.resolveLocalFileSystemURI(path,
-						function (fileEntry) {
-console.log(">>>> " + fileEntry.name);
-					  	fileEntry.file(
-					  			function(file){
-					  				if (type == "sound_tra")
-					  				{
-								    	if (file.size >= data_exp[pos].sound_tra_size)
-								    	{
-								    		if (data_exp[pos].downloadedSound_tra == "downloading")
-								    		{
-								    			nb_elem2dl++;
-								    			data_exp[pos].downloadedSound_tra = "OK";
-console.log("Downloaded: " + path + " > " + file.size);
-								    		}
-								    	}
-								    	else
-								    	{
-								    		//PAS LA BONNE TAILLE => ON RECHARGE
-									    	if (file.size != data_exp[pos].sound_tra_size)
-									    	{
-									    		if (data_exp[pos].downloadedSound_tra != "downloading")
-									    		{
-									    			nb_elem2dl--;
-									    			data_exp[pos].downloadedSound_tra = "downloading";
-console.log("---### Re-Download: " + path + " > " + file.size);
-														downloadFile(url, path);
-									    		}
-									    	}
-								    	}
-					  				}
-								},
-								function (error)
-								{
-console.log("ERROR GETTING FILE INFO : " + error.code);
-								}
-							);
+
+
+			function downloadPack_tolang()
+			{
+				tolang_filename = "mp3_" + to_lang_id + ".zip";
+				tolang_filepath = window.appRootDir.fullPath + "/" + tolang_filename;
+				if ((tolang_filepath.fileExists() == false) || (exp_do_updZIP == true))
+				{
+					exp_do_updZIP = false;
+			    show_ProgressBar();
+					console.log('Download start : ');
+					ft = new FileTransfer();
+					ft.onprogress = function(progressEvent) {
+				    if (progressEvent.lengthComputable)
+				    {
+//							pg_value = Math.round(progressEvent.loaded / progressEvent.total * 100 / nb_elem2dl + (nb_elem2dl-1)*50);
+							pg_value = Math.round(progressEvent.loaded / progressEvent.total * 100);
+				    }
+				    else
+				    {
+
+				    }
+					};
+					ft.download(
+						encodeURI("http://www.loecsen.com/OrizonFlash_V2/ressources/webapp/" + tolang_filename),
+						tolang_filepath,
+						function(entry) {
+							console.log('Download ended : ' + entry.name);
+							parseData();
 						},
-						function (error)
-						{
-console.log("NOT EXISTS 1 : " + path);
+						function(error) {
+							console.log("download error source " + error.source);
+							console.log("download error target " + error.target);
+							console.log("Error code" + error.code);
+							alert("download error source " + error.source + " error code" + error.code);
 						}
 					);
-    		}
-    	  else
-    		{
-	    	  fileSystem.root.getFile(path, {create: false},
-						function (fileEntry) {
-console.log(">>>> " + fileEntry.name);
-					  	fileEntry.file(
-					  			function(file){
-					  				if (type == "sound_tra")
-					  				{
-								    	if (file.size >= data_exp[pos].sound_tra_size)
-								    	{
-								    		if (data_exp[pos].downloadedSound_tra == "downloading")
-								    		{
-								    			nb_elem2dl++;
-								    			data_exp[pos].downloadedSound_tra = "OK";
-console.log("Downloaded: " + path + " > " + file.size);
-								    		}
-								    	}
-								    	else
-								    	{
-								    		//PAS LA BONNE TAILLE => ON RECHARGE
-									    	if (file.size != data_exp[pos].sound_tra_size)
-									    	{
-									    		if (data_exp[pos].downloadedSound_tra != "downloading")
-									    		{
-									    			nb_elem2dl--;
-									    			data_exp[pos].downloadedSound_tra = "downloading";
-console.log("---### Re-Download: " + path + " > " + file.size);
-														downloadFile(url, path);
-									    		}
-									    	}
-								    	}
-					  				}
-								},
-								function (error)
-								{
-console.log("ERROR GETTING FILE INFO : " + error.code);
-								}
-							);
-						},
-						function (error)
-						{
-console.log("NOT EXISTS : " + path);
-						}
-					);
-      	}
-      }
+				}
+				else
+				{
+			    if (exp_chk_updZIP == false)
+			    {
+			    	exp_chk_updZIP = true;
+			    	loaderZIPSND = new ZipLoader(tolang_filepath);
+			    	var cur_version = loaderZIPSND.load(tolang_filepath + "://VERSION");
+console.log("CURRENT VERSION: " + loaderZIPSND.load(tolang_filepath + "://VERSION"));
+            $.ajax({
+			        type: "GET",
+			        url: "http://www.loecsen.com/OrizonFlash_V2/ressources/webapp/" + tolang_filename + ".ver",
+			        cache: false,
+			        contentType: "text/html; charset=utf-8",
+			        dataType: "html",
+			        success: function(data){
+console.log("LAST VERSION: " + data);
+			        	var last_version = data;
+			        	if (last_version > cur_version)
+			        	{
+			        		console.log("UPDATE !!!");
+			        		exp_do_updZIP = true;
+			        		downloadPack_tolang();
+			        	}
+			        	else
+			        	{
+			        		console.log("NO UPDATE");
+			        		parseData();
+			        	}
+			        },
+			        error: parseData
+			      });
+			    }
+			    else
+			    {
+			    	parseData();
+			    }
+				}
+			}
 
-		var ready = true;
+
 			function parseData()
 			{
-				ready = true;
-				window.clearInterval(timer_load);
-console.log("***********************Ready 1 : " + ready);
-        for (var i = 0; i < nb_exp_total; i++)
+				loaderZIPSND = null;
+				loaderZIPSND = new ZipLoader(tolang_filepath);
+
+		    $("#pg_bar").css({'display' : 'none'});
+		    $("#bar").css({'display' : 'block'});
+				$('#sel_exp li').remove();
+				$('#sel_exp').mobiscroll('destroy');
+				$('#scroller li').remove();
+       	nb_exp = 0;
+        for (var i = 0; i < data_exp.length; i++)
 				{
-					if ((data_exp[i].title_id == title_id) || (exp_chk_all == true))
-					{
-						var str = data_exp[i].sound_tra;
-						var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-						checkIfFileExists(tmp_filename, str, i, "sound_tra");
-						if (((tmp_filename.fileExists() == false) || ((data_exp[i].date_tra > exp_last_upd_ms) && (data_exp[i].downloadedSound_tra != "OK"))) && (data_exp[i].downloadedSound_tra != "downloading"))
+        	if (data_exp[i].title_id == title_id)
+        	{
+        		if (nb_exp == 0)
+        		{
+        	    cur_expID = data_exp[i].id;
+        	    start_exp = i;
+        		}
+        		nb_exp++;
+						var tmp_id = data_exp[i].id;
+						if (data_exp[i].variation == "N")
 						{
-console.log("Audio not found : " + tmp_filename);
-							ready = false;
-	            data_exp[i].downloadedSound_tra = "downloading";
-							downloadFile(str, tmp_filename);
-	            //break;
+								$('#sel_exp').append('<li data-val=" '+ tmp_id.toString() + '"><div class="exp"><span class="exp_txt">' + data_exp[i].text + '</span></div></li>');
+								$('#scroller > ul').append('<li class="tab_exp" data-val=" '+ tmp_id.toString() + '" data-icon="false"><a class="tab_exp_txt" href="#">' + data_exp[i].text + '</a></li>');
 						}
-	          else
-	          {
-	            if ((typeof(data_exp[i].downloadedSound_tra) == "undefined") && (data_exp[i].downloadedSound_tra != "OK"))
-	            {
-                //data_exp[i].downloadedSound_tra = "OK";
-	              nb_elem2dl++;
-console.log(Math.round((nb_elem2dl*100/(nb_exp_total))) + "% Sound " + "n" + nb_elem2dl + " download complete: " + tmp_filename);
-	              pg_value = Math.round((nb_elem2dl*100/(nb_exp_total)));
-	              data_exp[i].sound_tra = tmp_filename;
-	            }
-	            else
-	            {
-		            if (data_exp[i].downloadedSound_tra == "downloading")
-		            {
-console.log("Audio found (downloading) : " + tmp_filename);
-		              ready = false;
-//break;
-		            }
-	            }
-	          }
-          }
-        }
-console.log("************************Ready : " + ready);
-				if (ready == true)
-				{
-					$('#sel_exp li').remove();
-					$('#sel_exp').mobiscroll('destroy');
-					$('#scroller li').remove();
-        	nb_exp = 0;
-	        for (var i = 0; i < nb_exp_total; i++)
-					{
-	        	if (data_exp[i].title_id == title_id)
-	        	{
-	        		if (nb_exp == 0)
-	        		{
-	        	    cur_expID = data_exp[i].id;
-	        	    start_exp=i;
-	        		}
-	        		nb_exp++;
-							var tmp_id = data_exp[i].id;
-							if (data_exp[i].variation == "N")
+						else
+						{
+							if (from_lang_r2l == "Y")
 							{
-									$('#sel_exp').append('<li data-val=" '+ tmp_id.toString() + '"><div class="exp"><span class="exp_txt">' + data_exp[i].text + '</span></div></li>');
-									$('#scroller > ul').append('<li class="tab_exp" data-val=" '+ tmp_id.toString() + '" data-icon="false"><a class="tab_exp_txt" href="#">' + data_exp[i].text + '</a></li>');
+								$('#sel_exp').append('<li data-val=" '+ tmp_id.toString() + '"><div class="exp"><span class="exp_var">' + data_exp[i].desc + ' +</span></div></li>');
+								$('#scroller > ul').append('<li class="tab_exp" data-val=" '+ tmp_id.toString() + '" data-icon="false"><a class="tab_exp_var" href="#">' + data_exp[i].desc + ' +</a></li>');
 							}
 							else
 							{
-								if (from_lang_r2l == "Y")
-								{
-									$('#sel_exp').append('<li data-val=" '+ tmp_id.toString() + '"><div class="exp"><span class="exp_var">' + data_exp[i].desc + ' +</span></div></li>');
-									$('#scroller > ul').append('<li class="tab_exp" data-val=" '+ tmp_id.toString() + '" data-icon="false"><a class="tab_exp_var" href="#">' + data_exp[i].desc + ' +</a></li>');
-								}
-								else
-								{
-									$('#sel_exp').append('<li data-val=" '+ tmp_id.toString() + '"><div class="exp"><span class="exp_var">+ ' + data_exp[i].desc + '</span></div></li>');
-									$('#scroller > ul').append('<li class="tab_exp" data-val=" '+ tmp_id.toString() + '" data-icon="false"><a class="tab_exp_var" href="#">+ ' + data_exp[i].desc + '</a></li>');
-								}
+								$('#sel_exp').append('<li data-val=" '+ tmp_id.toString() + '"><div class="exp"><span class="exp_var">+ ' + data_exp[i].desc + '</span></div></li>');
+								$('#scroller > ul').append('<li class="tab_exp" data-val=" '+ tmp_id.toString() + '" data-icon="false"><a class="tab_exp_var" href="#">+ ' + data_exp[i].desc + '</a></li>');
 							}
-	        	}
-					}
-					
-          $('.tab_exp a').css({'width' : left_column_width-40 + 'px'});
-					$('.tab_exp').click(function()
+						}
+        	}
+				}
+        $('.tab_exp a').css({'width' : left_column_width-40 + 'px'});
+				$('.tab_exp').click(function()
+				{
+					cur_expID = $.trim($(this).attr('data-val'));
+					if (mode_player == true)
+						upd_elem(cur_expID);
+					else
 					{
-						cur_expID = $.trim($(this).attr('data-val'));
+				    $('#btn_validate').removeClass('ui-disabled');
+						$('#scroller .ui-btn-up-a').removeClass('ui-btn-up-a').removeClass('ui-btn-hover-a').addClass('ui-btn-up-d').attr('data-theme', 'd').trigger('create');
+						$("[data-val=' " + cur_expID + "']").removeClass('ui-btn-up-d').removeClass('ui-btn-hover-d').addClass('ui-btn-up-a').attr('data-theme', 'a').trigger('create');
+					}
+			    return false;
+			  });
+				
+        $('#scroller > ul').trigger('create');
+				$('#scroller > ul').listview('refresh');
+				$('#page1').css("min-height","");
+				$('#page1').css("padding-bottom","");
+				$('#page1').css("padding-top","");
+				setup_UI();
+		
+				if (tabletView == true)
+				{
+					if (typeof(myScroll) != 'undefined')
+						Scroll_refresh();
+					else
+						Scroll_create();
+				}
+		
+				$('#sel_exp').mobiscroll().image({
+			    theme: 'ios',
+			    lang: lang,
+			    display: 'inline',
+			    mode: 'scroller',
+			    labels: ['Expressions'],
+			    inputClass: 'i-txt',
+			    rows: scroller_row,
+			    width: scroller_width+10,
+			    onChange: function (valueText, inst){
+						var sel = valueText;
+						cur_expID = $.trim(sel);
 						if (mode_player == true)
 							upd_elem(cur_expID);
 						else
 						{
-					    $('#btn_validate').removeClass('ui-disabled');
-							$('#scroller .ui-btn-up-a').removeClass('ui-btn-up-a').removeClass('ui-btn-hover-a').addClass('ui-btn-up-d').attr('data-theme', 'd').trigger('create');
-							$("[data-val=' " + cur_expID + "']").removeClass('ui-btn-up-d').removeClass('ui-btn-hover-d').addClass('ui-btn-up-a').attr('data-theme', 'a').trigger('create');
+							upd_elem(cur_expID, false, false, false, false);
+							$('#btn_validate').removeClass('ui-disabled');
 						}
-				    return false;
-				  });
-					
-          $('#scroller > ul').trigger('create');
-					$('#scroller > ul').listview('refresh');
-					$('#page1').css("min-height","");
-					$('#page1').css("padding-bottom","");
-					$('#page1').css("padding-top","");
-					setup_UI();
-			
-					if (tabletView == true)
-					{
-						if (typeof(myScroll) != 'undefined')
-							Scroll_refresh();
-						else
-							Scroll_create();
 					}
-			
-					$('#sel_exp').mobiscroll().image({
-				    theme: 'ios',
-				    lang: lang,
-				    display: 'inline',
-				    mode: 'scroller',
-				    labels: ['Expressions'],
-				    inputClass: 'i-txt',
-				    rows: scroller_row,
-				    width: scroller_width+10,
-				    onChange: function (valueText, inst){
-							var sel = valueText;
-							cur_expID = $.trim(sel);
-							if (mode_player == true)
-								upd_elem(cur_expID);
-							else
-							{
-								upd_elem(cur_expID, false, false, false, false);
-								$('#btn_validate').removeClass('ui-disabled');
-							}
-						}
-					});
-          hide_ProgressBar();
-          if (mode_player == true)
-          	upd_elem(cur_expID);
-          else
-          {
-				    exp_used = new Array();
-						nb_good_answers=0;
-						nb_exp_used=0;
-				    init_QCM();
-          }
-				}
-        else
-        {
-        	//parseData();
-          timer_load = setTimeout(parseData, 2000);
-        }
+				});
+				upd_elem(cur_expID);
+        hide_ProgressBar();
+        $('#page1').trigger("pageshow");
 			}
 //			ajax_get_lang_used(lang);
 //			ajax_get_product(from_lang_id);
@@ -1391,37 +1399,83 @@ console.log("************************Ready : " + ready);
 		    return false;
 		  });
 		
+      function autoplayNext(){
+        if ($('#btn_refresh').hasClass('ui-disabled'))
+        {
+          if (num_exp <= nb_exp)
+            timer = setTimeout(swipe_left,3000);
+          else
+          {
+            $("#btn_autoplay span.ui-icon").addClass("ui-icon-play").removeClass("ui-icon-delete");
+            $('#btn_refresh').removeClass('ui-disabled');
+          }
+        }
+      }
+      
 			function upd_elem(exp_id, update_img, update_txt, update_list, update_snd) {
 		    num_exp = get_dataexp_pos(data_exp, exp_id, "exp");
 				if (typeof(update_snd) == 'undefined')
 				{
-		  		$("#jquery_jplayer_1").bind($.jPlayer.event.ended + ".jp-ended", function(event) { // Using ".jp-ended" namespace so we can easily remove this event
-						if ($('#btn_refresh').hasClass('ui-disabled'))
-						{
-							if (num_exp <= nb_exp)
-								timer = setTimeout(swipe_left,3000);
-							else
-							{
-					   		$("#btn_autoplay span.ui-icon").addClass("ui-icon-play").removeClass("ui-icon-delete");
-					   		$('#btn_refresh').removeClass('ui-disabled');
-							}
-						}
-						$("#jquery_jplayer_1").unbind($.jPlayer.event.ended + ".jp-ended");
-					});
+          if (android)
+          {
+            $("#jquery_jplayer_1").bind($.jPlayer.event.ended + ".jp-ended", function(event) { // Using ".jp-ended" namespace so we can easily remove this event
+              autoplayNext();
+              $("#jquery_jplayer_1").unbind($.jPlayer.event.ended + ".jp-ended");
+            });
 
-				  $("#jquery_jplayer_1").jPlayer("setMedia", {
-				  	mp3: data_exp[num_exp].sound_tra
-//				  	mp3: loaderZIPSND.loadSound("ressources/webapp/sonogg.zip://allemand-4-12.ogg")
-				  }).jPlayer("play");
+
+            $("#jquery_jplayer_1").jPlayer("setMedia", {
+//				  	mp3: data_exp[num_exp].sound_tra
+							mp3: loaderZIPSND.loadSound(tolang_filepath + "://" + data_exp[num_exp].sound_tra)
+            }).jPlayer("play");
+          }
+          else
+          {
+            sound = loaderZIPSND.loadSound(tolang_filepath + "://" + data_exp[num_exp].sound_tra);
+//console.log(sound);
+            var myAudioContext, mySource, myBuffer;
+      
+            if ('AudioContext' in window) {
+              myAudioContext = new AudioContext();
+              console.log("coucou 31");
+            } else if ('webkitAudioContext' in window) {
+              console.log("coucou 32");
+              myAudioContext = new webkitAudioContext();
+            } else {
+              alert('Your browser does not support yet Web Audio API');
+            }
+      
+            var arrayBuff = Base64Binary.decodeArrayBuffer(sound);
+                                           
+            myAudioContext.decodeAudioData(arrayBuff, function(audioData) {
+              myBuffer = audioData;
+                                           
+              mySource = myAudioContext.createBufferSource();
+              mySource.buffer = myBuffer;
+              mySource.connect(myAudioContext.destination);
+                                           
+console.log("coucou");
+                                           
+              if ('AudioContext' in window) {
+                console.log("coucou 1");
+                mySource.start(0);
+              } else if ('webkitAudioContext' in window) {
+                console.log("coucou 2");
+                mySource.noteOn(0);
+                var timer = setTimeout(function() {
+                  console.log('playback finished');
+                  autoplayNext();
+                }, mySource.buffer.duration * 1000);
+              }
+            });
+          }
 				}
 		
 				if (typeof(update_img) == 'undefined')
 				{
 					$('#img_exp').svg({loadURL: loaderZIPIMG.load("ressources/webapp/svg.zip://"+data_exp[num_exp].image), addTo: false, changeSize: false});
-//					$('#img_exp').svg({loadURL: "ressources/webapp/svg/"+data_exp[num_exp].image, addTo: false, changeSize: false});
 					$('#img_exp').svg('destroy');
 					$('#img_exp').svg({loadURL: loaderZIPIMG.load("ressources/webapp/svg.zip://"+data_exp[num_exp].image), addTo: false, changeSize: false});
-//					$('#img_exp').svg({loadURL: "ressources/webapp/svg/"+data_exp[num_exp].image, addTo: false, changeSize: false});
 			  }
 		
 				if (typeof(update_txt) == 'undefined')
@@ -1574,7 +1628,7 @@ console.log("************************Ready : " + ready);
 				  });
 			*/
 					$('#tab_ads').css({'top' : main_row_height-60 + 'px', 'width' : left_column_width + 'px'});
-//					$('#ads').css({'display' : 'none'});
+					$('#ads').css({'display' : 'none'});
 			
 					$('#cnt_exp').css({'padding-top': '0px', 'padding-bottom': main_vertical_margins + 'px'});
 				}
@@ -1599,7 +1653,7 @@ console.log("************************Ready : " + ready);
 		</script>
 	</head>
 	<body>
-		<script src="phonegap.js"></script>
+		<script src="cordova-2.5.0.js"></script>
 		<!-- Home -->
 		<div data-role="page" id="page1">
 	

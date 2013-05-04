@@ -21,7 +21,18 @@
 
 	<preference name="phonegap-version" value="2.5.0" />
 	<preference name="fullscreen" value="true" />
-
+	<access origin="*" />
+	<plugins>
+	    <plugin name="App" value="org.apache.cordova.App"/>
+	    <plugin name="Device" value="org.apache.cordova.Device"/>
+	    <plugin name="Media" value="org.apache.cordova.AudioHandler"/>
+	    <plugin name="File" value="org.apache.cordova.FileUtils"/>
+	    <plugin name="NetworkStatus" value="org.apache.cordova.NetworkManager"/>
+	    <plugin name="Storage" value="org.apache.cordova.Storage"/>
+	    <plugin name="FileTransfer" value="org.apache.cordova.FileTransfer"/>
+	    <plugin name="SplashScreen" value="org.apache.cordova.SplashScreen"/>
+	    <plugin name="Globalization" value="org.apache.cordova.Globalization"/>
+	</plugins>
 	<!-- icons for iOS -->
 	<icon src="images/iOS/icon-57.png" gap:platform="ios" width="57" height="57" />
 	<icon src="images/iOS/icon-72.png" gap:platform="ios" width="72" height="72" />
