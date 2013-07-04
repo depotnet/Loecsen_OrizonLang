@@ -23,7 +23,7 @@ g_UI_translated["fr"]["TXT_MOB_19"] = "Partager";
 g_UI_translated["fr"]["TXT_MOB_20"] = "Fermer";
 g_UI_translated["fr"]["TXT_MOB_21"] = "OK";
 g_UI_translated["fr"]["TXT_MOB_22"] = "Annuler";
-g_UI_translated["fr"]["TXT_MOB_23"] = "Premium";
+g_UI_translated["fr"]["TXT_MOB_23"] = "Loecsen";
 g_UI_translated["fr"]["TXT_MOB_24"] = "Cliquez pour rejouer";
 
 //Anglais
@@ -50,7 +50,7 @@ g_UI_translated["en"]["TXT_MOB_19"] = "Share";
 g_UI_translated["en"]["TXT_MOB_20"] = "Close";
 g_UI_translated["en"]["TXT_MOB_21"] = "OK";
 g_UI_translated["en"]["TXT_MOB_22"] = "Cancel";
-g_UI_translated["en"]["TXT_MOB_23"] = "Premium";
+g_UI_translated["en"]["TXT_MOB_23"] = "Loecsen";
 g_UI_translated["en"]["TXT_MOB_24"] = "Click to replay";
 
 //Allemand
@@ -77,7 +77,7 @@ g_UI_translated["de"]["TXT_MOB_19"] = "Teilen";
 g_UI_translated["de"]["TXT_MOB_20"] = "Schliessen";
 g_UI_translated["de"]["TXT_MOB_21"] = "OK";
 g_UI_translated["de"]["TXT_MOB_22"] = "Abbestellen";
-g_UI_translated["de"]["TXT_MOB_23"] = "Premium";
+g_UI_translated["de"]["TXT_MOB_23"] = "Loecsen";
 g_UI_translated["de"]["TXT_MOB_24"] = "Klicken wiedergeben";
 
 //Espagnol
@@ -104,7 +104,7 @@ g_UI_translated["es"]["TXT_MOB_19"] = "Compartir";
 g_UI_translated["es"]["TXT_MOB_20"] = "Close";
 g_UI_translated["es"]["TXT_MOB_21"] = "OK";
 g_UI_translated["es"]["TXT_MOB_22"] = "Cancelar";
-g_UI_translated["es"]["TXT_MOB_23"] = "Premium";
+g_UI_translated["es"]["TXT_MOB_23"] = "Loecsen";
 g_UI_translated["es"]["TXT_MOB_24"] = "Haga clic aqu&iacute; para reproducir la partida";
 
 //Italien
@@ -131,7 +131,7 @@ g_UI_translated["it"]["TXT_MOB_19"] = "Share";
 g_UI_translated["it"]["TXT_MOB_20"] = "Chiudi";
 g_UI_translated["it"]["TXT_MOB_21"] = "OK";
 g_UI_translated["it"]["TXT_MOB_22"] = "Annulla";
-g_UI_translated["it"]["TXT_MOB_23"] = "Premium";
+g_UI_translated["it"]["TXT_MOB_23"] = "Loecsen";
 g_UI_translated["it"]["TXT_MOB_24"] = "Clicca per un replay";
 
 //Portuguais
@@ -158,5 +158,5 @@ g_UI_translated["pt"]["TXT_MOB_19"] = "Compartilhar";
 g_UI_translated["pt"]["TXT_MOB_20"] = "Fechar";
 g_UI_translated["pt"]["TXT_MOB_21"] = "OK";
 g_UI_translated["pt"]["TXT_MOB_22"] = "Cancelar";
-g_UI_translated["pt"]["TXT_MOB_23"] = "Premium";
+g_UI_translated["pt"]["TXT_MOB_23"] = "Loecsen";
 g_UI_translated["pt"]["TXT_MOB_24"] = "Clique para reproduzir";

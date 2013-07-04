@@ -1344,8 +1344,8 @@ console.log("Temp Start : " + tmp_start);
 			   	$('#img_exp').svg({loadURL: 'ressources/webapp/quizz.svg', addTo: false, changeSize: false});
 					if (nb_exp_used > 0)
 					{
-				    $('#lbl_trans').html(g_UI_translated[lang_UI]["TXT_MOB_18"] + nb_good_answers + '  /  ' + nb_exp_used);  // TO translate
-				    $('#lbl_phon').html(g_UI_translated[lang_UI]["TXT_MOB_17"] + nb_exp_used + '  /  ' + nb_exp);  // TO translate
+				    $('#lbl_trans').html(g_UI_translated[lang_UI]["TXT_MOB_18"] + ' : ' + nb_good_answers + '  /  ' + nb_exp_used);  // TO translate
+				    $('#lbl_phon').html(g_UI_translated[lang_UI]["TXT_MOB_17"] + ' : ' + nb_exp_used + '  /  ' + nb_exp);  // TO translate
 				  }
 				  else
 					{
@@ -1750,16 +1750,21 @@ console.log("Temp Start : " + tmp_start);
 								<a href="#" class="addthis_button_viadeo" title="Viadeo">&nbsp;&nbsp;&nbsp;&nbsp;Viadeo</a>
 							</div></li>
 					</ul>
-<!--					<script type="text/javascript">var addthis_config = {"data_track_addressbar":false};var addthis_language = "fr";</script>
-					<script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-507a83730478e532"></script>-->
+<!--
+					<script type="text/javascript">var addthis_config = {"data_track_addressbar":false};var addthis_language = "fr";</script>
+					<script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-507a83730478e532"></script>
+-->
 				  <a id="TXT_MOB_20" href="#pnl_share" data-role="button" data-rel="close" data-theme="a">Fermer</a>
 			</div>
 	
 			<div id="page_header" class="my-header-grid ui-grid-b" data-theme="a" data-role="header" data-position="fixed">
 				<div id="topbar_left" class="ui-block-a ui-bar-a" data-theme="a" style="width: 100px;">
 					<div align="left" style="padding-left:2px; padding-top:0px; height:40px;">
-						<a id="TXT_MOB_23" href="#premiumPage" data-rel="popup" data-position-to="window" id="btn_premium" data-role="button" data-inline="true" data-mini="true" data-theme="b">Premium</a>
-						<!-- Premium -->
+<!--
+						<a id="TXT_MOB_23" href="#premiumPage" data-rel="popup" data-position-to="window" id="btn_premium" data-role="button" data-inline="true" data-mini="true" data-theme="b">Loecsen</a>
+-->
+						<a id="TXT_MOB_23" href="http://www.loecsen.com" data-rel="popup" data-position-to="window" id="btn_premium" data-role="button" data-inline="true" data-mini="true" data-theme="b">Loecsen</a>
+						<!-- Premium 
 						<div data-role="popup" id="premiumPage" data-theme="b" data-corners="false">
 							<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
 						  <div data-role="header" data-theme="b">
@@ -1844,7 +1849,7 @@ console.log("Temp Start : " + tmp_start);
 									</div>
 									<div data-role="popup" id="pup_newlang" data-overlay-theme="a" data-theme="c" data-dismissible="false" style="width:300px; max-width:300px;" class="ui-corner-all">
 										<div data-role="header" data-theme="a" class="ui-corner-top">
-											<h1 id="pup_newlang_title">T&eacute;l&eacute;chargement d'une nouvelle langue</h1>
+											<h1 id="pup_newlang_title">Confirmation</h1>
 										</div>
 										<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
 											<p style="text-align: justify"><span id="pup_newlang_txt1">La langue que vous avez s&eacute;lectionn&eacute;e n'a pas encore &eacute;t&eacute; install&eacute;e sur votre syst&egrave;me.</span><br/><span id="pup_newlang_txt2">Ce t&eacute;l&eacute;chargement est gratuit et pourra occuper jusqu'à 15Mo d'espace.</span><br/><br/><span id="pup_newlang_txt3">Voulez-vous lancer le t&eacute;l&eacute;chargement maintenant ?</span></p>
@@ -1897,7 +1902,7 @@ console.log("Temp Start : " + tmp_start);
 								<div id="pup_result" data-role="popup" class="ui-content" style="width: 200px; max-width:350px;"></div>
 							</div>
               
-               <div id="ads" style="width: 320px; height: 50px;">
+               <div id="ads" style="margin:auto; height: 50px; text-align:center; background-color:#FFCC66"">
                <script type="text/javascript">
                google_ad_client = "ca-pub-8664648974897099";
                /* Annonces Smartphones */
