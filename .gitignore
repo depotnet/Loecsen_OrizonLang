@@ -163,4 +163,6 @@ pip-log.txt
 .DS_Store
 
 # Custom
+index.old.html
+index.pack.html
 index.nopack.html
