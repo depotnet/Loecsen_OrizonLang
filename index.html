@@ -447,7 +447,7 @@ console.log(Math.round((nb_elem2dl*100/(nb_exp_total))) + "% Sound " + "n" + nb_
 							data_exp[pos].downloadedSound_tra = "OK";
               data_exp[pos].sound_tra = localfilepath;
 						}
-						timer_load = setTimeout(parseData(pos), 50);
+						timer_load = setTimeout(parseData(pos+1), 50);
 					},
 					function(error) {
 						console.log("download error source " + error.source);
