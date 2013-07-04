@@ -447,6 +447,7 @@ console.log(Math.round((nb_elem2dl*100/(nb_exp_total))) + "% Sound " + "n" + nb_
 							data_exp[pos].downloadedSound_tra = "OK";
               data_exp[pos].sound_tra = localfilepath;
 						}
+						timer_load = setTimeout(parseData(pos), 50);
 					},
 					function(error) {
 						console.log("download error source " + error.source);
@@ -999,7 +1000,7 @@ console.log("Do update");
           num_exp = 1;
 //          cur_expID = data_exp[0].id;
 //listFiles();
-          parseData();
+          parseData(0);
         }
 			}
 
@@ -1025,107 +1026,111 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
       
       function checkIfFileExists(path, url, pos, type)
       {
-    	  if (android)
+    	  if (data_exp[pos].downloadedSound_tra != "OK")
     		{
-    		  window.resolveLocalFileSystemURI(path,
-						function (fileEntry) {
-//console.log(">>>> " + fileEntry.name);
-					  	fileEntry.file(
-					  			function(file){
-					  				if (type == "sound_tra")
-					  				{
-								    	if (file.size >= data_exp[pos].sound_tra_size)
-								    	{
-								    		if (data_exp[pos].downloadedSound_tra == "downloading")
-								    		{
-								    			nb_elem2dl++;
-								    			data_exp[pos].downloadedSound_tra = "OK";
-//console.log("Downloaded: " + path + " > " + file.size);
-								    		}
-								    	}
-								    	else
-								    	{
-								    		//PAS LA BONNE TAILLE => ON RECHARGE
-									    	if (file.size != data_exp[pos].sound_tra_size)
+	    	  if (android)
+	    		{
+	    		  window.resolveLocalFileSystemURI(path,
+							function (fileEntry) {
+	//console.log(">>>> " + fileEntry.name);
+						  	fileEntry.file(
+						  			function(file){
+						  				if (type == "sound_tra")
+						  				{
+									    	if (file.size >= data_exp[pos].sound_tra_size)
 									    	{
-									    		if (data_exp[pos].downloadedSound_tra != "downloading")
+									    		if (data_exp[pos].downloadedSound_tra == "downloading")
 									    		{
-									    			nb_elem2dl--;
-									    			data_exp[pos].downloadedSound_tra = "downloading";
-//console.log("---### Re-Download: " + path + " > " + file.size);
-														downloadFile(url, path);
+									    			nb_elem2dl++;
+									    			data_exp[pos].downloadedSound_tra = "OK";
+	//console.log("Downloaded: " + path + " > " + file.size);
 									    		}
 									    	}
-								    	}
-					  				}
-								},
-								function (error)
-								{
-//console.log("ERROR GETTING FILE INFO : " + error.code);
-								}
-							);
-						},
-						function (error)
-						{
-//console.log("NOT EXISTS 1 : " + path);
-						}
-					);
+									    	else
+									    	{
+									    		//PAS LA BONNE TAILLE => ON RECHARGE
+										    	if (file.size != data_exp[pos].sound_tra_size)
+										    	{
+										    		if (data_exp[pos].downloadedSound_tra != "downloading")
+										    		{
+										    			nb_elem2dl--;
+										    			data_exp[pos].downloadedSound_tra = "downloading";
+	//console.log("---### Re-Download: " + path + " > " + file.size);
+															downloadFile(url, path);
+										    		}
+										    	}
+									    	}
+						  				}
+									},
+									function (error)
+									{
+	//console.log("ERROR GETTING FILE INFO : " + error.code);
+									}
+								);
+							},
+							function (error)
+							{
+	//console.log("NOT EXISTS 1 : " + path);
+							}
+						);
+	    		}
+	    	  else
+	    		{
+		    	  fileSystem.root.getFile(path, {create: false},
+							function (fileEntry) {
+	console.log(">>>> " + fileEntry.name);
+						  	fileEntry.file(
+						  			function(file){
+						  				if (type == "sound_tra")
+						  				{
+									    	if (file.size >= data_exp[pos].sound_tra_size)
+									    	{
+									    		if (data_exp[pos].downloadedSound_tra == "downloading")
+									    		{
+									    			nb_elem2dl++;
+									    			data_exp[pos].downloadedSound_tra = "OK";
+	console.log("Downloaded: " + path + " > " + file.size);
+									    		}
+									    	}
+									    	else
+									    	{
+									    		//PAS LA BONNE TAILLE => ON RECHARGE
+										    	if (file.size != data_exp[pos].sound_tra_size)
+										    	{
+										    		if (data_exp[pos].downloadedSound_tra != "downloading")
+										    		{
+										    			nb_elem2dl--;
+										    			data_exp[pos].downloadedSound_tra = "downloading";
+	alert("---### Re-Download: " + url + " > " + path + " > " + file.size);
+															downloadFile(url, path);
+										    		}
+										    	}
+									    	}
+						  				}
+									},
+									function (error)
+									{
+	console.log("ERROR GETTING FILE INFO : " + error.code);
+									}
+								);
+							},
+							function (error)
+							{
+	console.log("NOT EXISTS : " + path);
+							}
+						);
+	      	}
     		}
-    	  else
-    		{
-	    	  fileSystem.root.getFile(path, {create: false},
-						function (fileEntry) {
-console.log(">>>> " + fileEntry.name);
-					  	fileEntry.file(
-					  			function(file){
-					  				if (type == "sound_tra")
-					  				{
-								    	if (file.size >= data_exp[pos].sound_tra_size)
-								    	{
-								    		if (data_exp[pos].downloadedSound_tra == "downloading")
-								    		{
-								    			nb_elem2dl++;
-								    			data_exp[pos].downloadedSound_tra = "OK";
-console.log("Downloaded: " + path + " > " + file.size);
-								    		}
-								    	}
-								    	else
-								    	{
-								    		//PAS LA BONNE TAILLE => ON RECHARGE
-									    	if (file.size != data_exp[pos].sound_tra_size)
-									    	{
-									    		if (data_exp[pos].downloadedSound_tra != "downloading")
-									    		{
-									    			nb_elem2dl--;
-									    			data_exp[pos].downloadedSound_tra = "downloading";
-console.log("---### Re-Download: " + path + " > " + file.size);
-														downloadFile(url, path);
-									    		}
-									    	}
-								    	}
-					  				}
-								},
-								function (error)
-								{
-console.log("ERROR GETTING FILE INFO : " + error.code);
-								}
-							);
-						},
-						function (error)
-						{
-console.log("NOT EXISTS : " + path);
-						}
-					);
-      	}
       }
 
 		
-			function parseData()
+			function parseData(tmp_start)
 			{
 				var ready = true;
 				window.clearInterval(timer_load);
 
-        for (var i = 0; i < nb_exp_total; i++)
+console.log("Temp Start : " + tmp_start);
+        for (var i = tmp_start; i < nb_exp_total; i++)
 				{
 					if ((data_exp[i].title_id == title_id) || (exp_chk_all == true))
 					{
@@ -1138,7 +1143,7 @@ console.log("NOT EXISTS : " + path);
 							ready = false;
 	            data_exp[i].downloadedSound_tra = "downloading";
 							downloadFile("http://www.loecsen.com/OrizonFlash_V2/ressources/son/"+str, tmp_filename);
-	            //break;
+	            break;
 						}
 	          else
 	          {
@@ -1263,8 +1268,8 @@ console.log("NOT EXISTS : " + path);
 				}
         else
         {
-        	//parseData();
-          timer_load = setTimeout(parseData, 2000);
+        	//parseData(0);
+          //timer_load = setTimeout(parseData(0), 2000);
         }
 			}
 //			ajax_get_product(from_lang_id);
