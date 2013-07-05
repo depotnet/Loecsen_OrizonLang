@@ -674,16 +674,18 @@ console.log(Math.round((nb_elem2dl*100/(nb_exp_total))) + "% Sound " + "n" + nb_
 			    width: 200,
 			    onSelect: function (valueText, inst){
 				    var sel = $.trim($('#sel_from_lang').mobiscroll('getValue'));
+				    var tmp_from_lang_pos = get_dataexp_pos(data_lang, sel, "lang_id");
 
-						if ((data_lang[from_lang_pos]._400ex == "true") && (data_lang[to_lang_pos]._400ex == "true"))
+						if ((data_lang[tmp_from_lang_pos]._400ex == "true") && (data_lang[to_lang_pos]._400ex == "true"))
 							prd_id=67;
-						if ((data_lang[from_lang_pos]._400ex == "false"))
+						if ((data_lang[tmp_from_lang_pos]._400ex == "false"))
 							prd_id=14;
 						if ((data_lang[to_lang_pos]._400ex == "false"))
 							prd_id=14;
 //		        var str_uri = window.appRootDir.fullPath + "/get_expressions_" + prd_id + "_" + from_lang_id + "_" + to_lang_id + "_" + title_id + ".json";
 		        var str_uri = window.appRootDir.fullPath + "/get_expressions_" + prd_id + "_" + sel + "_" + to_lang_id + ".json";
 
+console.log("JSON : " + str_uri);
 						if (str_uri.fileExists() == false)
 						{
 					    $('#pup_newlang_title').addClass("from_lang");
@@ -709,15 +711,18 @@ console.log(Math.round((nb_elem2dl*100/(nb_exp_total))) + "% Sound " + "n" + nb_
 			    width: 200,
 			    onSelect: function (valueText, inst){
 				    var sel = $.trim($('#sel_to_lang').mobiscroll('getValue'));
-						if ((data_lang[from_lang_pos]._400ex == "true") && (data_lang[to_lang_pos]._400ex == "true"))
+				    var tmp_to_lang_pos = get_dataexp_pos(data_lang, sel, "lang_id");
+
+				    if ((data_lang[from_lang_pos]._400ex == "true") && (data_lang[tmp_to_lang_pos]._400ex == "true"))
 							prd_id=67;
 						if ((data_lang[from_lang_pos]._400ex == "false"))
 							prd_id=14;
-						if ((data_lang[to_lang_pos]._400ex == "false"))
+						if ((data_lang[tmp_to_lang_pos]._400ex == "false"))
 							prd_id=14;
 //		        var str_uri = window.appRootDir.fullPath + "/get_expressions_" + prd_id + "_" + from_lang_id + "_" + to_lang_id + "_" + title_id + ".json";
 		        var str_uri = window.appRootDir.fullPath + "/get_expressions_" + prd_id + "_" + from_lang_id + "_" + sel + ".json";
 
+console.log("JSON : " + str_uri);
 						if (str_uri.fileExists() == false)
 						{
 					    $('#pup_newlang_title').addClass("to_lang");
@@ -1762,8 +1767,8 @@ console.log("Temp Start : " + tmp_start);
 					<div align="left" style="padding-left:2px; padding-top:0px; height:40px;">
 <!--
 						<a id="TXT_MOB_23" href="#premiumPage" data-rel="popup" data-position-to="window" id="btn_premium" data-role="button" data-inline="true" data-mini="true" data-theme="b">Loecsen</a>
--->
-						<a id="TXT_MOB_23" href="http://www.loecsen.com" data-rel="popup" data-position-to="window" id="btn_premium" data-role="button" data-inline="true" data-mini="true" data-theme="b">Loecsen</a>
+ -->
+						<a id="TXT_MOB_23" href="http://www.loecsen.com" id="btn_premium" data-role="button" data-inline="true" data-mini="true" data-theme="b">Loecsen</a>
 						<!-- Premium 
 						<div data-role="popup" id="premiumPage" data-theme="b" data-corners="false">
 							<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
@@ -1902,7 +1907,7 @@ console.log("Temp Start : " + tmp_start);
 								<div id="pup_result" data-role="popup" class="ui-content" style="width: 200px; max-width:350px;"></div>
 							</div>
               
-               <div id="ads" style="margin:auto; height: 50px; text-align:center; background-color:#FFCC66"">
+               <div id="ads" style="margin:auto; height: 50px; text-align:center; background-color:#FFCC66">
                <script type="text/javascript">
                google_ad_client = "ca-pub-8664648974897099";
                /* Annonces Smartphones */
