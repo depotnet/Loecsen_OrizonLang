@@ -414,6 +414,16 @@ console.log("Language used :" + lang_UI);
 				window.appRootDir = entry;
 				console.log(JSON.stringify(window.appRootDir));
 				//ajax_upd_titles(prd_id, from_lang_id);
+				$('#sel_exp').mobiscroll().image({
+			    theme: 'ios',
+			    lang: lang,
+			    display: 'inline',
+			    mode: 'scroller',
+			    labels: ['Expressions'],
+			    inputClass: 'i-txt',
+			    rows: scroller_row,
+			    width: scroller_width+10
+				});
 				ajax_get_fromlangs(prd_id, from_lang_id);
 			}
 
@@ -1901,8 +1911,20 @@ console.log("Temp Start : " + tmp_start);
 					</div>
 	<!-------------------- BLOCK 6 ui-bar ui-bar-e -------------------->
 					<div id="grd_block6" class="ui-block-b2">
-						<div class="" style="background-size: cover; background-repeat:no-repeat; background-image:url(images/bg_list_exp.jpg);">
-							<ul id="sel_exp">
+						<div class="" style="">
+							<ul id="sel_exp" style="list-style-type:none;">
+							<li data-val="0"><div class="exp"><span class="exp_txt"></span></div></li>
+							<li data-val="1"><div class="exp"><span class="exp_txt"></span></div></li>
+							<li data-val="2"><div class="exp"><span class="exp_txt"></span></div></li>
+							<li data-val="3"><div class="exp"><span class="exp_txt"></span></div></li>
+							<li data-val="4"><div class="exp"><span class="exp_txt"></span></div></li>
+							<li data-val="5"><div class="exp"><span class="exp_txt"></span></div></li>
+							<li data-val="6"><div class="exp"><span class="exp_txt"></span></div></li>
+							<li data-val="7"><div class="exp"><span class="exp_txt"></span></div></li>
+							<li data-val="8"><div class="exp"><span class="exp_txt"></span></div></li>
+							<li data-val="9"><div class="exp"><span class="exp_txt"></span></div></li>
+							<li data-val="10"><div class="exp"><span class="exp_txt"></span></div></li>
+							<li data-val="11"><div class="exp"><span class="exp_txt"></span></div></li>
 							</ul>
 						</div>
 					</div>
