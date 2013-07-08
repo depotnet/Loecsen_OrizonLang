@@ -171,7 +171,7 @@
 				.i-txt { display:none; }
 				.ios .dwhl { padding: 5px 0; }
 				.dwwr { padding: 0 5px; }
-		  	.dwi { padding: 0; margin: 0 }
+		  	.dwi { padding: 0; margin: 0; }
 		  	.dw-li { padding: 0 5px; }
 		  	.ui-body-c { background-image: none;}
 			}
@@ -201,6 +201,7 @@
 			var title_text;
 			var data_exp;
 			var data_lang;
+			var launch = true;
 console.log("Language detected :" + lang_UI);
 			switch(lang_UI)
 			{
@@ -447,7 +448,8 @@ console.log(Math.round((nb_elem2dl*100/(nb_exp_total))) + "% Sound " + "n" + nb_
 							data_exp[pos].downloadedSound_tra = "OK";
               data_exp[pos].sound_tra = localfilepath;
 						}
-						timer_load = setTimeout(parseData(pos+1), 50);
+						parseData(pos+1);
+						//timer_load = setTimeout(parseData(pos+1), 50);
 					},
 					function(error) {
 						console.log("download error source " + error.source);
@@ -520,7 +522,7 @@ console.log(Math.round((nb_elem2dl*100/(nb_exp_total))) + "% Sound " + "n" + nb_
       }
       function upd_ProgressBar()
       {
-    	  console.log("************* refresh *************");
+//console.log("************* refresh *************");
 				$("#slider-mini").attr('value', pg_value);
 				$("#slider-mini").slider('refresh');
 
@@ -585,7 +587,8 @@ console.log(Math.round((nb_elem2dl*100/(nb_exp_total))) + "% Sound " + "n" + nb_
 			{
 //				var str_uri = window.appRootDir.fullPath + "/get_langs_from_" + prd_id + "_" + lang_id + ".json";
 				var str_uri = window.appRootDir.fullPath + "/get_langs_from_" + lang_id + ".json";
-        if (fromlang_chk_upd == false)
+console.log("JSON : " + str_uri + " : " + fromlang_chk_upd);
+				if (fromlang_chk_upd == false)
           fileSystem.root.getFile(str_uri, {create:false}, function(f){f.getMetadata(do_upd_fromlang, do_upd_fromlang_fail);}, do_upd_fromlang_fail);
         else
         {
@@ -722,14 +725,14 @@ console.log("JSON : " + str_uri);
 //		        var str_uri = window.appRootDir.fullPath + "/get_expressions_" + prd_id + "_" + from_lang_id + "_" + to_lang_id + "_" + title_id + ".json";
 		        var str_uri = window.appRootDir.fullPath + "/get_expressions_" + prd_id + "_" + from_lang_id + "_" + sel + ".json";
 
-console.log("JSON : " + str_uri);
-						if (str_uri.fileExists() == false)
+						if ((str_uri.fileExists() == false) && (launch == false))
 						{
 					    $('#pup_newlang_title').addClass("to_lang");
 					    $("#pup_newlang").popup("open");
 					  }
 					  else
 					  {
+					  	launch=false;
 				    	changeLang("to_lang");
 						}
 				  }
@@ -737,89 +740,11 @@ console.log("JSON : " + str_uri);
 			  //ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id);
 			  ajax_upd_titles(prd_id, from_lang_id);
 			}
-/*
-			function ajax_get_tolangs(prd_id, lang_id)
-			{
-				var str_uri = window.appRootDir.fullPath + "/get_langs_to_" + prd_id + "_" + lang_id + ".json";
-        if (tolang_chk_upd == false)
-          fileSystem.root.getFile(str_uri, {create:false}, function(f){f.getMetadata(do_upd_tolang, do_upd_tolang_fail);}, do_upd_tolang_fail);
-        else
-        {
-	        show_ProgressBar();
-					if ((str_uri.fileExists() == false) || (tolang_do_upd == true))
-					{
-						tolang_do_upd = false;
-//						download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=to&prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "tolangs", lang_id, prd_id);
-						download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?app=1&lang_id=" + lang_id, str_uri, "tolangs", lang_id, prd_id);
-					}
-					else
-					{
-					  $.ajax({
-					    type: "GET",
-					    url: str_uri,
-					    cache: false,
-					    contentType: "application/json; charset=utf-8",
-					    dataType: "json",
-					    success: onData_tolangs
-						});
-					}
-				}
-			}
-			function do_upd_tolang(m)
-			{
-        tolang_chk_upd = true;
-        var date_tmp = new Date(m.modificationTime);
-        var last_upd_ms = date_tmp.getTime();
-        console.log("Last Update ToLang : " + last_upd_ms);
-        if ((today_ms - last_upd_ms) > (2*3600*1000))
-        {
-          console.log("Do update ToLang");
-          tolang_do_upd = true;
-        }
-//tolang_do_upd = true;
-        ajax_get_tolangs(prd_id, from_lang_id);
-      }
-			function do_upd_tolang_fail(evt)
-			{
-        tolang_chk_upd = true;
-        ajax_get_tolangs(prd_id, from_lang_id);
-      }
-			function onData_tolangs(data)
-			{
-				$('#sel_to_lang').mobiscroll('destroy');
-				$('#sel_to_lang li').remove();
-				var l = data.length;
-				for (var i = 0; i < l; i++)
-				{
-					var tmp_id = data[i].lang_id;
-//					$('#sel_to_lang').append('<li data-val=" '+ tmp_id.toString() + '"><div class="list_option"><div class="img-cont"><img id="to_lang_icon_'+ tmp_id.toString() + '" src="images/flags/' + data[i].icon + '" /></div><span>' + data[i].lang_name + '</span></div></li>');
-					$('#sel_to_lang').append('<li data-val=" '+ tmp_id.toString() + '"><div class="list_option"><div class="img-cont"><img id="to_lang_icon_'+ tmp_id.toString() + '" src="images/flags/' + data[i].icon + '" class="' + data[i].attrib + '"/></div><span>' + data[i].lang_name + '</span></div></li>');
-				}
-			  $('#flag2').attr('src', $('#to_lang_icon_'+to_lang_id).attr('src'));
-			  $('#sel_to_lang').mobiscroll().image({
-			    theme: 'default',
-			    lang: 'fr',
-			    setText: g_UI_translated[lang_UI]["TXT_MOB_21"],
-			    cancelText: g_UI_translated[lang_UI]["TXT_MOB_22"],
-			    display: 'modal',
-			    mode: 'scroller',
-			    r2l: scroller_r2l,
-			    labels: [g_UI_translated[lang_UI]["TXT_MOB_2"]],
-			    inputClass: 'i-txt',
-			    rows: 5,
-			    width: 200,
-			    onSelect: function (valueText, inst){
-				    var sel = $.trim($('#sel_to_lang').mobiscroll('getValue'));
-				    $('#pup_newlang_title').addClass("to_lang");
-				    $("#pup_newlang").popup("open");
-//			    	changeLang("to_lang");
-				  }
-			  });
-			}
-*/
+
 
       function changeLang(type)
       {
+console.log("Type : " + type);
       	if (type == "from_lang")
       	{
 			    var sel = $.trim($('#sel_from_lang').mobiscroll('getValue'));
@@ -936,7 +861,19 @@ console.log("JSON : " + str_uri);
 			  });
 				//ajax_get_fromlangs(prd_id, from_lang_id);
 				//ajax_get_tolangs(prd_id, from_lang_id);
-				ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id);
+				
+				if (launch == true)
+				{
+					$('#sel_to_lang').mobiscroll('show');
+					$('.dwbw').css({'width': '100%'});
+					$('.dwb-c').css({'display': 'none'});
+				}
+				else
+				{
+					$('.dwbw').css({'width': '50%'});
+					$('.dwb-c').css({'display': 'inline-block'});
+					ajax_upd_expressions(prd_id, from_lang_id, to_lang_id, title_id);
+				}
 			}
 
 
@@ -1141,7 +1078,6 @@ console.log("Temp Start : " + tmp_start);
 					{
 						var str = data_exp[i].sound_tra;
 						var tmp_filename = window.appRootDir.fullPath + "/" + str.substring(str.lastIndexOf("/")+1, str.length);
-						checkIfFileExists(tmp_filename, "http://www.loecsen.com/OrizonFlash_V2/ressources/son/"+str, i, "sound_tra");
 						if (((tmp_filename.fileExists() == false) || ((data_exp[i].date_tra > exp_last_upd_ms) && (data_exp[i].downloadedSound_tra != "OK"))) && (data_exp[i].downloadedSound_tra != "downloading"))
 						{
 //console.log("Audio not found : " + tmp_filename);
@@ -1152,6 +1088,7 @@ console.log("Temp Start : " + tmp_start);
 						}
 	          else
 	          {
+							checkIfFileExists(tmp_filename, "http://www.loecsen.com/OrizonFlash_V2/ressources/son/"+str, i, "sound_tra");
 	            if ((typeof(data_exp[i].downloadedSound_tra) == "undefined") && (data_exp[i].downloadedSound_tra != "OK"))
 	            {
                 //data_exp[i].downloadedSound_tra = "OK";
@@ -1675,11 +1612,11 @@ console.log("Temp Start : " + tmp_start);
 					$('#grd_block5').css({'display' : 'none'});
 					$('#grd_block6').css({'display' : 'none'});
 			
-					$('#topbar_left').css({'width' : '100px;'});
-					$('#topbar_right').css({'width' : '100px;'});
+					$('#topbar_left').css({'width' : '100px'});
+					$('#topbar_right').css({'width' : '100px'});
 			//		$("#topbar_center div").css({'padding-top': '5px'});
-					$('#bar_left').css({'width' : '160px;'});
-					$('#bar_right').css({'width' : '90px;'});
+					$('#bar_left').css({'width' : '160px'});
+					$('#bar_right').css({'width' : '90px'});
 			
 					$('#list_exp').css({'width' : left_column_width + 'px'});
 					$('#list_exp').css({'height' : main_row_height-60 + 'px'});
