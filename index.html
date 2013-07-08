@@ -688,7 +688,6 @@ console.log("JSON : " + str_uri + " : " + fromlang_chk_upd);
 //		        var str_uri = window.appRootDir.fullPath + "/get_expressions_" + prd_id + "_" + from_lang_id + "_" + to_lang_id + "_" + title_id + ".json";
 		        var str_uri = window.appRootDir.fullPath + "/get_expressions_" + prd_id + "_" + sel + "_" + to_lang_id + ".json";
 
-console.log("JSON : " + str_uri);
 						if (str_uri.fileExists() == false)
 						{
 					    $('#pup_newlang_title').addClass("from_lang");
@@ -1814,7 +1813,7 @@ console.log("Temp Start : " + tmp_start);
 				<div id="grd_main" class="ui-grid-a2">
 					<div id="grd_block1" class="ui-block-a">
 	<!-------------------- BLOCK 1 ui-bar ui-bar-e -------------------->
-						<div id="list_exp">
+						<div id="list_exp" style="background-repeat:repeat-y; background-image:url(images/bg_scroll_list_exp.jpg);">
 							<div id="scroller">
 								<ul data-role="listview" data-inset="false" data-theme="d" data-divider-theme="d">
 								</ul>
@@ -1833,7 +1832,7 @@ console.log("Temp Start : " + tmp_start);
 								</div>
 							</div>
 					</div>
-					<div id="grd_block2" class="ui-block-b" style=" background-color: #FFFFFF">
+					<div id="grd_block2" class="ui-block-b" style="background-color: #FFFFFF; background-repeat:no-repeat; background-position: center center; background-image:url(images/loader.gif);">
 	<!-------------------- BLOCK 2 ui-bar ui-bar-e -------------------->
 						<div class="" style="">
 	
@@ -1902,7 +1901,7 @@ console.log("Temp Start : " + tmp_start);
 					</div>
 	<!-------------------- BLOCK 6 ui-bar ui-bar-e -------------------->
 					<div id="grd_block6" class="ui-block-b2">
-						<div class="" style="">
+						<div class="" style="background-size: cover; background-repeat:no-repeat; background-image:url(images/bg_list_exp.jpg);">
 							<ul id="sel_exp">
 							</ul>
 						</div>
