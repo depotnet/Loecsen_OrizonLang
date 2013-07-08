@@ -33,6 +33,7 @@
 	    <plugin name="FileTransfer" value="org.apache.cordova.FileTransfer"/>
 	    <plugin name="SplashScreen" value="org.apache.cordova.SplashScreen"/>
 	    <plugin name="Globalization" value="org.apache.cordova.Globalization"/>
+			<plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser" />
 	</plugins>
 	<!-- icons for iOS -->
 	<icon src="images/iOS/icon/icon-57.png" gap:platform="ios" width="57" height="57" />
