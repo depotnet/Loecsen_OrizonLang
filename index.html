@@ -108,6 +108,11 @@
 		  .list_share div {
 		  	height: 32px; width: 200px;
 		  }
+		  .list_share span {
+			  margin-left:40px;
+			  position: absolute;
+			  margin-top: 7px;
+		  }
 		  
 		  .img_flag {
 		  	padding-top: 2px;
@@ -150,6 +155,15 @@
 			}
 		
 		
+			.ui-li-thumb, .ui-li-icon {
+		    float: left;
+		    left: 5px;
+		    margin-right: 10px;
+		    max-height: 60px; 
+		    max-width: 60px;
+		    vertical-align: middle;
+		    top: 10px;
+			}
 			.ui-icon-help {
 				background-image: url("ressources/webapp/icon_help.png");
 				background-position: 3px 3px;
@@ -280,6 +294,9 @@ console.log("Language used :" + lang_UI);
       var exp_do_upd = false;
       var exp_chk_all = true;
 
+      var ws_url = 'http://www.loecsen.com/OrizonFlash_V2/webservices/';
+      var share_url = 'http://www.loecsen.com/travel/share.html';
+      
 			var loaderZIPIMG = new ZipLoader('ressources/webapp/svg.zip');
 			var loaderZIPSND;
 
@@ -412,7 +429,7 @@ console.log("Language used :" + lang_UI);
 			function dirReady(entry)
 			{
 				window.appRootDir = entry;
-				console.log(JSON.stringify(window.appRootDir));
+//console.log(JSON.stringify(window.appRootDir));
 				//ajax_upd_titles(prd_id, from_lang_id);
 				$('#sel_exp').mobiscroll().image({
 			    theme: 'ios',
@@ -498,8 +515,6 @@ console.log(Math.round((nb_elem2dl*100/(nb_exp_total))) + "% Sound " + "n" + nb_
 						console.log("download complete: " + entry.fullPath);
 						if (fct == "fromlangs")
 							ajax_get_fromlangs(prd_id, lang_id);
-//						if (fct == "tolangs")
-//							ajax_get_tolangs(prd_id, lang_id);
 						if (fct == "titles")
 							ajax_upd_titles(prd_id, lang_id);
 						if (fct == "expressions")
@@ -597,7 +612,6 @@ console.log(Math.round((nb_elem2dl*100/(nb_exp_total))) + "% Sound " + "n" + nb_
 			{
 //				var str_uri = window.appRootDir.fullPath + "/get_langs_from_" + prd_id + "_" + lang_id + ".json";
 				var str_uri = window.appRootDir.fullPath + "/get_langs_from_" + lang_id + ".json";
-console.log("JSON : " + str_uri + " : " + fromlang_chk_upd);
 				if (fromlang_chk_upd == false)
           fileSystem.root.getFile(str_uri, {create:false}, function(f){f.getMetadata(do_upd_fromlang, do_upd_fromlang_fail);}, do_upd_fromlang_fail);
         else
@@ -605,8 +619,8 @@ console.log("JSON : " + str_uri + " : " + fromlang_chk_upd);
 					if ((str_uri.fileExists() == false) || (fromlang_do_upd == true))
 					{
 						fromlang_do_upd = false;
-//						download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?pos=from&prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "fromlangs", lang_id, prd_id);
-						download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_langs.php?app=1&lang_id=" + lang_id, str_uri, "fromlangs", lang_id, prd_id);
+//						download_JSON(ws_url + "json_get_langs.php?pos=from&prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "fromlangs", lang_id, prd_id);
+						download_JSON(ws_url + "json_get_langs.php?app=1&lang_id=" + lang_id, str_uri, "fromlangs", lang_id, prd_id);
 					}
 					else
 					{
@@ -753,7 +767,6 @@ console.log("JSON : " + str_uri + " : " + fromlang_chk_upd);
 
       function changeLang(type)
       {
-console.log("Type : " + type);
       	if (type == "from_lang")
       	{
 			    var sel = $.trim($('#sel_from_lang').mobiscroll('getValue'));
@@ -797,7 +810,7 @@ console.log("Type : " + type);
 					if ((str_uri.fileExists() == false) || (title_do_upd == true))
 					{
 						title_do_upd = false;
-						download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_titles.php?prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "titles", lang_id, prd_id);
+						download_JSON(ws_url + "json_get_titles.php?prd_id=" + prd_id + "&lang_id=" + lang_id, str_uri, "titles", lang_id, prd_id);
 					}
 					else
 					{
@@ -905,8 +918,8 @@ console.log("Type : " + type);
           if ((str_uri.fileExists() == false) || (exp_do_upd == true))
           {
             exp_do_upd = false;
-//            download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_expressions.php?prd_id=" + prd_id + "&from_lang_id=" + from_lang_id + "&to_lang_id=" + to_lang_id + "&title_id=" + title_id, str_uri, "expressions", -1, prd_id, from_lang_id, to_lang_id, title_id);
-            download_JSON("http://www.loecsen.com/OrizonFlash_V2/webservices/json_get_expressions.php?prd_id=" + prd_id + "&from_lang_id=" + from_lang_id + "&to_lang_id=" + to_lang_id + "&title_id=0", str_uri, "expressions", -1, prd_id, from_lang_id, to_lang_id, title_id);
+//            download_JSON(ws_url + "json_get_expressions.php?prd_id=" + prd_id + "&from_lang_id=" + from_lang_id + "&to_lang_id=" + to_lang_id + "&title_id=" + title_id, str_uri, "expressions", -1, prd_id, from_lang_id, to_lang_id, title_id);
+            download_JSON(ws_url + "json_get_expressions.php?prd_id=" + prd_id + "&from_lang_id=" + from_lang_id + "&to_lang_id=" + to_lang_id + "&title_id=0", str_uri, "expressions", -1, prd_id, from_lang_id, to_lang_id, title_id);
           }
           else
           {
@@ -1080,7 +1093,6 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 				var ready = true;
 				window.clearInterval(timer_load);
 
-console.log("Temp Start : " + tmp_start);
         for (var i = tmp_start; i < nb_exp_total; i++)
 				{
 					if ((data_exp[i].title_id == title_id) || (exp_chk_all == true))
@@ -1585,7 +1597,7 @@ console.log("Temp Start : " + tmp_start);
 			
 			
 //	alert(browser_height + " / header: " + $('#page_header').height() + " / " + 38 + " / img: " + img_height + " / ads: " + $('#ads').height() + " / " + $('#bar_left').height() + " / " + $('#grd_block6:nth-child(3)').height());
-          var cnt_padding = (((browser_height)  - (44 + 38 + img_height + 50 + 41 + (scroller_row * 30) +18)) / 2);
+          var cnt_padding = (((browser_height)  - (44 + 38 + img_height + 50 + 41 + (scroller_row * 30) + 18)) / 2);
           $('#cnt_exp').css({'padding-top': cnt_padding + 'px', 'padding-bottom': cnt_padding + 'px'});
 
 //alert(cnt_padding);
@@ -1680,54 +1692,29 @@ console.log("Temp Start : " + tmp_start);
 			<div data-role="panel" id="pnl_share" data-position="right" data-display="push" data-theme="a">
 					<ul data-role="listview" data-inset="true" data-theme="c" data-divider-theme="c">
 						<li id="TXT_MOB_19" data-role="list-divider">Partager</li>
-						<li data-icon="false" class="list_share">
-							<div class="addthis_toolbox addthis_32x32_style addthis_vertical_style">
-								<a href="#" class="addthis_button_facebook" title="Facebook">&nbsp;&nbsp;&nbsp;&nbsp;Facebook</a>
-							</div></li>
-						<li data-icon="false" class="list_share">
-							<div class="addthis_toolbox addthis_32x32_style addthis_vertical_style">
-								<a href="#" class="addthis_button_twitter" title="Twitter">&nbsp;&nbsp;&nbsp;&nbsp;Twitter</a>
-							</div></li>
-						<li data-icon="false" class="list_share">
-							<div class="addthis_toolbox addthis_32x32_style addthis_vertical_style">
-								<a href="#" class="addthis_button_google" title="Google">&nbsp;&nbsp;&nbsp;&nbsp;Google</a>
-							</div></li>
-						<li data-icon="false" class="list_share">
-							<div class="addthis_toolbox addthis_32x32_style addthis_vertical_style">
-								<a href="#" class="addthis_button_linkedin" title="LinkedIn">&nbsp;&nbsp;&nbsp;&nbsp;LinkedIn</a>
-							</div></li>
-						<li data-icon="false" class="list_share">
-							<div class="addthis_toolbox addthis_32x32_style addthis_vertical_style">
-								<a href="#" class="addthis_button_viadeo" title="Viadeo">&nbsp;&nbsp;&nbsp;&nbsp;Viadeo</a>
-							</div></li>
+						<li data-icon="false" onclick="var ref = window.open('http://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(share_url), '_system');" class="list_share">
+								<div><img src="images/icon_facebook_32x32.png" alt="Facebook" class="ui-li-thumb"><span>Facebook</span></div>
+							</li>
+						<li data-icon="false" class="list_share" onclick="var ref = window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent('Loecsen Orizon Lang') + '&url=' + encodeURIComponent(share_url), '_system');">
+								<div><img src="images/icon_twitter_32x32.png" alt="Twitter" class="ui-li-thumb"><span>Twitter</span></div>
+							</li>
+						<li data-icon="false" class="list_share" onclick="var ref = window.open('https://plus.google.com/share?url=' + encodeURIComponent(share_url), '_system');">
+							<div><img src="images/icon_googleplus_32x32.png" alt="Google" class="ui-li-thumb"><span>Google</span></div>
+						</li>
+						<li data-icon="false" class="list_share" onclick="var ref = window.open('http://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(share_url) + '&title=' + encodeURIComponent('Loecsen') + '&summary=' + encodeURIComponent('Loecsen Orizon Lang'), '_system');">
+								<div><img src="images/icon_linkedin_32x32.png" alt="LinkedIn" class="ui-li-thumb"><span>LinkedIn</span></div>
+							</li>
+						<li data-icon="false" class="list_share" onclick="var ref = window.open('mailto:contact@loecsen.com', '_system');">
+								<div><img src="images/icon_email_32x32.png" alt="Email" class="ui-li-thumb"><span>Email</span></div>
+							</li>
 					</ul>
-<!--
-					<script type="text/javascript">var addthis_config = {"data_track_addressbar":false};var addthis_language = "fr";</script>
-					<script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-507a83730478e532"></script>
--->
 				  <a id="TXT_MOB_20" href="#pnl_share" data-role="button" data-rel="close" data-theme="a">Fermer</a>
 			</div>
 	
 			<div id="page_header" class="my-header-grid ui-grid-b" data-theme="a" data-role="header" data-position="fixed">
 				<div id="topbar_left" class="ui-block-a ui-bar-a" data-theme="a" style="width: 100px;">
 					<div align="left" style="padding-left:2px; padding-top:0px; height:40px;">
-<!--
-						<a id="TXT_MOB_23" href="#premiumPage" data-rel="popup" data-position-to="window" id="btn_premium" data-role="button" data-inline="true" data-mini="true" data-theme="b">Loecsen</a>
- -->
-						<a id="TXT_MOB_23" href="#" onclick="var ref = window.open('http://www.loecsen.com', '_system');" id="btn_premium" data-role="button" data-inline="true" data-mini="true" data-theme="b">Loecsen</a>
-						<!-- Premium 
-						<div data-role="popup" id="premiumPage" data-theme="b" data-corners="false">
-							<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
-						  <div data-role="header" data-theme="b">
-						    <h2 id="TXT_MOB_23b">Version Premium</h2>
-						  </div>
-						  <div data-role="content" data-theme="b">
-						  	<div id="premium_content" style="width: 300px;">
-						    	<p id="TXT_MOB_6">Une application off-line sera bient&ocirc;t disponible pour iPhone, Ipad et Android</p>
-							  </div>
-						  </div>
-						</div>
-						<!-- /Premium -->
+						<a id="TXT_MOB_23" href="#" onclick="var ref = window.open('http://www.loecsen.com/', '_system');" id="btn_premium" data-role="button" data-inline="true" data-mini="true" data-theme="b">Loecsen</a>
 					</div>
 				</div>
 				<div id="topbar_center" class="ui-block-b ui-bar-a">
@@ -1789,14 +1776,6 @@ console.log("Temp Start : " + tmp_start);
 										</ol>
 									</div>
 									<div id="warning_lang" style="width: 300px; display: none;">
-<!--
-										<div role="application" class="ui-slider-track ui-btn-down-c ui-btn-corner-all ui-mini" style="display: none;">
-											<div class="ui-slider-bg ui-btn-active ui-btn-corner-all" style="width: 25%;"></div>
-											<a href="#" class="ui-slider-handle ui-btn ui-shadow ui-btn-corner-all ui-btn-up-c" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" aria-valuetext="25" title="25" aria-labelledby="slider-13-label" style="left: 25%;">
-												<span class="ui-btn-inner"><span class="ui-btn-text"></span></span>
-											</a>
-										</div>
--->
 									</div>
 									<div data-role="popup" id="pup_newlang" data-overlay-theme="a" data-theme="c" data-dismissible="false" style="width:300px; max-width:300px;" class="ui-corner-all">
 										<div data-role="header" data-theme="a" class="ui-corner-top">
@@ -1816,9 +1795,10 @@ console.log("Temp Start : " + tmp_start);
 					</div>
 				</div>
 			</div>
-	
-	<!--		<div data-role="content" data-position="fixed" style="padding: 0; height: 0px; background-color: #FFFFFF"></div>-->
-	
+<!--
+			<div data-role="content" style="padding: 0; height: 0px; background-color: #FFFFFF">
+			</div>
+-->
 			<div id="footer" data-theme="a" data-role="footer" data-position="fixed" style=" padding-bottom:0px; border-top-width: 0; background-color: #FFFFFF;">
 				<div id="grd_main" class="ui-grid-a2">
 					<div id="grd_block1" class="ui-block-a">
