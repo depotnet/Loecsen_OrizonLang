@@ -7,8 +7,8 @@
 
 		<script src="js/jquery-1.8.3.min.js"></script>
 <!------  Includes  ------>
-		<link href="js/jquery.mobile-1.3.0/jquery.mobile-1.3.0.min.css" rel="stylesheet" />
-		<script src="js/jquery.mobile-1.3.0/jquery.mobile-1.3.0.min.js"></script>
+		<link href="js/jquery.mobile-1.3.1/jquery.mobile-1.3.1.min.css" rel="stylesheet" />
+		<script src="js/jquery.mobile-1.3.1/jquery.mobile-1.3.1.min.js"></script>
 		
 		<link href="js/mobiscroll.custom-2.4.4.min.css" rel="stylesheet" type="text/css" />
 		<script src="js/mobiscroll.custom-2.4.4.min.js" type="text/javascript"></script>
@@ -1676,6 +1676,8 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 				$('#img_exp').css({'width': img_width});
 				$('#img_exp').css({'height': img_height});
 				$("#pup_result").popup({positionTo: $('#img_exp')});
+				
+				$("#pnl_share").trigger("updatelayout");
 			}
 			setup_UI();
 
@@ -1694,19 +1696,19 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 						<li id="TXT_MOB_19" data-role="list-divider">Partager</li>
 						<li data-icon="false" onclick="var ref = window.open('http://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(share_url), '_system');" class="list_share">
 								<div><img src="images/icon_facebook_32x32.png" alt="Facebook" class="ui-li-thumb"><span>Facebook</span></div>
-							</li>
+						</li>
 						<li data-icon="false" class="list_share" onclick="var ref = window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent('Loecsen Orizon Lang') + '&url=' + encodeURIComponent(share_url), '_system');">
 								<div><img src="images/icon_twitter_32x32.png" alt="Twitter" class="ui-li-thumb"><span>Twitter</span></div>
-							</li>
+						</li>
 						<li data-icon="false" class="list_share" onclick="var ref = window.open('https://plus.google.com/share?url=' + encodeURIComponent(share_url), '_system');">
 							<div><img src="images/icon_googleplus_32x32.png" alt="Google" class="ui-li-thumb"><span>Google</span></div>
 						</li>
 						<li data-icon="false" class="list_share" onclick="var ref = window.open('http://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(share_url) + '&title=' + encodeURIComponent('Loecsen') + '&summary=' + encodeURIComponent('Loecsen Orizon Lang'), '_system');">
 								<div><img src="images/icon_linkedin_32x32.png" alt="LinkedIn" class="ui-li-thumb"><span>LinkedIn</span></div>
-							</li>
+						</li>
 						<li data-icon="false" class="list_share" onclick="var ref = window.open('mailto:contact@loecsen.com', '_system');">
 								<div><img src="images/icon_email_32x32.png" alt="Email" class="ui-li-thumb"><span>Email</span></div>
-							</li>
+						</li>
 					</ul>
 				  <a id="TXT_MOB_20" href="#pnl_share" data-role="button" data-rel="close" data-theme="a">Fermer</a>
 			</div>
@@ -1726,72 +1728,71 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 					<div align="right" style="height:40px;">
 						<div data-role="controlgroup" data-type="horizontal" data-mini="true">
 							<a id="btn_info" href="#infoPage" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-mini="true" data-iconpos="notext" data-icon="help" data-theme="a">Info</a>
-							<!-- Info -->
-							<div data-role="popup" id="infoPage" data-corners="false">
-								<a href="#" data-rel="back" data-role="button" data-theme="e" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Fermer</a>
-							  <div data-role="header" data-theme="e">
-							    <h2 id="TXT_MOB_7">Aide</h2>
-							  </div>
-							  <div data-role="content" data-theme="e">
-							  	<div id="help_content" style="width: 300px;">
-										<div style="width: 100%; height: 50px;">
-											<div style="float: left; width: 100px;">
-												<div data-role="controlgroup" data-type="horizontal" data-mini="true">
-													<a href="#" id="btn_from_lang_demo" data-role="button" data-inline="true" data-mini="true" data-theme="a"><img id="flag1" class="img_flag" src="images/flags/fr.gif" /></a>
-									    		<a href="#" id="btn_to_lang_demo" data-role="button" data-inline="true" data-mini="true" data-theme="a"><img id="flag2" class="img_flag" src="images/flags/uk.gif" /></a>
-									    	</div>
-								    	</div>
-								    	<span id="TXT_MOB_8">Changer les langues de d&eacute;part et d&acute;arriv&eacute;e</span>
-								    </div>
-										<div style="width: 100%; height: 50px;">
-											<div style="float: left; width: 50px;">
-												<div data-role="controlgroup" data-type="horizontal" data-mini="true">
-									    		<a href="#" id="btn_title_demo" data-role="button" data-inline="true" data-mini="true" data-iconpos="notext" data-icon="bars" data-theme="a"></a>
-												</div>
-									    </div>
-									    <span id="TXT_MOB_9" style="margin-top: 10px; display: inline-block;">Changer le th&egrave;me</span>
-								    </div>
-										<div style="width: 100%; height: 50px;">
-											<div style="float: left; width: 50px;">
-												<div data-role="controlgroup" data-type="horizontal" data-mini="true">
-													<a href="#" id="btn_autoplay_demo" data-role="button" data-iconpos="notext" data-icon="play" data-theme="b">Autoplay</a>
-												</div>
-									    </div>
-									    <span id="TXT_MOB_10" style="margin-top: 10px; display: inline-block;">Lecture continue</span>
-								    </div>
-										<div style="width: 100%; height: 50px;">
-											<div style="float: left; width: 50px;">
-												<div data-role="controlgroup" data-type="horizontal" data-mini="true">
-													<a href="#" id="btn_refresh_demo" data-role="button" data-iconpos="notext" data-icon="refresh" data-theme="b">Refresh</a>
-												</div>
-									    </div>
-									    <span id="TXT_MOB_11" style="margin-top: 10px; display: inline-block;">Rejouer</span>
-								    </div>
-								  </div>
-							  	<div id="help_quizzcontent" style="width: 300px; display: none;">
-										<ol>
-											<li id="TXT_MOB_12">Ecoutez l&acute;expression</li>
-											<li id="TXT_MOB_13">Choisissez une r&eacute;ponse dans la liste des expressions</li>
-											<li id="TXT_MOB_14">Validez votre r&eacute;ponse</li>
-										</ol>
-									</div>
-									<div id="warning_lang" style="width: 300px; display: none;">
-									</div>
-									<div data-role="popup" id="pup_newlang" data-overlay-theme="a" data-theme="c" data-dismissible="false" style="width:300px; max-width:300px;" class="ui-corner-all">
-										<div data-role="header" data-theme="a" class="ui-corner-top">
-											<h1 id="pup_newlang_title">Confirmation</h1>
-										</div>
-										<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
-											<p style="text-align: justify"><span id="pup_newlang_txt1">La langue que vous avez s&eacute;lectionn&eacute;e n'a pas encore &eacute;t&eacute; install&eacute;e sur votre syst&egrave;me.</span><br/><span id="pup_newlang_txt2">Ce t&eacute;l&eacute;chargement est gratuit et pourra occuper jusqu'à 15Mo d'espace.</span><br/><br/><span id="pup_newlang_txt3">Voulez-vous lancer le t&eacute;l&eacute;chargement maintenant ?</span></p>
-											<a id="pup_newlang_btn1" href="#" data-role="button" data-inline="true" data-theme="c" style="width: 120px;">Oui</a>    
-											<a id="pup_newlang_btn2" href="#" data-role="button" data-inline="true" data-theme="b" style="width: 120px;">Non</a>  
-										</div>
-									</div>
-							  </div>
-							</div>
-							<!-- /Info -->
 							<a href="#pnl_share" id="btn_share" data-role="button" data-inline="true" data-mini="true" data-theme="a"><img id="icon_share" src="ressources/webapp/icon_share2.png" style="margin-top:-3px; width:23px;" /></a>
 						</div>
+					</div>
+				</div>
+
+				<!-- Info -->
+				<div data-role="popup" id="infoPage" data-corners="false">
+					<a href="#" data-rel="back" data-role="button" data-theme="e" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Fermer</a>
+				  <div data-role="header" data-theme="e">
+				    <h2 id="TXT_MOB_7">Aide</h2>
+				  </div>
+				  <div data-role="content" data-theme="e">
+				  	<div id="help_content" style="width: 300px;">
+							<div style="width: 100%; height: 50px;">
+								<div style="float: left; width: 100px;">
+									<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+										<a href="#" id="btn_from_lang_demo" data-role="button" data-inline="true" data-mini="true" data-theme="a"><img id="flag1" class="img_flag" src="images/flags/fr.gif" /></a>
+						    		<a href="#" id="btn_to_lang_demo" data-role="button" data-inline="true" data-mini="true" data-theme="a"><img id="flag2" class="img_flag" src="images/flags/uk.gif" /></a>
+						    	</div>
+					    	</div>
+					    	<span id="TXT_MOB_8">Changer les langues de d&eacute;part et d&acute;arriv&eacute;e</span>
+					    </div>
+							<div style="width: 100%; height: 50px;">
+								<div style="float: left; width: 50px;">
+									<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+						    		<a href="#" id="btn_title_demo" data-role="button" data-inline="true" data-mini="true" data-iconpos="notext" data-icon="bars" data-theme="a"></a>
+									</div>
+						    </div>
+						    <span id="TXT_MOB_9" style="margin-top: 10px; display: inline-block;">Changer le th&egrave;me</span>
+					    </div>
+							<div style="width: 100%; height: 50px;">
+								<div style="float: left; width: 50px;">
+									<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+										<a href="#" id="btn_autoplay_demo" data-role="button" data-iconpos="notext" data-icon="play" data-theme="b">Autoplay</a>
+									</div>
+						    </div>
+						    <span id="TXT_MOB_10" style="margin-top: 10px; display: inline-block;">Lecture continue</span>
+					    </div>
+							<div style="width: 100%; height: 50px;">
+								<div style="float: left; width: 50px;">
+									<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+										<a href="#" id="btn_refresh_demo" data-role="button" data-iconpos="notext" data-icon="refresh" data-theme="b">Refresh</a>
+									</div>
+						    </div>
+						    <span id="TXT_MOB_11" style="margin-top: 10px; display: inline-block;">Rejouer</span>
+					    </div>
+					  </div>
+				  	<div id="help_quizzcontent" style="width: 300px; display: none;">
+							<ol>
+								<li id="TXT_MOB_12">Ecoutez l&acute;expression</li>
+								<li id="TXT_MOB_13">Choisissez une r&eacute;ponse dans la liste des expressions</li>
+								<li id="TXT_MOB_14">Validez votre r&eacute;ponse</li>
+							</ol>
+						</div>
+				  </div>
+				</div>
+				<!-- /Info -->
+				<div data-role="popup" id="pup_newlang" data-overlay-theme="a" data-theme="c" data-dismissible="false" style="width:300px; max-width:300px;" class="ui-corner-all">
+					<div data-role="header" data-theme="a" class="ui-corner-top">
+						<h1 id="pup_newlang_title">Confirmation</h1>
+					</div>
+					<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+						<p style="text-align: justify"><span id="pup_newlang_txt1">La langue que vous avez s&eacute;lectionn&eacute;e n'a pas encore &eacute;t&eacute; install&eacute;e sur votre syst&egrave;me.</span><br/><span id="pup_newlang_txt2">Ce t&eacute;l&eacute;chargement est gratuit et pourra occuper jusqu'à 15Mo d'espace.</span><br/><br/><span id="pup_newlang_txt3">Voulez-vous lancer le t&eacute;l&eacute;chargement maintenant ?</span></p>
+						<a id="pup_newlang_btn1" href="#" data-role="button" data-inline="true" data-theme="c" style="width: 120px;">Oui</a>    
+						<a id="pup_newlang_btn2" href="#" data-role="button" data-inline="true" data-theme="b" style="width: 120px;">Non</a>  
 					</div>
 				</div>
 			</div>
