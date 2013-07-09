@@ -1697,13 +1697,13 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 						<li data-icon="false" onclick="var ref = window.open('http://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(share_url), '_system');" class="list_share">
 								<div><img src="images/icon_facebook_32x32.png" alt="Facebook" class="ui-li-thumb"><span>Facebook</span></div>
 						</li>
-						<li data-icon="false" class="list_share" onclick="var ref = window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent('Loecsen Orizon Lang') + '&url=' + encodeURIComponent(share_url), '_system');">
+						<li data-icon="false" class="list_share" onclick="var ref = window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent('Loecsen') + '&url=' + encodeURIComponent(share_url), '_system');">
 								<div><img src="images/icon_twitter_32x32.png" alt="Twitter" class="ui-li-thumb"><span>Twitter</span></div>
 						</li>
 						<li data-icon="false" class="list_share" onclick="var ref = window.open('https://plus.google.com/share?url=' + encodeURIComponent(share_url), '_system');">
 							<div><img src="images/icon_googleplus_32x32.png" alt="Google" class="ui-li-thumb"><span>Google</span></div>
 						</li>
-						<li data-icon="false" class="list_share" onclick="var ref = window.open('http://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(share_url) + '&title=' + encodeURIComponent('Loecsen') + '&summary=' + encodeURIComponent('Loecsen Orizon Lang'), '_system');">
+						<li data-icon="false" class="list_share" onclick="var ref = window.open('http://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(share_url) + '&title=' + encodeURIComponent('Loecsen') + '&summary=' + encodeURIComponent('Loecsen'), '_system');">
 								<div><img src="images/icon_linkedin_32x32.png" alt="LinkedIn" class="ui-li-thumb"><span>LinkedIn</span></div>
 						</li>
 						<li data-icon="false" class="list_share" onclick="var ref = window.open('mailto:contact@loecsen.com', '_system');">
@@ -1716,7 +1716,7 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 			<div id="page_header" class="my-header-grid ui-grid-b" data-theme="a" data-role="header" data-position="fixed">
 				<div id="topbar_left" class="ui-block-a ui-bar-a" data-theme="a" style="width: 100px;">
 					<div align="left" style="padding-left:2px; padding-top:0px; height:40px;">
-						<a id="TXT_MOB_23" href="#" onclick="var ref = window.open('http://www.loecsen.com/', '_system');" id="btn_premium" data-role="button" data-inline="true" data-mini="true" data-theme="b">Loecsen</a>
+						<a id="TXT_MOB_23" href="#" onclick="var ref = window.open(encodeURIComponent(share_url), '_system');" id="btn_premium" data-role="button" data-inline="true" data-mini="true" data-theme="b">Loecsen</a>
 					</div>
 				</div>
 				<div id="topbar_center" class="ui-block-b ui-bar-a">
