@@ -25,6 +25,13 @@ g_UI_translated["fr"]["TXT_MOB_21"] = "OK";
 g_UI_translated["fr"]["TXT_MOB_22"] = "Annuler";
 g_UI_translated["fr"]["TXT_MOB_23"] = "Loecsen";
 g_UI_translated["fr"]["TXT_MOB_24"] = "Cliquez pour rejouer";
+g_UI_translated["fr"]["TXT_MOB_25"] = "Confirmation";
+g_UI_translated["fr"]["TXT_MOB_26"] = "La langue que vous avez s&eacute;lectionn&eacute;e n&acute;a pas encore &eacute;t&eacute; install&eacute;e sur votre syst&egrave;me.";
+g_UI_translated["fr"]["TXT_MOB_27"] = "Ce t&eacute;l&eacute;chargement est gratuit et pourra occuper jusqu&acute;&agrave; à 15Mo d&acute;espace.";
+g_UI_translated["fr"]["TXT_MOB_28"] = "Voulez-vous lancer le t&eacute;l&eacute;chargement maintenant ?";
+g_UI_translated["fr"]["TXT_MOB_29"] = "Cours de langues pour mieux voyager";
+g_UI_translated["fr"]["TXT_MOB_30"] = "Apprendre &agrave; parler des langues avec une m&eacute;thode professionnelle. Guide de conversation pour le voyage.";
+g_UI_translated["fr"]["TXT_MOB_31"] = "cours, langue, apprendre, parler, m&eacute;thode, voyage, voyageur, s&eacute;jour, dictionnaire, allemand, anglais,fran&ccedil;ais, italien, portugais, espagnol, grec, danois, estonien, n&eacute;erlandais, hongrois, su&eacute;dois, tch&egrave;que, turc, roumain, croate, lituanien, arabe, h&eacute;breu, chinois, thai, japonais, cor&eacute;en, breton, russe";
 
 //Anglais
 g_UI_translated["en"] = [];
@@ -52,6 +59,13 @@ g_UI_translated["en"]["TXT_MOB_21"] = "OK";
 g_UI_translated["en"]["TXT_MOB_22"] = "Cancel";
 g_UI_translated["en"]["TXT_MOB_23"] = "Loecsen";
 g_UI_translated["en"]["TXT_MOB_24"] = "Click to replay";
+g_UI_translated["en"]["TXT_MOB_25"] = "Confirmation";
+g_UI_translated["en"]["TXT_MOB_26"] = "La langue que vous avez s&eacute;lectionn&eacute;e n&acute;a pas encore &eacute;t&eacute; install&eacute;e sur votre syst&egrave;me.";
+g_UI_translated["en"]["TXT_MOB_27"] = "Ce t&eacute;l&eacute;chargement est gratuit et pourra occuper jusqu&acute;&agrave; 15Mo d&acute;espace.";
+g_UI_translated["en"]["TXT_MOB_28"] = "Voulez-vous lancer le t&eacute;l&eacute;chargement maintenant ?";
+g_UI_translated["en"]["TXT_MOB_29"] = "Language courses for better travel";
+g_UI_translated["en"]["TXT_MOB_30"] = "Learn to speak the language with a professional method. Phrasebook for travel.";
+g_UI_translated["en"]["TXT_MOB_31"] = "courses, language, learn, speak, method, travel, traveler, trip, dictionary, English, German, French, Italian, Portuguese, Spanish, Greek, Danish, Estonian, Dutch, Hungarian, Swedish, Turkish, Romanian, Croatian, Lithuanian, Arabic, Hebrew, Chinese, Thai, Japanese, Korean, Breton, Russian";
 
 //Allemand
 g_UI_translated["de"] = [];
@@ -79,6 +93,13 @@ g_UI_translated["de"]["TXT_MOB_21"] = "OK";
 g_UI_translated["de"]["TXT_MOB_22"] = "Abbestellen";
 g_UI_translated["de"]["TXT_MOB_23"] = "Loecsen";
 g_UI_translated["de"]["TXT_MOB_24"] = "Klicken wiedergeben";
+g_UI_translated["de"]["TXT_MOB_25"] = "Confirmation";
+g_UI_translated["de"]["TXT_MOB_26"] = "La langue que vous avez s&eacute;lectionn&eacute;e n&acute;a pas encore &eacute;t&eacute; install&eacute;e sur votre syst&egrave;me.";
+g_UI_translated["de"]["TXT_MOB_27"] = "Ce t&eacute;l&eacute;chargement est gratuit et pourra occuper jusqu&acute;&agrave; 15Mo d&acute;espace.";
+g_UI_translated["de"]["TXT_MOB_28"] = "Voulez-vous lancer le t&eacute;l&eacute;chargement maintenant ?";
+g_UI_translated["de"]["TXT_MOB_29"] = "Sprachkurse f&uuml;r bessere Reise";
+g_UI_translated["de"]["TXT_MOB_30"] = "Lernen Sie die Sprache mit einem professionellen Verfahren sprechen. Sprachf&uuml;hrer f&uuml;r die Reise.";
+g_UI_translated["de"]["TXT_MOB_31"] = "Kurse, Sprache, lernen, sprechen, Methode, Reise, Reisende, Reise, W&ouml;rterbuch, Englisch, Deutsch, Franz&ouml;sisch, Italienisch, Portugiesisch, Spanisch, Griechisch, D&auml;nisch, Estnisch, Niederl&auml;ndisch, Ungarisch, Schwedisch, T&uuml;rkisch, Rum&auml;nisch, Kroatisch, Litauisch, Arabisch, Hebr&auml;isch, Chinesisch, Thai, Japanisch, Koreanisch, Breton, Russisch";
 
 //Espagnol
 g_UI_translated["es"] = [];
@@ -106,6 +127,13 @@ g_UI_translated["es"]["TXT_MOB_21"] = "OK";
 g_UI_translated["es"]["TXT_MOB_22"] = "Cancelar";
 g_UI_translated["es"]["TXT_MOB_23"] = "Loecsen";
 g_UI_translated["es"]["TXT_MOB_24"] = "Haga clic aqu&iacute; para reproducir la partida";
+g_UI_translated["es"]["TXT_MOB_25"] = "Confirmation";
+g_UI_translated["es"]["TXT_MOB_26"] = "La langue que vous avez s&eacute;lectionn&eacute;e n&acute;a pas encore &eacute;t&eacute; install&eacute;e sur votre syst&egrave;me.";
+g_UI_translated["es"]["TXT_MOB_27"] = "Ce t&eacute;l&eacute;chargement est gratuit et pourra occuper jusqu&acute;&agrave; 15Mo d&acute;espace.";
+g_UI_translated["es"]["TXT_MOB_28"] = "Voulez-vous lancer le t&eacute;l&eacute;chargement maintenant ?";
+g_UI_translated["es"]["TXT_MOB_29"] = "Cursos de idiomas para un mejor viaje";
+g_UI_translated["es"]["TXT_MOB_30"] = "Aprende a hablar el idioma con un m&eacute;todo profesional. Frases para viajar.";
+g_UI_translated["es"]["TXT_MOB_31"] = "cursos, el idioma, aprender, hablar, m&eacute;todo, viaje, viajero, viaje, diccionario, Ingl&eacute;s, alem&aacute;n, franc&eacute;s, italiano, portugu&eacute;s, espa&ntilde;ol, griego, dan&eacute;s, estonio, holand&eacute;s, h&uacute;ngaro, sueco, turco, rumano, croata, lituano, &aacute;rabe, hebreo, chino, tailand&eacute;s, japon&eacute;s, coreano, breton, ruso";
 
 //Italien
 g_UI_translated["it"] = [];
@@ -133,6 +161,14 @@ g_UI_translated["it"]["TXT_MOB_21"] = "OK";
 g_UI_translated["it"]["TXT_MOB_22"] = "Annulla";
 g_UI_translated["it"]["TXT_MOB_23"] = "Loecsen";
 g_UI_translated["it"]["TXT_MOB_24"] = "Clicca per un replay";
+g_UI_translated["it"]["TXT_MOB_25"] = "Confirmation";
+g_UI_translated["it"]["TXT_MOB_26"] = "La langue que vous avez s&eacute;lectionn&eacute;e n&acute;a pas encore &eacute;t&eacute; install&eacute;e sur votre syst&egrave;me.";
+g_UI_translated["it"]["TXT_MOB_27"] = "Ce t&eacute;l&eacute;chargement est gratuit et pourra occuper jusqu&acute;&agrave; 15Mo d&acute;espace.";
+g_UI_translated["it"]["TXT_MOB_28"] = "Voulez-vous lancer le t&eacute;l&eacute;chargement maintenant ?";
+g_UI_translated["it"]["TXT_MOB_29"] = "Corsi di lingua per una migliore viaggio";
+g_UI_translated["it"]["TXT_MOB_30"] = "Imparare a parlare la lingua con un metodo professionale. Frasario per i viaggi.";
+g_UI_translated["it"]["TXT_MOB_31"] = "corsi, lingua, imparare, parlano, metodo, viaggiare, viaggiatore, viaggio, dizionario, inglese, tedesco, francese, italiano, portoghese, spagnolo, greco, danese, estone, olandese, ungherese, svedese, turco, rumeno, croato, lituano, arabo, ebraico, cinese, tailandese, giapponese, coreano, bretone, russa";
+
 
 //Portuguais
 g_UI_translated["pt"] = [];
@@ -160,3 +196,10 @@ g_UI_translated["pt"]["TXT_MOB_21"] = "OK";
 g_UI_translated["pt"]["TXT_MOB_22"] = "Cancelar";
 g_UI_translated["pt"]["TXT_MOB_23"] = "Loecsen";
 g_UI_translated["pt"]["TXT_MOB_24"] = "Clique para reproduzir";
+g_UI_translated["pt"]["TXT_MOB_25"] = "Confirmation";
+g_UI_translated["pt"]["TXT_MOB_26"] = "La langue que vous avez s&eacute;lectionn&eacute;e n&acute;a pas encore &eacute;t&eacute; install&eacute;e sur votre syst&egrave;me.";
+g_UI_translated["pt"]["TXT_MOB_27"] = "Ce t&eacute;l&eacute;chargement est gratuit et pourra occuper jusqu&acute;&agrave; d&acute;espace.";
+g_UI_translated["pt"]["TXT_MOB_28"] = "Voulez-vous lancer le t&eacute;l&eacute;chargement maintenant ?";
+g_UI_translated["pt"]["TXT_MOB_29"] = "Cursos de l&iacute;nguas para melhor viagem";
+g_UI_translated["pt"]["TXT_MOB_30"] = "Aprenda a falar a l&iacute;ngua com um m&eacute;todo profissional. Frases para viagens.";
+g_UI_translated["pt"]["TXT_MOB_31"] = "cursos, l&iacute;ngua, aprender, falar, m&eacute;todo, viagem, viajante, viagem, dicion&aacute;rio, Ingl&ecirc;s, Alem&atilde;o, Franc&ecirc;s, Italiano, Portugu&ecirc;s, espanhol, grego, dinamarqu&ecirc;s, estoniano, holand&ecirc;s, h&uacute;ngaro, sueco, turco, romeno, croata, lituano, &aacute;rabe, hebraico, chin&ecirc;s, tailand&ecirc;s, japon&ecirc;s, coreano, Breton, Russo";

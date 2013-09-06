@@ -1297,6 +1297,7 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 
 		
 			function init_QCM() {
+				$('#grd_block2').css({'background-image': 'none'});
 		    $('#btn_validate').addClass('ui-disabled');
 				$('#scroller .ui-btn-up-a').removeClass('ui-btn-up-a').removeClass('ui-btn-hover-a').addClass('ui-btn-up-d').attr('data-theme', 'd').trigger('create');
 		
@@ -1597,7 +1598,9 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 			
 			
 //	alert(browser_height + " / header: " + $('#page_header').height() + " / " + 38 + " / img: " + img_height + " / ads: " + $('#ads').height() + " / " + $('#bar_left').height() + " / " + $('#grd_block6:nth-child(3)').height());
-          var cnt_padding = (((browser_height)  - (44 + 38 + img_height + 50 + 41 + (scroller_row * 30) + 18)) / 2);
+/*NO ADS */
+//          var cnt_padding = (((browser_height)  - (44 + 38 + img_height + 50 + 41 + (scroller_row * 30) + 18)) / 2);
+          var cnt_padding = (((browser_height)  - (44 + 38 + img_height + 41 + (scroller_row * 30) + 18)) / 2);
           $('#cnt_exp').css({'padding-top': cnt_padding + 'px', 'padding-bottom': cnt_padding + 'px'});
 
 //alert(cnt_padding);
@@ -1640,7 +1643,9 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 					$('#bar_right').css({'width' : '90px'});
 			
 					$('#list_exp').css({'width' : left_column_width + 'px'});
-					$('#list_exp').css({'height' : main_row_height-60 + 'px'});
+/*NO ADS */
+//					$('#list_exp').css({'height' : main_row_height-60 + 'px'});
+					$('#list_exp').css({'height' : main_row_height + 'px'});
 					$('#scroller').css({'width' : left_column_width-8 + 'px'});
 			
 					$('.tab_exp a').css({'width' : left_column_width-40 + 'px'});
@@ -1658,8 +1663,9 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 						}
 				    return false;
 				  });
-			*/
-					$('#tab_ads').css({'top' : main_row_height-60 + 'px', 'width' : left_column_width + 'px'});
+*/
+/*NO ADS */
+//					$('#tab_ads').css({'top' : main_row_height-60 + 'px', 'width' : left_column_width + 'px'});
 					$('#ads').css({'display' : 'none'});
 			
 					$('#cnt_exp').css({'padding-top': '0px', 'padding-bottom': main_vertical_margins + 'px'});
@@ -1811,6 +1817,7 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 							</div>
 						</div>
 							<div id="tab_ads" style="position: absolute; background-color:#FFFFFF; z-index: 999">
+<!--
 								<div style="width: 320px; height: 60px; background-color:#FFCC66;">
 								<script type="text/javascript">
 									google_ad_client = "ca-pub-8664648974897099";
@@ -1821,6 +1828,7 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 								</script>
 								<script type="text/javascript"src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 								</div>
+-->
 							</div>
 					</div>
 					<div id="grd_block2" class="ui-block-b" style="background-color: #FFFFFF; background-repeat:no-repeat; background-position: center center; background-image:url(images/loader.gif);">
@@ -1833,7 +1841,7 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 								<div id="img_exp"></div>
 								<div id="pup_result" data-role="popup" class="ui-content" style="width: 200px; max-width:350px;"></div>
 							</div>
-              
+<!--
                <div id="ads" style="margin:auto; height: 50px; text-align:center; background-color:#FFCC66">
                <script type="text/javascript">
                google_ad_client = "ca-pub-8664648974897099";
@@ -1844,7 +1852,7 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
                </script>
                <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
                </div>
-            
+-->
 						</div>
 					</div>
 	<!-------------------- BLOCK 3 ui-bar ui-bar-e -------------------->
