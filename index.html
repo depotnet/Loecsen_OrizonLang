@@ -531,6 +531,13 @@ console.log(Math.round((nb_elem2dl*100/(nb_exp_total))) + "% Sound " + "n" + nb_
 				);
 			}
 
+      function show_selToLang()
+      {
+				$('#sel_to_lang').mobiscroll('show');
+				$('.dwbw').css({'width': '100%'});
+				$('.dwb-c').css({'display': 'none'});
+			}
+			
       function show_ProgressBar()
       {
         if (ProgressBar == false)
@@ -757,6 +764,12 @@ console.log(Math.round((nb_elem2dl*100/(nb_exp_total))) + "% Sound " + "n" + nb_
 					  {
 					  	launch=false;
 				    	changeLang("to_lang");
+						}
+				  },
+				  onClose: function (valueText, inst){
+						if (launch == true)
+						{
+							setTimeout(show_selToLang, 50);
 						}
 				  }
 			  });
@@ -1133,6 +1146,7 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
       
 				if (ready == true)
 				{
+					$('#grd_block2').css('background-image', 'none');
 					$('#sel_exp li').remove();
 					$('#sel_exp').mobiscroll('destroy');
 					$('#scroller li').remove();
@@ -1627,7 +1641,8 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 					$('#lbl_phon').css({'font-size' : 20 + 'px'});
 					$('#lbl_phon').css({'padding-top': '0px', 'padding-bottom': (main_vertical_margins) + 'px'});
 					
-					var main_row_height = img_height + 60 + lbl_trans_height + lbl_phon_height + (main_vertical_margins*2.5);
+//					var main_row_height = img_height + 60 + lbl_trans_height + lbl_phon_height + (main_vertical_margins*2.5);
+					var main_row_height = browser_height-44-41;
 					$('#grd_block1').css({'width' : left_column_width + 'px'});
 					$('#grd_block1').css({'height' : main_row_height + 'px'});
 					$('#grd_block2').css({'width' : browser_width-$('#grd_block1').width() + 'px'});
@@ -1723,7 +1738,7 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 			<div id="page_header" class="my-header-grid ui-grid-b" data-theme="a" data-role="header" data-position="fixed">
 				<div id="topbar_left" class="ui-block-a ui-bar-a" data-theme="a" style="width: 100px;">
 					<div align="left" style="padding-left:2px; padding-top:0px; height:40px;">
-						<a id="TXT_MOB_23" href="#" onclick="var ref = window.open(encodeURIComponent(share_url), '_system');" id="btn_premium" data-role="button" data-inline="true" data-mini="true" data-theme="b">Loecsen</a>
+						<div  onclick="var ref = window.open(share_url, '_system');"><a id="TXT_MOB_23" id="btn_premium" data-role="button" data-inline="true" data-mini="true" data-theme="b">Loecsen</a></div>
 					</div>
 				</div>
 				<div id="topbar_center" class="ui-block-b ui-bar-a">
