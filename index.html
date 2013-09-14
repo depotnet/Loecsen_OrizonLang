@@ -214,7 +214,7 @@
 			var data_exp;
 			var data_lang;
 			var launch = true;
-console.log("Language detected :" + lang_UI);
+//console.log("Language detected :" + lang_UI);
 			switch(lang_UI)
 			{
 				case "en":
@@ -254,7 +254,7 @@ console.log("Language detected :" + lang_UI);
 					to_lang_id = 3;
 				break;
 			}
-console.log("Language used :" + lang_UI);
+//console.log("Language used :" + lang_UI);
 			
 			var _w = Math.max( $(window).width(), $(window).height() );
 			var _h = Math.min( $(window).width(), $(window).height() );
@@ -405,7 +405,7 @@ console.log("Language used :" + lang_UI);
 			
 			function onDeviceReady()
 			{
-				console.log("device is ready");
+//				console.log("device is ready");
 				translate_UI();
 				window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
 				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
@@ -1501,7 +1501,7 @@ console.log("num_exp: " + num_exp + "  | start_exp: " + start_exp + "  | nb_exp:
 		  		$("#jquery_jplayer_1").bind($.jPlayer.event.ended + ".jp-ended", function(event) { // Using ".jp-ended" namespace so we can easily remove this event
 						if ($('#btn_refresh').hasClass('ui-disabled'))
 						{
-							if (num_exp <= nb_exp)
+							if (num_exp <= (nb_exp + start_exp))
 								timer = setTimeout(swipe_left,3000);
 							else
 							{
