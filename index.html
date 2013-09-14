@@ -24,9 +24,7 @@
 			@import "js/svg/jquery.svg.css";
 		</style> 
 		<script src="js/svg/jquery.svg.min.js" type="text/javascript"></script>
-<!--
-		<script src="js/unzip/archive.js" type="text/javascript"></script>
--->
+
 <!------  Languages  ------>
 		<script src="js/lang/UI_translations.js" type="text/javascript"></script>
 
@@ -1147,6 +1145,8 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 				if (ready == true)
 				{
 					$('#grd_block2').css('background-image', 'none');
+					$('#lbl_trans').css('display', 'block');
+					$('#lbl_phon').css('display', 'block');
 					$('#sel_exp li').remove();
 					$('#sel_exp').mobiscroll('destroy');
 					$('#scroller li').remove();
@@ -1514,17 +1514,14 @@ console.log("num_exp: " + num_exp + "  | start_exp: " + start_exp + "  | nb_exp:
 
 				  $("#jquery_jplayer_1").jPlayer("setMedia", {
 				  	mp3: data_exp[num_exp].sound_tra
-//				  	mp3: loaderZIPSND.loadSound("ressources/webapp/sonogg.zip://allemand-4-12.ogg")
 				  }).jPlayer("play");
 				}
 		
 				if (typeof(update_img) == 'undefined')
 				{
-//					$('#img_exp').svg({loadURL: loaderZIPIMG.load("ressources/webapp/svg.zip://"+data_exp[num_exp].image), addTo: false, changeSize: false});
 					$('#img_exp').svg({loadURL: 'ressources/webapp/svg/' + data_exp[num_exp].image, addTo: false, changeSize: false});
 					$('#img_exp').svg('destroy');
 					$('#img_exp').svg({loadURL: 'ressources/webapp/svg/' + data_exp[num_exp].image, addTo: false, changeSize: false});
-//					$('#img_exp').svg({loadURL: loaderZIPIMG.load("ressources/webapp/svg.zip://"+data_exp[num_exp].image), addTo: false, changeSize: false});
 			  }
 		
 				if (typeof(update_txt) == 'undefined')
@@ -1872,8 +1869,8 @@ console.log("num_exp: " + num_exp + "  | start_exp: " + start_exp + "  | nb_exp:
 						<div class="" style="">
 	
 							<div id="cnt_exp" style="text-align: center">
-								<h4 id="lbl_trans" class="exp_trans" style=""> </h4>
-								<h5 id="lbl_phon" class="exp_phon" style=""></h5>
+								<h4 id="lbl_trans" class="exp_trans" style="display: none;"> </h4>
+								<h5 id="lbl_phon" class="exp_phon" style="display: none;"></h5>
 								<div id="img_exp"></div>
 								<div id="pup_result" data-role="popup" class="ui-content" style="width: 200px; max-width:350px;"></div>
 							</div>
