@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="379px"
+	 height="141px" viewBox="0 0 379 141" style="enable-background:new 0 0 379 141;" xml:space="preserve">
+<g id="Layer_2">
+	<g>
+		<rect style="fill:none;" width="379" height="141"/>
+		<rect style="fill:#FFFFFF;" width="379" height="141"/>
+	</g>
+</g>
+<g id="Layer_3">
+	<g>
+		<polygon style="fill:#D4D4D4;" points="354.42,92.084 378,101.831 354.42,111.578 		"/>
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="101.8311" x2="354.4199" y2="101.8311">
+			<stop  offset="0.1966" style="stop-color:#262626"/>
+			<stop  offset="0.4686" style="stop-color:#6B6B6B"/>
+			<stop  offset="0.7173" style="stop-color:#A4A4A4"/>
+			<stop  offset="0.9011" style="stop-color:#C6C6C6"/>
+			<stop  offset="1" style="stop-color:#D4D4D4"/>
+		</linearGradient>
+		<rect y="100.345" style="fill:url(#SVGID_1_);" width="354.42" height="2.973"/>
+	</g>
+	
+		<line style="fill:none;stroke:#E30000;stroke-width:2.2117;stroke-linecap:round;" x1="73.918" y1="94.398" x2="73.918" y2="109.264"/>
+	
+		<line style="opacity:0.66;fill:none;stroke:#E30000;stroke-width:2.212;stroke-linecap:round;" x1="197.036" y1="94.398" x2="197.036" y2="109.264"/>
+	
+		<line style="opacity:0.33;fill:none;stroke:#E30000;stroke-width:5;stroke-linecap:round;" x1="320.149" y1="94.398" x2="320.149" y2="109.264"/>
+	
+		<line style="fill:none;stroke:#E30000;stroke-width:2.2117;stroke-linecap:round;" x1="73.918" y1="40.314" x2="73.918" y2="55.175"/>
+	
+		<line style="opacity:0.66;fill:none;stroke:#E30000;stroke-width:2.212;stroke-linecap:round;" x1="197.036" y1="40.314" x2="197.036" y2="55.175"/>
+	
+		<line style="opacity:0.33;fill:none;stroke:#E30000;stroke-width:5;stroke-linecap:round;" x1="320.149" y1="40.314" x2="320.149" y2="55.175"/>
+	
+		<circle style="fill:none;stroke:#FF9934;stroke-width:3.6232;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:10,10;" cx="320.149" cy="69" r="55"/>
+	<circle style="fill:#65B724;stroke:#FFFFFF;" cx="74.068" cy="74.522" r="10"/>
+</g>
+</svg>

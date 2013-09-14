@@ -24,9 +24,9 @@
 			@import "js/svg/jquery.svg.css";
 		</style> 
 		<script src="js/svg/jquery.svg.min.js" type="text/javascript"></script>
-
+<!--
 		<script src="js/unzip/archive.js" type="text/javascript"></script>
-
+-->
 <!------  Languages  ------>
 		<script src="js/lang/UI_translations.js" type="text/javascript"></script>
 
@@ -297,8 +297,8 @@ console.log("Language used :" + lang_UI);
       var ws_url = 'http://www.loecsen.com/OrizonFlash_V2/webservices/';
       var share_url = 'http://www.loecsen.com/travel/share.html';
       
-			var loaderZIPIMG = new ZipLoader('ressources/webapp/svg.zip');
-			var loaderZIPSND;
+//			var loaderZIPIMG = new ZipLoader('ressources/webapp/svg.zip');
+//			var loaderZIPSND;
 
       var fileSystem;
       var knownfiles = [];
@@ -1285,26 +1285,28 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 			function swipe_left(e){
 				if (mode_player == true)
 				{
-					if (num_exp < nb_exp)
+console.log("num_exp: " + num_exp + "  | start_exp: " + start_exp + "  | nb_exp: " + nb_exp);
+					if (num_exp < (nb_exp + start_exp))
 					{
 						num_exp++;
 			    	cur_expID = data_exp[num_exp].id;
 			    	$('#sel_exp').mobiscroll('setValue', [' ' + cur_expID], false, 0.5);
 						upd_elem(cur_expID);
-						scrollToLine(num_exp-jump, true);
+						scrollToLine(num_exp - start_exp - jump, true);
 					}
 				}
 			};
 			function swipe_right(e){
 				if (mode_player == true)
 				{
-					if (num_exp > 1)
+console.log("num_exp: " + num_exp + "  | start_exp: " + start_exp + "  | nb_exp: " + nb_exp);
+					if (start_exp < num_exp)
 					{
 						num_exp--;
 			    	cur_expID = data_exp[num_exp].id;
 			    	$('#sel_exp').mobiscroll('setValue', [' ' + cur_expID], false, 0.5);
 						upd_elem(cur_expID);
-						scrollToLine(num_exp-jump, true);
+						scrollToLine(num_exp - start_exp - jump, true);
 					}
 				}
 			};
@@ -1518,9 +1520,11 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 		
 				if (typeof(update_img) == 'undefined')
 				{
-					$('#img_exp').svg({loadURL: loaderZIPIMG.load("ressources/webapp/svg.zip://"+data_exp[num_exp].image), addTo: false, changeSize: false});
+//					$('#img_exp').svg({loadURL: loaderZIPIMG.load("ressources/webapp/svg.zip://"+data_exp[num_exp].image), addTo: false, changeSize: false});
+					$('#img_exp').svg({loadURL: 'ressources/webapp/svg/' + data_exp[num_exp].image, addTo: false, changeSize: false});
 					$('#img_exp').svg('destroy');
-					$('#img_exp').svg({loadURL: loaderZIPIMG.load("ressources/webapp/svg.zip://"+data_exp[num_exp].image), addTo: false, changeSize: false});
+					$('#img_exp').svg({loadURL: 'ressources/webapp/svg/' + data_exp[num_exp].image, addTo: false, changeSize: false});
+//					$('#img_exp').svg({loadURL: loaderZIPIMG.load("ressources/webapp/svg.zip://"+data_exp[num_exp].image), addTo: false, changeSize: false});
 			  }
 		
 				if (typeof(update_txt) == 'undefined')
@@ -1802,7 +1806,23 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 								<li id="TXT_MOB_12">Ecoutez l&acute;expression</li>
 								<li id="TXT_MOB_13">Choisissez une r&eacute;ponse dans la liste des expressions</li>
 								<li id="TXT_MOB_14">Validez votre r&eacute;ponse</li>
-							</ol>
+							</ol><hr/>
+							<div style="width: 100%; height: 50px;">
+								<div style="float: left; width: 50px;">
+									<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+										<a href="#" id="btn_validate_demo" data-role="button" data-iconpos="notext" data-icon="check" data-theme="b">Validate</a>
+									</div>
+						    </div>
+						    <span id="TXT_MOB_29" style="margin-top: 10px; display: inline-block;">Valider</span>
+					    </div>
+							<div style="width: 100%; height: 50px;">
+								<div style="float: left; width: 50px;">
+									<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+										<a href="#" id="btn_refresh_demo2" data-role="button" data-iconpos="notext" data-icon="refresh" data-theme="b">Refresh</a>
+									</div>
+						    </div>
+						    <span id="TXT_MOB_11" style="margin-top: 10px; display: inline-block;">Rejouer</span>
+					    </div>
 						</div>
 				  </div>
 				</div>

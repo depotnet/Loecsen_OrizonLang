@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="378px"
+	 height="140.001px" viewBox="0 0 378 140.001" style="enable-background:new 0 0 378 140.001;" xml:space="preserve">
+<g id="Layer_2">
+	<g>
+		<rect style="fill:#FFFFFF;" width="378" height="140.001"/>
+	</g>
+</g>
+<g id="Layer_3">
+	<g id="homme">
+		<path style="fill:none;stroke:#7E7A64;stroke-width:1.1995;stroke-linecap:round;stroke-linejoin:round;" d="M205.18,75.171
+			c0,1.062,0.857,1.926,1.922,1.926c1.053,0,1.922-0.863,1.922-1.926c0-1.061-0.869-1.922-1.922-1.922
+			C206.037,73.249,205.18,74.11,205.18,75.171z"/>
+		<path style="fill:none;stroke:#7E7A64;stroke-width:1.7991;stroke-linecap:round;stroke-linejoin:round;" d="M198.141,16.97
+			c0,5.955,3.691,10.781,8.23,10.781c4.543,0,8.236-4.826,8.236-10.781c0-5.953-3.693-10.779-8.236-10.779
+			C201.832,6.191,198.141,11.017,198.141,16.97z"/>
+		<path style="fill:none;stroke:#7E7A64;stroke-width:1.7991;stroke-linecap:round;stroke-linejoin:round;" d="M206.168,28.179
+			c0.039,7.525-1.012,29.776,0.428,36.999c1.291,6.45,1.863,4.496,0.578,13.53c-1.617,11.312,2.016,22.355,2.402,28.078
+			c2.006,29.688,2.186,28.945-4.699,28.082"/>
+	</g>
+	<g id="femme">
+		<path style="fill:#FFFFFF;stroke:#7E7A64;stroke-width:1.1995;stroke-linecap:round;stroke-linejoin:round;" d="M165.719,23.751
+			c0,6.095-3.769,11.033-8.424,11.033c-4.65,0-8.425-4.938-8.425-11.033c0-6.091,3.775-11.029,8.425-11.029
+			C161.95,12.722,165.719,17.66,165.719,23.751z"/>
+		<path style="fill:#FFFFFF;stroke:#7E7A64;stroke-width:1.1995;stroke-linecap:round;stroke-linejoin:round;" d="M162.322,46.63
+			c0,1.882-1.522,3.409-3.407,3.409c-1.884,0-3.416-1.527-3.416-3.409c0-1.883,1.531-3.411,3.416-3.411
+			C160.8,43.22,162.322,44.747,162.322,46.63z"/>
+		<path style="fill:none;stroke:#7E7A64;stroke-width:1.1995;stroke-linecap:round;stroke-linejoin:round;" d="M157.547,49.756
+			c0.125,7.778,0.11,16.11-0.658,19.93c-1.198,6.016-3.609,3.611-2.403,12.035c1.506,10.555,5.617,19.256,4.411,24.469
+			c-6.568,28.473-6.818,29.287-0.404,28.484"/>
+		<path style="fill:none;stroke:#7E7A64;stroke-width:1.1995;stroke-linecap:round;stroke-linejoin:round;" d="M157.294,35.188
+			c-0.01,1.939,0.057,4.926,0.131,8.376"/>
+	</g>
+</g>
+</svg>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="379px"
+	 height="141px" viewBox="0 0 379 141" style="enable-background:new 0 0 379 141;" xml:space="preserve">
+<g id="Layer_2">
+	<g>
+		<rect style="fill:none;" width="379" height="141"/>
+		<rect style="fill:#FFFFFF;" width="379" height="141"/>
+	</g>
+</g>
+<g id="Layer_3">
+	<polygon style="fill:#E4E4E4;" points="352.714,81.129 376.179,90.83 352.714,100.529 	"/>
+	
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-0.0015" y1="90.8311" x2="352.7124" y2="90.8311" gradientTransform="matrix(-1 0 0 1 352.7139 0)">
+		<stop  offset="0.1966" style="stop-color:#D4D4D4"/>
+		<stop  offset="0.4686" style="stop-color:#8F8F8F"/>
+		<stop  offset="0.7173" style="stop-color:#565656"/>
+		<stop  offset="0.9011" style="stop-color:#333333"/>
+		<stop  offset="1" style="stop-color:#262626"/>
+	</linearGradient>
+	<rect y="89.35" style="fill:url(#SVGID_1_);" width="352.714" height="2.96"/>
+	
+		<line style="fill:none;stroke:#FFFFFF;stroke-width:5;stroke-dasharray:9.4865;" x1="132.282" y1="91.31" x2="352.714" y2="91.31"/>
+	<line style="fill:none;stroke:#E30000;stroke-width:5;stroke-linecap:round;" x1="73.56" y1="83.433" x2="73.56" y2="98.225"/>
+	<g>
+		
+			<line style="opacity:0.33;fill:none;stroke:#E30000;stroke-width:2.201;stroke-linecap:round;" x1="184.542" y1="83.433" x2="184.542" y2="98.225"/>
+		
+			<line style="opacity:0.33;fill:none;stroke:#E30000;stroke-width:2.201;stroke-linecap:round;" x1="184.542" y1="29.609" x2="184.542" y2="44.399"/>
+	</g>
+	<g>
+		
+			<line style="opacity:0.33;fill:none;stroke:#E30000;stroke-width:2.201;stroke-linecap:round;" x1="231.002" y1="83.433" x2="231.002" y2="98.225"/>
+		
+			<line style="opacity:0.33;fill:none;stroke:#E30000;stroke-width:2.201;stroke-linecap:round;" x1="231.002" y1="29.609" x2="231.002" y2="44.399"/>
+	</g>
+	<g>
+		
+			<line style="opacity:0.33;fill:none;stroke:#E30000;stroke-width:2.201;stroke-linecap:round;" x1="278.461" y1="83.433" x2="278.461" y2="98.225"/>
+		
+			<line style="opacity:0.33;fill:none;stroke:#E30000;stroke-width:2.201;stroke-linecap:round;" x1="278.461" y1="29.609" x2="278.461" y2="44.399"/>
+	</g>
+	<g>
+		
+			<line style="opacity:0.33;fill:none;stroke:#E30000;stroke-width:2.201;stroke-linecap:round;" x1="329.92" y1="83.433" x2="329.92" y2="98.225"/>
+		
+			<line style="opacity:0.33;fill:none;stroke:#E30000;stroke-width:2.201;stroke-linecap:round;" x1="329.92" y1="29.609" x2="329.92" y2="44.399"/>
+	</g>
+	<g>
+		
+			<line style="opacity:0.66;fill:none;stroke:#E30000;stroke-width:2.201;stroke-linecap:round;" x1="136.083" y1="83.433" x2="136.083" y2="98.225"/>
+		
+			<line style="opacity:0.66;fill:none;stroke:#E30000;stroke-width:2.201;stroke-linecap:round;" x1="136.083" y1="29.609" x2="136.083" y2="44.399"/>
+	</g>
+	<line style="fill:none;stroke:#E30000;stroke-width:5;stroke-linecap:round;" x1="73.56" y1="29.609" x2="73.56" y2="44.399"/>
+	<circle style="fill:#65B724;stroke:#FFFFFF;" cx="73" cy="64" r="10"/>
+</g>
+</svg>

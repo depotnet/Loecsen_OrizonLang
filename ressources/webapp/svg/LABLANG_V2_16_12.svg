@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="378px"
+	 height="140px" viewBox="0 0 378 140" style="enable-background:new 0 0 378 140;" xml:space="preserve">
+<pattern  x="-81" y="170" width="538" height="200" patternUnits="userSpaceOnUse" id="New_Pattern_Swatch_3" viewBox="0 -200 538 200" style="overflow:visible;">
+	<g>
+		<polygon style="fill:none;" points="0,0 538,0 538,-200 0,-200 		"/>
+		<polygon style="fill:#FFFFFF;" points="0,0 538,0 538,-200 0,-200 		"/>
+	</g>
+</pattern>
+<g id="fond">
+	<rect style="fill:#FFFFFF;" width="378" height="140"/>
+</g>
+<g id="homme">
+	<g>
+		<path style="fill:none;stroke:#777768;stroke-width:1.199;stroke-linecap:round;stroke-linejoin:round;" d="M224.704,73.147
+			c0,1.059,0.864,1.915,1.918,1.915c1.053,0,1.914-0.856,1.914-1.915s-0.861-1.911-1.914-1.911
+			C225.568,71.236,224.704,72.089,224.704,73.147z"/>
+		<path style="fill:#FFFFFF;stroke:#787768;stroke-width:1.799;stroke-linecap:round;stroke-linejoin:round;" d="M217.704,15.2
+			c0,5.929,3.668,10.734,8.197,10.734c4.521,0,8.193-4.805,8.193-10.734c0-5.927-3.673-10.732-8.193-10.732
+			C221.372,4.468,217.704,9.273,217.704,15.2z"/>
+		<path style="fill:none;stroke:#777768;stroke-width:1.799;stroke-linecap:round;stroke-linejoin:round;" d="M225.695,26.361
+			c0.035,7.493-1.012,29.645,0.425,36.837c1.287,6.422,1.858,4.477,0.571,13.469c-1.606,11.266,2.01,22.258,2.401,27.961
+			c1.992,29.556,2.173,28.813-4.687,27.957"/>
+	</g>
+</g>
+<g id="femme">
+	<path style="fill:url(#New_Pattern_Swatch_3);stroke:#777768;stroke-width:1.199;stroke-linecap:round;stroke-linejoin:round;" d="
+		M146.571,33.04c-0.011,1.939,0.057,4.926,0.131,8.376"/>
+	
+		<ellipse style="fill:url(#New_Pattern_Swatch_3);stroke:#777768;stroke-width:1.199;stroke-linecap:round;stroke-linejoin:round;" cx="146.57" cy="21.603" rx="8.425" ry="11.033"/>
+	<path style="fill:none;stroke:#777768;stroke-width:1.199;stroke-linecap:round;stroke-linejoin:round;" d="M146.823,47.608
+		c0.126,7.778,0.111,16.11-0.658,19.93c-1.197,6.016-3.608,3.611-2.403,12.035c1.507,10.555,5.617,19.256,4.411,24.469
+		c-6.567,28.473-6.817,29.287-0.403,28.484"/>
+	<path style="fill:#FFFFFF;stroke:#787768;stroke-width:1.199;stroke-linecap:round;stroke-linejoin:round;" d="M151.599,44.482
+		c0,1.882-1.521,3.409-3.406,3.409s-3.416-1.527-3.416-3.409c0-1.883,1.531-3.411,3.416-3.411S151.599,42.599,151.599,44.482z"/>
+</g>
+<g id="Layer_5">
+	<path style="display:none;fill:none;stroke:#777768;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;" d="
+		M197.764,79.465c-0.911,1.977-2.563,2.85-3.051,3.336c-2.411,1.129-8.015,1.148-9.175-1.587"/>
+	<path style="display:none;fill:none;stroke:#777768;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;" d="
+		M185.347,83.595c0-9.021,1.799-14.439,4.703-22.071c-1.313,6.579-4.276,13.017-4.464,18.461c0-9.097,6.03-13.34,7.684-20.129
+		c-1.653,6.79-4.607,11.363-7.684,20.129c1.397-2.804,4.304-6.2,5.162-6.429c0.725,0,3.905,2.26,4.324,2.68
+		c0.311,0.508,0.487,2.486,0.545,3.789"/>
+	<path style="display:none;fill:none;stroke:#777768;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;" d="
+		M186.767,64.965c0.157,2.021-1.61,14.486-1.335,16.836c0.104,0.125,0.042-0.061,0.104-0.112"/>
+</g>
+</svg>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="378px"
+	 height="159px" viewBox="0 0 378 159" style="enable-background:new 0 0 378 159;" xml:space="preserve">
+<pattern  x="-81" y="189" width="538" height="200" patternUnits="userSpaceOnUse" id="New_Pattern_Swatch_3" viewBox="0 -200 538 200" style="overflow:visible;">
+	<g>
+		<polygon style="fill:none;" points="0,0 538,0 538,-200 0,-200 		"/>
+		<polygon style="fill:#FFFFFF;" points="0,0 538,0 538,-200 0,-200 		"/>
+	</g>
+</pattern>
+<g id="fond">
+	<rect y="19" style="fill:#FFFFFF;" width="378" height="140"/>
+</g>
+<g id="comptoir">
+	<g>
+		<rect x="23.833" y="71.292" style="fill:none;" width="330.51" height="81.697"/>
+		<polyline style="fill:none;stroke:#3399FF;stroke-linecap:round;stroke-linejoin:round;" points="24.333,145.875 172,145.875 
+			172,79.458 157.333,79.458 157.333,71.792 183.817,71.792 178.328,152.489 353.844,152.489 		"/>
+	</g>
+</g>
+<g id="client">
+	<g>
+		<path style="fill:none;stroke:#777768;stroke-width:1.1995;stroke-linecap:round;stroke-linejoin:round;" d="M224.704,92.147
+			c0,1.059,0.864,1.915,1.918,1.915c1.053,0,1.914-0.856,1.914-1.915s-0.861-1.911-1.914-1.911
+			C225.568,90.236,224.704,91.089,224.704,92.147z"/>
+		<path style="fill:none;stroke:#787768;stroke-width:1.799;stroke-linecap:round;stroke-linejoin:round;" d="M217.704,34.2
+			c0,5.929,3.668,10.734,8.197,10.734c4.521,0,8.193-4.805,8.193-10.734c0-5.927-3.673-10.732-8.193-10.732
+			C221.372,23.468,217.704,28.273,217.704,34.2z"/>
+		<path style="fill:none;stroke:#787768;stroke-width:1.799;stroke-linecap:round;stroke-linejoin:round;" d="M225.695,45.361
+			c0.035,7.493-1.012,29.645,0.425,36.837c1.287,6.422,1.858,4.477,0.571,13.469c-1.606,11.266,2.01,22.258,2.401,27.961
+			c1.992,29.556,2.173,28.813-4.687,27.957"/>
+	</g>
+</g>
+<g id="hotesse">
+	<path style="fill:url(#New_Pattern_Swatch_3);stroke:#777768;stroke-width:1.199;stroke-linecap:round;stroke-linejoin:round;" d="
+		M146.571,45.875c-0.011,1.939,0.057,4.926,0.131,8.376"/>
+	
+		<ellipse style="fill:url(#New_Pattern_Swatch_3);stroke:#777768;stroke-width:1.199;stroke-linecap:round;stroke-linejoin:round;" cx="146.57" cy="34.438" rx="8.425" ry="11.033"/>
+	<path style="fill:url(#New_Pattern_Swatch_3);stroke:#777768;stroke-width:1.199;stroke-linecap:round;stroke-linejoin:round;" d="
+		M146.823,60.443c0.126,7.778,0.111,16.11-0.658,19.93c-1.197,6.016-3.608,3.611-2.403,12.035
+		c1.507,10.555,5.617,19.256,4.411,24.469c-6.567,28.473-6.817,29.287-0.403,28.484"/>
+	<path style="fill:#FFFFFF;stroke:#787768;stroke-width:1.1995;stroke-linecap:round;stroke-linejoin:round;" d="M151.599,57.317
+		c0,1.882-1.521,3.409-3.406,3.409s-3.416-1.527-3.416-3.409c0-1.883,1.531-3.411,3.416-3.411S151.599,55.434,151.599,57.317z"/>
+</g>
+<g id="enveloppe">
+	
+		<rect x="182.125" y="38" style="fill:url(#New_Pattern_Swatch_3);stroke:#777768;stroke-width:0.5509;stroke-linecap:round;stroke-linejoin:round;" width="27.25" height="18.666"/>
+	
+		<polygon style="fill:url(#New_Pattern_Swatch_3);stroke:#777768;stroke-width:0.5509;stroke-linecap:round;stroke-linejoin:round;" points="
+		182.125,38 195.75,50.611 209.375,38 	"/>
+	<path style="fill:url(#New_Pattern_Swatch_3);stroke:#777768;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;" d="
+		M148.625,0"/>
+</g>
+</svg>

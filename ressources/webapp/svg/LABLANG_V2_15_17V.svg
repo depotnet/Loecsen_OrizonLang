@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="378px"
+	 height="140px" viewBox="0 0 378 140" style="enable-background:new 0 0 378 140;" xml:space="preserve">
+<g id="fond">
+	<rect style="fill:#FFFFFF;" width="378" height="140"/>
+</g>
+<g id="parasol">
+	<g>
+		
+			<line style="fill:none;stroke:#777768;stroke-width:1.6231;stroke-linecap:round;stroke-linejoin:round;" x1="189" y1="51" x2="189" y2="120.25"/>
+		
+			<line style="fill:none;stroke:#777768;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;" x1="189" y1="18.667" x2="189" y2="11.25"/>
+		<path style="fill:#FF3333;stroke:#777768;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;" d="M252.228,51
+			c0-9.61-28.403-32.333-63.228-32.333c-34.825,0-63.228,22.723-63.228,32.333H252.228z"/>
+		<path style="fill:#65B724;stroke:#777768;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;" d="M237.241,51
+			c0-9.61-24.238-32.333-48.241-32.333S140.759,41.39,140.759,51H237.241z"/>
+		<path style="fill:#FF3333;stroke:#777768;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;" d="M189,18.667
+			c13.702,0,23.835,22.723,23.835,32.333h-47.67C165.165,41.39,175.298,18.667,189,18.667z"/>
+	</g>
+</g>
+</svg>
