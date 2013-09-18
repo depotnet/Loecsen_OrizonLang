@@ -201,6 +201,12 @@
 		    app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1,
 		    android = ~ua.indexOf('Android'),
 		    lastWidth = 0;
+			var deviceID = '';
+			var ip = '68.147.52.158';
+			$.getJSON("http://www.loecsen.com/OrizonFlash_V2/get_ip.php",
+				function(data){
+					ip = data.ip;
+			});
 			var lang_UI = lang.substr(0,2);
 			var prd_id = 67;
 			var from_lang_id;
@@ -214,7 +220,7 @@
 			var data_exp;
 			var data_lang;
 			var launch = true;
-//console.log("Language detected :" + lang_UI);
+
 			switch(lang_UI)
 			{
 				case "en":
@@ -254,7 +260,6 @@
 					to_lang_id = 3;
 				break;
 			}
-//console.log("Language used :" + lang_UI);
 			
 			var _w = Math.max( $(window).width(), $(window).height() );
 			var _h = Math.min( $(window).width(), $(window).height() );
@@ -382,6 +387,8 @@
 				$("#btn_quizz .ui-btn-text").text(g_UI_translated[lang_UI]["TXT_MOB_5"]);
 				$("#TXT_MOB_20 .ui-btn-text").text(g_UI_translated[lang_UI]["TXT_MOB_20"]);
 				$("#TXT_MOB_23 .ui-btn-text").text(g_UI_translated[lang_UI]["TXT_MOB_23"]);
+
+				$("#TXT_MOB_29").html(g_UI_translated[lang_UI]["TXT_MOB_29"]);
 			}
 
 			if (android)
@@ -407,6 +414,7 @@
 			{
 //				console.log("device is ready");
 				translate_UI();
+				deviceID = device.uuid;
 				window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
 				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
 			}
@@ -420,7 +428,7 @@
 			{
         fileSystem = fs;
       
-				console.log("filesystem got");
+//console.log("filesystem got");
 				fs.root.getDirectory(window.appRootDirName, {create : true, exclusive : false}, dirReady, fail);
 			}
 			
@@ -440,6 +448,8 @@
 			    width: scroller_width+10
 				});
 				ajax_get_fromlangs(prd_id, from_lang_id);
+				timer_ads = window.setInterval(ajax_get_ads, 60000);
+				ajax_get_ads();
 			}
 
 			function downloadFile(url, str_filename)
@@ -582,6 +592,7 @@ console.log(Math.round((nb_elem2dl*100/(nb_exp_total))) + "% Sound " + "n" + nb_
 		  var qcm_num;
 			var timer;
 			var timer_load;
+			var timer_ads;
 			var timer_pg;
 			var nb_good_answers=0;
 			var nb_exp_used=0;
@@ -611,7 +622,36 @@ console.log(Math.round((nb_elem2dl*100/(nb_exp_total))) + "% Sound " + "n" + nb_
 
 
 
-
+			function ajax_get_ads()
+			{
+				if (ip == '68.147.52.158')
+				{
+					$.getJSON("http://www.loecsen.com/OrizonFlash_V2/get_ip.php",
+						function(data){
+							ip = data.ip;
+					});
+				}
+//				var str_uri = "http://ads.mp.mydas.mobi/getAd?apid=134641&hdid=" + deviceID + "&ua=" + encodeURIComponent(ua) + "&uip=68.147.52.158" + ip;
+				var str_uri = "http://ads.mp.mydas.mobi/getAd?apid=134641&hdid=" + deviceID + "&ua=iPhone&uip=" + ip;
+			  $.ajax({
+			    type: "GET",
+			    url: str_uri,
+			    cache: false,
+			    dataType: "html",
+			    success: function(data){
+			    	if (tabletView == true)
+			    	{
+			    		$('#tab_ads').empty();
+			    		$('#tab_ads').append(data);
+			    	}
+			    	else
+			    	{
+			    		$('#ads').empty();
+			    		$('#ads').append(data);
+			    	}
+			    }
+				});
+			}
 
 			function ajax_get_fromlangs(prd_id, lang_id)
 			{
@@ -1285,7 +1325,6 @@ console.log(entries[i].name+' dir? '+entries[i].isDirectory);
 			function swipe_left(e){
 				if (mode_player == true)
 				{
-console.log("num_exp: " + num_exp + "  | start_exp: " + start_exp + "  | nb_exp: " + nb_exp);
 					if (num_exp < (nb_exp + start_exp))
 					{
 						num_exp++;
@@ -1299,7 +1338,6 @@ console.log("num_exp: " + num_exp + "  | start_exp: " + start_exp + "  | nb_exp:
 			function swipe_right(e){
 				if (mode_player == true)
 				{
-console.log("num_exp: " + num_exp + "  | start_exp: " + start_exp + "  | nb_exp: " + nb_exp);
 					if (start_exp < num_exp)
 					{
 						num_exp--;
@@ -1610,13 +1648,14 @@ console.log("num_exp: " + num_exp + "  | start_exp: " + start_exp + "  | nb_exp:
 					var bar_width = browser_width;
 			
 					//$('#ads').css({'display' : 'none'});
-					$('#tab_ads').css({'display' : 'none'});
+//					$('#tab_ads').css({'display' : 'none'});
 			
 			
 //	alert(browser_height + " / header: " + $('#page_header').height() + " / " + 38 + " / img: " + img_height + " / ads: " + $('#ads').height() + " / " + $('#bar_left').height() + " / " + $('#grd_block6:nth-child(3)').height());
+/* ADS */
+          var cnt_padding = (((browser_height)  - (44 + 38 + img_height + 50 + 41 + (scroller_row * 30) + 18)) / 2);
 /*NO ADS */
-//          var cnt_padding = (((browser_height)  - (44 + 38 + img_height + 50 + 41 + (scroller_row * 30) + 18)) / 2);
-          var cnt_padding = (((browser_height)  - (44 + 38 + img_height + 41 + (scroller_row * 30) + 18)) / 2);
+//          var cnt_padding = (((browser_height)  - (44 + 38 + img_height + 41 + (scroller_row * 30) + 18)) / 2);
           $('#cnt_exp').css({'padding-top': cnt_padding + 'px', 'padding-bottom': cnt_padding + 'px'});
 
 //alert(cnt_padding);
@@ -1643,7 +1682,7 @@ console.log("num_exp: " + num_exp + "  | start_exp: " + start_exp + "  | nb_exp:
 					$('#lbl_phon').css({'padding-top': '0px', 'padding-bottom': (main_vertical_margins) + 'px'});
 					
 //					var main_row_height = img_height + 60 + lbl_trans_height + lbl_phon_height + (main_vertical_margins*2.5);
-					var main_row_height = browser_height-44-41;
+					var main_row_height = browser_height-41-41;
 					$('#grd_block1').css({'width' : left_column_width + 'px'});
 					$('#grd_block1').css({'height' : main_row_height + 'px'});
 					$('#grd_block2').css({'width' : browser_width-$('#grd_block1').width() + 'px'});
@@ -1660,9 +1699,10 @@ console.log("num_exp: " + num_exp + "  | start_exp: " + start_exp + "  | nb_exp:
 					$('#bar_right').css({'width' : '90px'});
 			
 					$('#list_exp').css({'width' : left_column_width + 'px'});
+/* ADS */
+					$('#list_exp').css({'height' : main_row_height-54 + 'px'});
 /*NO ADS */
-//					$('#list_exp').css({'height' : main_row_height-60 + 'px'});
-					$('#list_exp').css({'height' : main_row_height + 'px'});
+//					$('#list_exp').css({'height' : main_row_height + 'px'});
 					$('#scroller').css({'width' : left_column_width-8 + 'px'});
 			
 					$('.tab_exp a').css({'width' : left_column_width-40 + 'px'});
@@ -1682,7 +1722,7 @@ console.log("num_exp: " + num_exp + "  | start_exp: " + start_exp + "  | nb_exp:
 				  });
 */
 /*NO ADS */
-//					$('#tab_ads').css({'top' : main_row_height-60 + 'px', 'width' : left_column_width + 'px'});
+					$('#tab_ads').css({'top' : main_row_height-54 + 'px', 'width' : left_column_width + 'px'});
 					$('#ads').css({'display' : 'none'});
 			
 					$('#cnt_exp').css({'padding-top': '0px', 'padding-bottom': main_vertical_margins + 'px'});
@@ -1849,20 +1889,7 @@ console.log("num_exp: " + num_exp + "  | start_exp: " + start_exp + "  | nb_exp:
 								</ul>
 							</div>
 						</div>
-							<div id="tab_ads" style="position: absolute; background-color:#FFFFFF; z-index: 999">
-<!--
-								<div style="width: 320px; height: 60px; background-color:#FFCC66;">
-								<script type="text/javascript">
-									google_ad_client = "ca-pub-8664648974897099";
-									/* Annonces Tablettes */
-									google_ad_slot = "2358793837";
-									google_ad_width = 320;
-									google_ad_height = 50;
-								</script>
-								<script type="text/javascript"src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-								</div>
--->
-							</div>
+							<div id="tab_ads" style="position: absolute; background-color:#FFFFFF; z-index: 999"></div>
 					</div>
 					<div id="grd_block2" class="ui-block-b" style="background-color: #FFFFFF; background-repeat:no-repeat; background-position: center center; background-image:url(images/loader.gif);">
 	<!-------------------- BLOCK 2 ui-bar ui-bar-e -------------------->
@@ -1874,18 +1901,8 @@ console.log("num_exp: " + num_exp + "  | start_exp: " + start_exp + "  | nb_exp:
 								<div id="img_exp"></div>
 								<div id="pup_result" data-role="popup" class="ui-content" style="width: 200px; max-width:350px;"></div>
 							</div>
-<!--
-               <div id="ads" style="margin:auto; height: 50px; text-align:center; background-color:#FFCC66">
-               <script type="text/javascript">
-               google_ad_client = "ca-pub-8664648974897099";
-               /* Annonces Smartphones */
-               google_ad_slot = "2358793837";
-               google_ad_width = 320;
-               google_ad_height = 50;
-               </script>
-               <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-               </div>
--->
+              
+               <div id="ads" style="margin:auto; height: 50px; text-align:center; background-color:#FFCC66"></div>
 						</div>
 					</div>
 	<!-------------------- BLOCK 3 ui-bar ui-bar-e -------------------->

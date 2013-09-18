@@ -22,8 +22,6 @@
 	<preference name="phonegap-version" value="2.5.0" />
 	<preference name="fullscreen" value="true" />
 	<preference name="load-url-timeout" value="60000" />
-	<preference name="orientation" value="portrait" />
-	<preference name="target-device" value="handset" />
 	<access origin="*" />
 	<plugins>
 	    <plugin name="App" value="org.apache.cordova.App"/>
