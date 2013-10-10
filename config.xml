@@ -22,8 +22,8 @@
 	<preference name="phonegap-version" value="2.5.0" />
 	<preference name="fullscreen" value="true" />
 	<preference name="load-url-timeout" value="60000" />
-	<preference name="orientation" value="landscape" />
-	<preference name="target-device" value="tablet" />
+	<preference name="orientation" value="portrait" />
+	<preference name="target-device" value="handset" />
 	<access origin="*" />
 	<plugins>
 	    <plugin name="App" value="org.apache.cordova.App"/>
@@ -70,10 +70,10 @@
 	<gap:splash src="images/iOS/splash/Default-Portrait@2x~ipad-1536-2008.png" width="1536" height="2008" />
 
 	<!-- Splash for Android -->
-	<gap:splash src="images/android/splash/ldpi_320-200.png" gap:platform="android" gap:density="ldpi" />
-	<gap:splash src="images/android/splash/mdpi_480-320.png" gap:platform="android" gap:density="mdpi" />
-	<gap:splash src="images/android/splash/hdpi_800-480.png" gap:platform="android" gap:density="hdpi" />
-	<gap:splash src="images/android/splash/xhdpi_1280-720.png" gap:platform="android" gap:density="xhdpi" />
+	<gap:splash src="images/android/splash/ldpi_200-320.png" gap:platform="android" gap:density="ldpi" />
+	<gap:splash src="images/android/splash/mdpi_320-480.png" gap:platform="android" gap:density="mdpi" />
+	<gap:splash src="images/android/splash/hdpi_480-800.png" gap:platform="android" gap:density="hdpi" />
+	<gap:splash src="images/android/splash/xhdpi_720-1280.png" gap:platform="android" gap:density="xhdpi" />
 
 	<!-- Splash for BlackBerry 
 	<gap:splash src="splash/bb/splash.png" gap:platform="blackberry" />
